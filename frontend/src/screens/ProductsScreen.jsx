@@ -1,16 +1,11 @@
 import React from 'react';
 import Card from '../components/shared/Card';
 import { useGetProductsQuery } from '../slices/productApiSlice';
-import Button from '../components/shared/Button';
-
-import { Heart, Star, Bell } from 'lucide-react'; // Importez les icônes dont vous avez besoin
 
 
 const ProductsScreen = () => {
     const {data: products , error: errorProducts , isLoading: loadingProducts} = useGetProductsQuery()
-    const handleClick = () => {
-        alert('Button clicked!');
-      };
+    
     console.log(products);
   return (
     <>
@@ -22,20 +17,7 @@ const ProductsScreen = () => {
           <Card key={product.id} product={product} />
         ))}
       </section>
-      <div className="p-6 space-y-4">
-      <Button icon={Heart} version="primary" onClick={handleClick}>
-        Like
-      </Button>
-      <Button icon={Star} version="secondary" onClick={handleClick}>
-        Rate
-      </Button>
-      <Button icon={Bell} version="success" onClick={handleClick}>
-        Notify
-      </Button>
-      <Button icon={Bell} version="primary" isDisabled>
-        Disabled
-      </Button>
-    </div>
+     
     </>
   );
 };
