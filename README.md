@@ -1,0 +1,3 @@
+# 📊 KRYSTO APPLICATION
+
+## 🌟 Introduction
