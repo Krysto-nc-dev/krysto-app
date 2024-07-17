@@ -22,6 +22,8 @@ import LoginScreen from './screens/LoginScreen'
 import ArticlesScreen from './screens/ArticlesScreen'
 import ProductsScreen from './screens/ProductsScreen'
 import ProductDetailsScreen from './screens/ProductDetailsScreen'
+import AdminDashboardLayout from './components/layout/adminLayout/AdminDashboardLayout'
+import AdminDashboardScreen from './screens/admin/AdminDashboardScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,7 +42,13 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}></Route>
 
       {/* Admin users */}
-      <Route path="" element={<AdminRoute />}></Route>
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/" element={<AdminDashboardLayout />}>
+          <Route path="/admin-dashboard" element={<AdminDashboardScreen />} />
+
+          {/* Route générique pour gérer toutes les autres routes non définies */}
+        </Route>
+      </Route>
 
       {/* Users */}
       <Route path="" element={<UserRoute />}></Route>
