@@ -3,6 +3,7 @@ import Table from "../components/shared/Table";
 import Button from "../components/shared/Button";
 import SelectFilter from "../components/shared/SelectFilter";
 import { Heart, Star, Bell } from "lucide-react";
+import Messages from './FeedbackScreens/Messages';
 
 const AboutScreen = () => {
   const headers = ['Name', 'Email', 'Role'];
@@ -27,8 +28,16 @@ const AboutScreen = () => {
 
   return (
     <>
-      <h1 className='text-primaryColor text-2xl'>Welcome Krysto</h1>
-   
+      <h1 className='text-primaryColor text-2xl'>Composants</h1>
+     
+      <h3>Alertes</h3>
+      <div className="container mx-auto mt-5">
+      <Messages type="warning" message="Attention, quelque chose s'est mal passé." />
+      {/* <Messages type="success" message="Opération réussie !" />
+      <Messages type="danger" message="Erreur critique !" />
+      <Messages message="Information générale." /> */}
+    </div>
+      <h3>Boutons</h3>
       <div className="p-6 flex items-centers justify-between">
         <Button icon={Heart} version="primary">
           Like
@@ -43,7 +52,7 @@ const AboutScreen = () => {
           Disabled
         </Button>
       </div>
-
+<h3>Tableau</h3>
       <div className="p-6 space-y-8">
         <div>
           <h2 className="text-xl font-bold mb-4">Primary Table</h2>
@@ -54,7 +63,7 @@ const AboutScreen = () => {
           <Table headers={headers} data={data} version="secondary" />
         </div>
       </div>
-
+<h3>Filtres</h3>
       <div className="p-6">
         <h2 className="text-xl font-bold mb-4">Select Filters</h2>
         <SelectFilter

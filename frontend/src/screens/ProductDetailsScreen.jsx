@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductDetailsQuery } from "../slices/productApiSlice";
+import Loader from "./FeedbackScreens/Loader";
 
 const ProductDetailsScreen = () => {
   const { id: productId } = useParams();
@@ -10,7 +11,7 @@ const ProductDetailsScreen = () => {
 
   // Vérification si les données du produit sont en chargement ou non disponibles
   if (loadingProduct) {
-    return <div>Loading...</div>;
+    return  <Loader/>;
   }
 
   if (errorProduct) {
