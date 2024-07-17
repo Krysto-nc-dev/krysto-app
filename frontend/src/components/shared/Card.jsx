@@ -1,10 +1,11 @@
 import React from 'react'
 import Rating from './Rating'
+import { Link } from 'react-router-dom';
 
-const Card = ({product}) => {
+const Card = ({product, url}) => {
     console.log(product);
   return (
-    <article className="bg-white  rounded-lg shadow-lg overflow-hidden">
+    <Link to={url} className="bg-white  rounded-lg shadow-lg overflow-hidden">
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-2 text-gray-800">{product.name}</h2>
         <p className="text-gray-600 mb-4">
@@ -15,7 +16,7 @@ const Card = ({product}) => {
           Read More
         </button>
       </div>
-    </article>
+    </Link>
   )
 }
 

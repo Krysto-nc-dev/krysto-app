@@ -14,7 +14,7 @@ const ProductsScreen = () => {
         {loadingProducts && <p>Chargement des produits...</p>}
         {errorProducts && <p>Une erreur est survenue...</p>}
         {products && products.map((product) => (
-          <Card key={product.id} product={product} />
+          <Card key={product.id} product={product} url={`/produit/${product._id}`}/>
         ))}
       </section>
      

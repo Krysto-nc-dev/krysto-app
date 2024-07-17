@@ -14,7 +14,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-  if (user) {
+  if (product) {
     res.status(200).json(product)
   } else {
     res.status(404)
