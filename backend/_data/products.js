@@ -1,5 +1,6 @@
 const products = [
   {
+    dolibarrId: '25',
     name: 'Product 1',
     description: 'Description for Product 1',
     price: 299.99,
@@ -47,6 +48,7 @@ const products = [
     countInStock: 30,
   },
   {
+    dolibarrId: '25',
     name: 'Product 3',
     description: 'Description for Product 3',
     price: 149.99,
