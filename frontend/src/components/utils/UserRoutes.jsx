@@ -5,7 +5,7 @@ const UserRoute = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
 
-  return userInfo  &&   userInfo.role === 'User' ? <Outlet /> : <Navigate to="/" replace />;
+  return userInfo  &&   userInfo.role === 'User' ? <Outlet /> : <Navigate to="/connexion" replace />;
 };
 
 export default UserRoute;

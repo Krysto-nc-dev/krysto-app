@@ -53,6 +53,8 @@ import UserLayout from './components/layout/userLayout/UserLayout'
 import ProfileScreen from './screens/user/ProfileScreen'
 import ShippingScreen from './screens/user/ShippingScreen'
 import PaymentScreen from './screens/user/PaymentScreen'
+import UserDashboardScreen from './screens/user/UserDashboardScreen'
+import PartnerDashboardScreen from './screens/partner/PartnerDashboardScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -72,7 +74,12 @@ const router = createBrowserRouter(
       </Route>
 
       {/* Registered users */}
-      <Route path="" element={<PrivateRoute />}></Route>
+      <Route path="" element={<PrivateRoute />}>
+        <Route
+          path="/partenaire-dashboard"
+          element={<PartnerDashboardScreen />}
+        />
+      </Route>
 
       {/* Admin users */}
       <Route path="" element={<AdminRoute />}>
@@ -140,6 +147,10 @@ const router = createBrowserRouter(
       {/* Users */}
       <Route path="" element={<UserRoute />}>
         <Route path="/" element={<UserLayout />}>
+          <Route
+            path="/utilisateur-dashboard"
+            element={<UserDashboardScreen />}
+          />
           <Route path="/adresse-de-livraison" element={<ShippingScreen />} />
           <Route path="/paiment" element={<PaymentScreen />} />
           <Route path="/commande/:id" element={<OrderScreen />} />

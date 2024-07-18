@@ -31,7 +31,9 @@ const RegisterScreen = () => {
       if (userInfo.isAdmin) {
         navigate('/admin-dashboard')
       } else if (userInfo.role === 'User') {
-        navigate('/')
+        navigate('/utilisateur-dashboard')
+      } else if (userInfo.role === 'User') {
+        navigate('/partnenaire-dashboard')
       } else {
         navigate(redirect)
       }
