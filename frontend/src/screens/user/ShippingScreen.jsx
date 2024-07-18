@@ -4,6 +4,7 @@ import { Send } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { saveShippingAddress } from '../../slices/cartSlice'
+import CheckoutSteps from '../../components/user/CheckoutSteps'
 
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart)
@@ -23,7 +24,9 @@ const ShippingScreen = () => {
   }
 
   return (
-    <>
+
+      <>
+      <CheckoutSteps step1 step2/>
       <h1 className="text-2xl font-bold text-gray-700 mb-6">
         Votre adresse de livraison
       </h1>
