@@ -27,6 +27,13 @@ body {
   @apply text-gray-700;
   
 }
+.custom-scale {
+  transition: transform 300ms;
+}
+
+.custom-scale:hover {
+  transform: scale(0.98); /* Ajustez le facteur d'échelle ici */
+}
 
 /* ================= CUSTOM TOAST STYLES  ========================= */
 

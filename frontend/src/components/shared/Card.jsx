@@ -11,10 +11,10 @@ const Card = ({ children, image, variant, url }) => {
   };
 
   const cardContent = (
-    <div className={` mb-4 relative container mx-auto shadow-md rounded-lg overflow-hidden transition-transform duration-300 ${variantClasses[variant] || 'bg-white text-black'} ${url ? 'hover:shadow-lg' : ''}`}>
+    <div className={` mb-4 relative container mx-auto shadow-md  rounded-lg overflow-hidden transition-transform duration-300 ${variantClasses[variant] || 'bg-white text-black'} ${url ? 'hover:shadow-xl hover:shadow-gray-400' : ''} custom-scale`}>
       {image && (
         <div className="overflow-hidden h-[300px]">
-          <img src={image} alt="Container Image" className="w-full  transform transition-transform duration-300 hover:scale-105" />
+          <img src={image} alt="Container Image" className="w-full  transform transition-transform duration-300 " />
         </div>
       )}
       <div className="p-4">
@@ -24,7 +24,7 @@ const Card = ({ children, image, variant, url }) => {
   );
 
   return url ? (
-    <Link to={url} className=" block transform transition-transform duration-300 hover:shadow-lg">
+    <Link to={url} className=" transform transition-transform duration-300 hover:scale-105 ">
       {cardContent}
     </Link>
   ) : (

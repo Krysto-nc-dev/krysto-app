@@ -10,7 +10,7 @@ const ProductsScreen = () => {
     const {data: products , error: errorProducts , isLoading: loadingProducts} = useGetProductsQuery()
     const {data: dolliProducts , error: errorDolliProducts , isLoading: dolliProductsLoading} =  useGetDolliProductsQuery()
 
-    
+
     console.log("produits :" , products);
     console.log("produits dollibar :" , dolliProducts);
    
@@ -20,7 +20,7 @@ const ProductsScreen = () => {
   
     
       <h1 className="text-3xl font-bold mb-6">Découvrez nos produits</h1>
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-5">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {loadingProducts && <Loader/>}
         {errorProducts && <Messages type="error" text="Une Erreur est survenue"/> }
         {products && products.map((product) => (
