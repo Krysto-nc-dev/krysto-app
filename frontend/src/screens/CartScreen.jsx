@@ -32,7 +32,7 @@ const CartScreen = () => {
   const checkoutHandler = () => {
     // Redirige vers la page de connexion avec une redirection vers la page de commande après la connexion
     // navigate('/login?redirect=/commande');
-    navigate('/commande');
+    navigate('/adresse-de-livraison');
   };
 
   return (
