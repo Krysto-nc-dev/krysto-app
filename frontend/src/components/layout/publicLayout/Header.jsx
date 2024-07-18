@@ -89,7 +89,7 @@ const Header = () => {
         <div className="hidden lg:flex gap-5 ">
           <Link
             className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
-            to={'/panier'}
+            to={'/pannier'}
           >
             <BsBasket className="w-5 h-5 mr-2" /> Panier
             {cartItems.length > 0 && (
@@ -181,7 +181,7 @@ const Header = () => {
             </Link>
             <Link
               className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
-              to={'/panier'}
+              to={'/pannier'}
             >
               <BsBasket className="w-5 h-5 mr-2" /> Panier
               {cartItems.length > 0 && (

@@ -6,7 +6,12 @@ const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = f
       versionStyle = 'bg-primaryColor hover:bg-secondaryColor focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
     } else if (version === 'secondary') {
       versionStyle = 'bg-secondaryColor hover:bg-primaryColor focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
-    } else {
+    } 
+    else if (version === 'danger') {
+      versionStyle = 'bg-dangerColor hover:bg-red-400 focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
+    } 
+    
+    else {
       versionStyle = 'bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50';
     }
   
