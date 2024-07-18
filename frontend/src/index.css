@@ -40,6 +40,10 @@ body {
   background-color: var(--backgroundColor);
 }
 
+.icon-size-adjusted svg {
+  width: 18px;  /* Adjust to desired width */
+  height: 18px; /* Adjust to desired height */
+}
 
 .animate-slide-in-left {
   animation: slideInLeft 0.3s ease-out;

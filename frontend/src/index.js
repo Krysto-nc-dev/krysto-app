@@ -56,6 +56,7 @@ import PaymentScreen from './screens/user/PaymentScreen'
 import UserDashboardScreen from './screens/user/UserDashboardScreen'
 import PartnerDashboardScreen from './screens/partner/PartnerDashboardScreen'
 import PlaceOrderScreen from './screens/user/PlaceOrderScreen'
+import AdminWebsiteScreen from './screens/admin/AdminWebsiteScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -130,6 +131,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-recettes-couleur"
             element={<AdminColorRecipesScreen />}
+          />
+          <Route
+            path="/admin-administration-du-site"
+            element={<AdminWebsiteScreen />}
           />
           <Route path="/admin-agenda" element={<AdminAgendaScreen />} />
           <Route path="/admin-projets" element={<AdminProjectsScreen />} />

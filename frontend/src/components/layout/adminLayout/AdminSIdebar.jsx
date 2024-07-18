@@ -27,18 +27,18 @@ const AdminSidebar = () => {
         
       </div>
       {!isSidebarOpen && (
-        <div className="mt-3">
+        <div className="mt-2">
           {DASHBOARD_ADMIN_SIDEBAR_LINKS.map((link) => (
             <Link
               to={link.href}
               key={link.key}
-              className={`flex items-center text-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[14px] text-gray-800 ${
+              className={`flex items-center text-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[10px] text-gray-800 ${
                 location.pathname === link.href
                   ? 'bg-lightColor text-gray-800'
                   : 'text-gay-800 font-bold'
               } hover:bg-secondaryColor hover:text-backgroundColor`}
             >
-              <span>
+              <span className='icon-size-adjusted'>
 
               {link.icon}
               </span>
@@ -47,19 +47,22 @@ const AdminSidebar = () => {
         </div>
       )}
       {isSidebarOpen && (
-        <div className="flex-1 mt-3">
+        <div className="flex-1 mt-2">
           {DASHBOARD_ADMIN_SIDEBAR_LINKS.map((link) => (
             <Link
               to={link.href}
               key={link.key}
-              className={`flex items-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[10px] ${
+              className={`flex items-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[9px] ${
                 location.pathname === link.href
                       ? 'bg-lightColor text-gray-800'
                   : 'text-gay-800 font-bold'
               } hover:bg-secondaryColor hover:text-backgroundColor`}
             >
+              <span className='icon-size-adjusted'>
+
               {link.icon}
-              <span>{link.label}</span>
+              </span>
+              <span >{link.label}</span>
             </Link>
           ))}
         </div>

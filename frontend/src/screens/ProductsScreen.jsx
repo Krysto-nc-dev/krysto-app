@@ -3,11 +3,14 @@ import Card from '../components/shared/Card';
 import { useGetProductsQuery } from '../slices/productApiSlice';
 import Loader from './FeedbackScreens/Loader';
 import Messages from './FeedbackScreens/Messages';
+import { useGetDolliProductsQuery } from '../slices/dolibarr/dolliProductApiSlice';
 
 
 const ProductsScreen = () => {
     const {data: products , error: errorProducts , isLoading: loadingProducts} = useGetProductsQuery()
-    
+    const {data: dolliProducts , error: errorDolliProducts , isLoading: dolliProductsLoading} =  useGetDolliProductsQuery()
+    console.log("produits :" , products);
+    console.log("produits dollibar :" , dolliProducts);
    
   return (
     <>

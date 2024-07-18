@@ -1,4 +1,4 @@
-import { LayoutDashboard, Box, Users, Calendar, CreditCard,  DollarSign,  Warehouse, FilePen,  CookingPot, Factory, Eye, RecycleIcon, Truck, Milk, Palette, Projector,  Star, Receipt, Mail, ScanBarcode, FolderKanbanIcon } from 'lucide-react';
+import { LayoutDashboard, Box, Users, Calendar, CreditCard,  DollarSign,  Warehouse, FilePen,  CookingPot, Factory, Eye, RecycleIcon, Truck, Milk, Palette, Projector,  Star, Receipt, Mail, ScanBarcode, FolderKanbanIcon, WebhookIcon, MonitorCogIcon } from 'lucide-react';
 
 export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
   {
@@ -107,6 +107,13 @@ export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
     icon: <Calendar />,
     href: '/admin-agenda',
   },
+  {
+    key:'agenda',
+    label: 'Administration site',
+    icon: <MonitorCogIcon/>,
+    href: '/admin-administration-du-site',
+  },
+
   {
     key:'PROJET',
     label: 'Projet',
