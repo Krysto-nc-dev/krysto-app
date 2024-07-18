@@ -10,12 +10,14 @@ import {
   X,
 } from 'lucide-react'
 import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
+import { BsBasket } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const menuRef = useRef(null)
-
+  const { cartItems } = useSelector((state) => state.cart)
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
@@ -84,7 +86,18 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        <div className="hidden lg:flex">
+        <div className="hidden lg:flex gap-5 ">
+          <Link
+            className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+            to={'/panier'}
+          >
+            <BsBasket className="w-5 h-5 mr-2" /> Panier
+            {cartItems.length > 0 && (
+              <span className="inline-block bg-secondaryColor text-white rounded-full px-2 py-1 ml-2 text-xs">
+                {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+              </span>
+            )}
+          </Link>
           <Link
             to={'/connexion'}
             className="flex items-center px-4 py-2 mt-3 mr-7 text-gray-700 bg-secondaryColor hover:bg-opacity-90 hover:text-gray-900 rounded-md transition hover:-translate-y-0.5 duration-150"
@@ -165,6 +178,17 @@ const Header = () => {
               onClick={toggleMobileMenu}
             >
               <Gem className="w-[20px] mr-2" /> A propos
+            </Link>
+            <Link
+              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              to={'/panier'}
+            >
+              <BsBasket className="w-5 h-5 mr-2" /> Panier
+              {cartItems.length > 0 && (
+                <span className="inline-block bg-secondaryColor text-white rounded-full px-2 py-1 ml-2 text-xs">
+                  {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                </span>
+              )}
             </Link>
             <Link
               className="flex items-center justify-center text-gray-700 bg-secondaryColor text-gray-700 hover:bg-opacity-90 rounded-md py-2 mt-4"
