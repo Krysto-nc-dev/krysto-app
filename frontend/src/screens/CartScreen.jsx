@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/shared/Button';
 import { ArrowBigLeftIcon, ShoppingCart, Trash } from 'lucide-react';
 import SelectFilter from '../components/shared/SelectFilter';
-import { addToCart } from '../slices/cartSlice'; // Assurez-vous d'importer également removeFromCart si nécessaire
+import { addToCart , removeFromCart } from '../slices/cartSlice'; // Assurez-vous d'importer également removeFromCart si nécessaire
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const CartScreen = () => {
   };
 
   const removeCartItemHandler = (productId) => {
-    // dispatch(removeFromCart(productId));
+     dispatch(removeFromCart(productId));
   };
 
   return (
