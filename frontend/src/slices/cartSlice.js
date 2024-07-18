@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Récupère les données du localStorage ou initialise un tableau vide
-const savedCartItems = JSON.parse(localStorage.getItem('cart'))
+const savedCartItems = JSON.parse(localStorage.getItem('cart')) || []
 const initialState = {
-  cartItems: savedCartItems ? savedCartItems : [],
+  cartItems: Array.isArray(savedCartItems) ? savedCartItems : [],
 }
+
 const addDecimals = (num) => {
   return (Math.round(num * 100) / 100).toFixed(2)
 }
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -15,17 +17,20 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const item = action.payload
       const existItem = state.cartItems.find(
-        (cartItem) => cartItem.id === item.id,
+        (cartItem) => cartItem.id === item._id,
       )
 
       if (existItem) {
         // Si l'élément existe déjà dans le panier, incrémenter la quantité
-        state.cartItems = state.cartItems.map(
-          (cartItem) => (cartItem._id = existItem._id ? item : item),
+        state.cartItems = state.cartItems.map((cartItem) =>
+          cartItem.id === existItem.id
+            ? { ...cartItem, qty: cartItem.qty + (item.qty || 1) }
+            : cartItem,
         )
       } else {
-        // Sinon, ajouter l'élément au panier avec une quantité de 1
-        state.cartItems = [...state.cartItems, item]
+        // Sinon, ajouter l'élément au panier avec une quantité de 1 s'il n'est pas spécifié
+        const newItem = { ...item, qty: item.qty || 1 }
+        state.cartItems = [...state.cartItems, newItem]
       }
 
       // Calculate items price
@@ -36,22 +41,16 @@ const cartSlice = createSlice({
       // Calculate shipping price (if order is over 100 dollars then free else 10 euros shipping cost)
       state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10)
       // Calculate tax price (15% tax)
-      state.taxPrice = addDecimals(Number(0.15 * state.itemsPrice).toFixed(2))
+      state.taxPrice = addDecimals(Number((0.15 * state.itemsPrice).toFixed(2)))
       // Calculate total price
-      state.totalPrice = addDecimals(
-        state.itemsPrice + state.shippingPrice + state.taxPrice,
-      )
-
-      // Calculate total price
-
       state.totalPrice = addDecimals(
         Number(state.itemsPrice) +
           Number(state.shippingPrice) +
-          Number(state.taxPrice).toFixed(2),
+          Number(state.taxPrice),
       )
 
       // Mettre à jour le localStorage avec les nouvelles données du panier
-      localStorage.setItem('cart', JSON.stringify(state))
+      localStorage.setItem('cart', JSON.stringify(state.cartItems))
     },
   },
 })

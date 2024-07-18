@@ -46,6 +46,7 @@ import AdminAgendaScreen from './screens/admin/AdminAgendaScreen'
 import AdminProjectsScreen from './screens/admin/AdminProjectsScreen'
 import AdminPresentationsScreen from './screens/admin/AdminPresentationsScreen'
 import AdminWathMonitoringScreen from './screens/admin/AdminWathMonitoringScreen'
+import CartScreen from './screens/CartScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,6 +60,7 @@ const router = createBrowserRouter(
         <Route path="/blog" element={<ArticlesScreen />} />
         <Route path="/contacts" element={<ContactScreen />} />
         <Route path="/krysto-shop" element={<ProductsScreen />} />
+        <Route path="/pannier" element={<CartScreen />} />
         <Route path="/produit/:id" element={<ProductDetailsScreen />} />
       </Route>
 

@@ -10,7 +10,7 @@ const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = f
       versionStyle = 'bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50';
     }
   
-    const disabledStyle = isDisabled ? 'cursor-not-allowed opacity-50 bg-red-300 hover:bg-red-300' : '';
+    const disabledStyle = isDisabled ? 'cursor-not-allowed opacity-50 bg-red-300 hover:bg-red-400' : '';
   
     return (
       <button

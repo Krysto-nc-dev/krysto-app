@@ -1,35 +1,74 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useGetProductDetailsQuery } from "../slices/productApiSlice";
-import Loader from "./FeedbackScreens/Loader";
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetProductDetailsQuery } from '../slices/productApiSlice';
+import Loader from './FeedbackScreens/Loader';
+import Button from '../components/shared/Button';
+import { BsBasket } from 'react-icons/bs';
+import SelectFilter from '../components/shared/SelectFilter';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slices/cartSlice';
 
 const ProductDetailsScreen = () => {
   const { id: productId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const { data: product, error: errorProduct, isLoading: loadingProduct } =
-    useGetProductDetailsQuery(productId);
+  const [qty, setQty] = useState(1);
 
-  // Vérification si les données du produit sont en chargement ou non disponibles
+
+
+  const {
+    data: product,
+    error: errorProduct,
+    isLoading: loadingProduct,
+  } = useGetProductDetailsQuery(productId);
+
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product , qty  }));
+    navigate("/pannier")
+  }
+
+
   if (loadingProduct) {
-    return  <Loader/>;
+    return <Loader />;
   }
 
   if (errorProduct) {
     return <div>Error: {errorProduct.message}</div>;
   }
 
-  // Vérification si le produit existe avant d'accéder à ses propriétés
   if (!product) {
     return <div>Product not found</div>;
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">
-        Product Details - {product.name}
-      </h1>
+      <h1 className="text-2xl font-bold">Product Details - {product.name}</h1>
       <p>{product.description}</p>
       <p>DOLIBARR ID : {product.dolibarrId}</p>
+      {product.countInStock > 0 ? (
+        <SelectFilter
+          version={'primary'}
+          label="Quantité"
+          options={[...Array(product.countInStock).keys()].map((x) => ({
+            value: x + 1,
+            label: (x + 1).toString(),
+          }))}
+          value={qty}
+          onChange={(e) => setQty(Number(e.target.value))}
+        />
+      ) : (
+        <p className="text-red-500">Cette article n'est plus en stock</p>
+      )}
+      <Button
+        version="primary"
+        isDisabled={product.countInStock === 0}
+        icon={BsBasket}
+        onClick={addToCartHandler}
+      >
+        Ajouter au panier
+      </Button>
     </div>
   );
 };

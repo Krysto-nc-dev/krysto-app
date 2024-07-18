@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
 
 const SelectFilter = ({ label, options, value, onChange, version }) => {
   // Détermination des styles en fonction de la version choisie
-  let baseStyle = 'w-full px-4 py-2 border rounded-t-lg focus:outline-none';
+  let baseStyle = 'w-full px-4 py-2 border rounded-t-lg focus:outline-none text-gray-800';
   let versionStyle = '';
   let labelStyle = 'block mb-1 font-semibold text-gray-700';
   let arrowStyle = 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700';
@@ -36,8 +35,8 @@ const SelectFilter = ({ label, options, value, onChange, version }) => {
           onChange={onChange}
           className={`${baseStyle} ${versionStyle}`}
         >
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
