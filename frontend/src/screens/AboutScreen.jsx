@@ -4,7 +4,7 @@ import Button from "../components/shared/Button";
 import SelectFilter from "../components/shared/SelectFilter";
 import { Heart, Star, Bell } from "lucide-react";
 import Messages from './FeedbackScreens/Messages';
-import Container from '../components/shared/Container';
+import Card from '../components/shared/Card';
 
 const AboutScreen = () => {
   const headers = ['Name', 'Email', 'Role'];
@@ -98,35 +98,35 @@ const AboutScreen = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-5">
 
-      <Container image="https://via.placeholder.com/600x300" url="https://example.com">
+      <Card image="https://via.placeholder.com/600x300" url="https://example.com">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
+    </Card>
 
-      <Container >
+      <Card >
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
-    <Container image="https://via.placeholder.com/600x300" variant="translucent">
+    </Card>
+    <Card image="https://via.placeholder.com/600x300" variant="translucent">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
-    <Container image="https://via.placeholder.com/600x300" variant="dark">
+    </Card>
+    <Card image="https://via.placeholder.com/600x300" variant="dark">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-200">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
-    <Container image="https://via.placeholder.com/600x300" variant="secondary">
+    </Card>
+    <Card image="https://via.placeholder.com/600x300" variant="secondary">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
-    <Container image="https://via.placeholder.com/600x300" variant="primary">
+    </Card>
+    <Card image="https://via.placeholder.com/600x300" variant="primary">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
-    <Container image="https://via.placeholder.com/600x300" variant="danger">
+    </Card>
+    <Card image="https://via.placeholder.com/600x300" variant="danger">
       <h2 className="text-xl font-bold mb-4">Card Title</h2>
       <p className="text-gray-700">This is some card content. It can include text, images, and other elements.</p>
-    </Container>
+    </Card>
       </div>
     </>
   );

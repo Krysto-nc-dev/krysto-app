@@ -1,23 +1,35 @@
-import React from 'react'
-import Rating from './Rating'
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Card = ({product, url}) => {
-    console.log(product);
-  return (
-    <Link to={url} className="bg-white  rounded-lg shadow-lg overflow-hidden">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-2 text-gray-800">{product.name}</h2>
-        <p className="text-gray-600 mb-4">
-         {product.description}
-        </p>
-        <Rating value={product.rating} text={"test"}/>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
-          Read More
-        </button>
-      </div>
-    </Link>
-  )
-}
+const Card = ({ children, image, variant, url }) => {
+  const variantClasses = {
+    primary: 'bg-primaryColor text-black',
+    secondary: 'bg-secondaryColor text-black',
+    dark: 'bg-gray-800 text-white',
+    translucent: 'bg-gray-300 bg-opacity-50 text-black',
+    danger: 'bg-red-400 bg-opacity-50 text-black',
+  };
 
-export default Card
+  const cardContent = (
+    <div className={`relative container mx-auto shadow-md rounded-lg overflow-hidden transition-transform duration-300 ${variantClasses[variant] || 'bg-white text-black'} ${url ? 'hover:shadow-lg' : ''}`}>
+      {image && (
+        <div className="overflow-hidden h-[300px]">
+          <img src={image} alt="Container Image" className="w-full  transform transition-transform duration-300 hover:scale-105" />
+        </div>
+      )}
+      <div className="p-4">
+        {children}
+      </div>
+    </div>
+  );
+
+  return url ? (
+    <Link to={url} className=" block transform transition-transform duration-300 hover:shadow-lg">
+      {cardContent}
+    </Link>
+  ) : (
+    cardContent
+  );
+};
+
+export default Card;

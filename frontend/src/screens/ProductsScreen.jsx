@@ -9,6 +9,8 @@ import { useGetDolliProductsQuery } from '../slices/dolibarr/dolliProductApiSlic
 const ProductsScreen = () => {
     const {data: products , error: errorProducts , isLoading: loadingProducts} = useGetProductsQuery()
     const {data: dolliProducts , error: errorDolliProducts , isLoading: dolliProductsLoading} =  useGetDolliProductsQuery()
+
+    
     console.log("produits :" , products);
     console.log("produits dollibar :" , dolliProducts);
    
@@ -22,7 +24,17 @@ const ProductsScreen = () => {
         {loadingProducts && <Loader/>}
         {errorProducts && <Messages type="error" text="Une Erreur est survenue"/> }
         {products && products.map((product) => (
-          <Card key={product.id} product={product} url={`/produit/${product._id}`}/>
+
+        
+          <Card key={product.id} product={product} image="/images/pot.jpg" url={`/produit/${product._id}`} >
+            <h2>{product.name}</h2>
+             <p className=' min-h-44'>
+              
+             </p>
+             <p className='absolute top-3'>{product.price} XPF</p>
+            
+          </Card>
+         
         ))}
       </section>
      
