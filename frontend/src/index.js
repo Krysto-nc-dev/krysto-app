@@ -47,6 +47,10 @@ import AdminProjectsScreen from './screens/admin/AdminProjectsScreen'
 import AdminPresentationsScreen from './screens/admin/AdminPresentationsScreen'
 import AdminWathMonitoringScreen from './screens/admin/AdminWathMonitoringScreen'
 import CartScreen from './screens/CartScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import OrderScreen from './screens/user/OrderScreen'
+import UserLayout from './components/layout/userLayout/UserLayout'
+import ProfileScreen from './screens/user/ProfileScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,7 +58,8 @@ const router = createBrowserRouter(
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout />}>
         <Route index={true} path="/" element={<HomeScreen />} />
-        <Route index={true} path="/connexion" element={<LoginScreen />} />
+        <Route path="/inscription" element={<RegisterScreen />} />
+        <Route path="/connexion" element={<LoginScreen />} />
         <Route path="/a-propos" element={<AboutScreen />} />
         <Route path="/initiations" element={<InitiationsScreen />} />
         <Route path="/blog" element={<ArticlesScreen />} />
@@ -131,7 +136,12 @@ const router = createBrowserRouter(
       </Route>
 
       {/* Users */}
-      <Route path="" element={<UserRoute />}></Route>
+      <Route path="" element={<UserRoute />}>
+        <Route path="/" element={<UserLayout />}>
+          <Route path="/commande" element={<OrderScreen />} />
+          <Route path="/mon-profile" element={<ProfileScreen />} />
+        </Route>
+      </Route>
 
       {/* Route générique pour gérer toutes les autres routes non définies */}
       <Route path="*" element={<NotFound />} />

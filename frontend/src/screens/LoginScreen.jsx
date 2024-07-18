@@ -83,7 +83,7 @@ const LoginScreen = () => {
               </button>
             </form>
             <div className="flex items-center justify-between mt-6">
-              <Link to="/register" className="text-primaryColor hover:text-opacity-90">
+              <Link to="/inscription" className="text-primaryColor hover:text-opacity-90">
                 Créer un compte
               </Link>
               <Link to="/forgot-password" className="text-primaryColor hover:text-opacity-90">

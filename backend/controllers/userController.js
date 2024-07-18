@@ -32,7 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, lastname } = req.body
   const userExist = await User.findOne({ email })
   if (userExist) {
     res.status(400)
@@ -40,9 +40,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
   const user = await User.create({
     name,
+    lastname,
     email,
     password,
-    lastname,
   })
   if (user) {
     generateToken(res, user._id)
