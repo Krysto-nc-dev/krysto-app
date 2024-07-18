@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProfileScreen = () => {
   return (
-    <h1 className='text-2xl'>Mon profile</h1>
+    <h1 className=' text-gray-700 text-2xl'>Mon profile</h1>
   )
 }
 

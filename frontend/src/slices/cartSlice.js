@@ -19,14 +19,12 @@ const cartSlice = createSlice({
       )
 
       if (existItem) {
-        // Si l'article existe déjà dans le panier, mettre à jour la quantité
         state.cartItems = state.cartItems.map((cartItem) =>
           cartItem._id === existItem._id
             ? { ...cartItem, qty: item.qty || cartItem.qty + 1 }
             : cartItem,
         )
       } else {
-        // Sinon, ajouter l'article avec la quantité spécifiée ou 1 par défaut
         const newItem = { ...item, qty: item.qty || 1 }
         state.cartItems.push(newItem)
       }
@@ -44,6 +42,10 @@ const cartSlice = createSlice({
       state.shippingAddress = action.payload
       return updateCart(state)
     },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload
+      return updateCart(state)
+    },
   },
 })
 
@@ -51,6 +53,7 @@ export const {
   addToCart,
   removeFromCart,
   saveShippingAddress,
+  savePaymentMethod,
 } = cartSlice.actions
 
 export default cartSlice.reducer

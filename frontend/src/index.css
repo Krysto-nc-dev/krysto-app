@@ -24,6 +24,7 @@ body {
 
   color: var(--textColor);
   font-family: 'Rubik', sans-serif;
+  @apply text-gray-700;
   
 }
 
