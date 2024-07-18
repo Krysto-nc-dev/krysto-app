@@ -1,7 +1,7 @@
 import { AlignJustify, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { DASHBOARD_SIDEBAR_LINKS } from '../Navigation';
+import { DASHBOARD_ADMIN_SIDEBAR_LINKS } from './Navigation';
 
 
 const AdminSidebar = () => {
@@ -13,7 +13,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <aside className={`bg-gray-700 p-3 text-textColor h-full absolute top-0 left-0 transition-all duration-300 ease-in-out z-50 ${isSidebarOpen ? 'w-55' : 'w-15'}`}>
+    <aside className={`bg-primaryColor p-3 py-11 text-gray-800 h-full absolute top-0 left-0 transition-all duration-300 ease-in-out z-50 ${isSidebarOpen ? 'w-55' : 'w-15'}`}>
     
       <div className="flex items-center justify-between gap-2 px-1 ">
         {/* Menu icon to toggle sidebar */}
@@ -28,14 +28,14 @@ const AdminSidebar = () => {
       </div>
       {!isSidebarOpen && (
         <div className="mt-3">
-          {DASHBOARD_SIDEBAR_LINKS.map((link) => (
+          {DASHBOARD_ADMIN_SIDEBAR_LINKS.map((link) => (
             <Link
               to={link.href}
               key={link.key}
-              className={`flex items-center text-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[14px] ${
+              className={`flex items-center text-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[14px] text-gray-800 ${
                 location.pathname === link.href
-                  ? 'bg-lightColor text-white'
-                  : 'text-primaryColor font-bold'
+                  ? 'bg-lightColor text-gray-800'
+                  : 'text-gay-800 font-bold'
               } hover:bg-secondaryColor hover:text-backgroundColor`}
             >
               <span>
@@ -48,14 +48,14 @@ const AdminSidebar = () => {
       )}
       {isSidebarOpen && (
         <div className="flex-1 mt-3">
-          {DASHBOARD_SIDEBAR_LINKS.map((link) => (
+          {DASHBOARD_ADMIN_SIDEBAR_LINKS.map((link) => (
             <Link
               to={link.href}
               key={link.key}
               className={`flex items-center gap-2 mb-[0.7px] px-1 py-1 rounded-lg text-[10px] ${
                 location.pathname === link.href
-                  ? 'bg-lightColor text-white'
-                  : 'text-primaryColor font-bold'
+                      ? 'bg-lightColor text-gray-800'
+                  : 'text-gay-800 font-bold'
               } hover:bg-secondaryColor hover:text-backgroundColor`}
             >
               {link.icon}

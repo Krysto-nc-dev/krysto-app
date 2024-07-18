@@ -1,129 +1,129 @@
 import { LayoutDashboard, Box, Users, Calendar, CreditCard,  DollarSign,  Warehouse, FilePen,  CookingPot, Factory, Eye, RecycleIcon, Truck, Milk, Palette, Projector,  Star, Receipt, Mail, ScanBarcode, FolderKanbanIcon } from 'lucide-react';
 
-export const DASHBOARD_SIDEBAR_LINKS = [
+export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
   {
     key: 'Tableau de bord',
     label: 'Tableau de bord',
     icon: <LayoutDashboard />,
-    href: '/dashboard',
+    href: '/admin-dashboard',
   },
 
   {
     key: 'tiers',
     label: 'Tiers',
     icon: <Users />,
-    href: '/user-thirdparties',
+    href: '/admin-tiers',
   },
   {
     key: 'emailing',
     label: 'emailing',
     icon:  <Mail/>,
-    href: '/mail-bank',
+    href: '/admin-mails-repertoire',
   },
 
   {
     key: 'Produits',
     label: 'Produits',
     icon: <Box />,
-    href: '/user-products',
+    href: '/admin-dollibarr-products',
   },
   {
     key: 'Entrepots',
     label: 'Entrepots',
     icon: <Warehouse />,
-    href: '/entrepots',
+    href: '/admin-entrepots',
   },
   {
     key: 'propal',
     label: 'Devis',
     icon: <FilePen />,
-    href: '/propal',
+    href: '/admin-propositions-commercial',
   },
   {
     key: 'facturation & paiement',
     label: 'Facturation & Paiement',
     icon: <DollarSign />,
-    href: '/billing',
+    href: '/admin-facturation',
   },
   {
     key: 'Facture fournisseurs',
     label: 'Facture fournisseurs',
     icon: <Receipt />,
-    href: '/supplier-invoices',
+    href: '/admin-facturations-fournisseurs',
   },
   {
     key: 'banques',
     label: 'Comptes bancaires',
     icon: <CreditCard />,
-    href: '/banks',
+    href: '/admin-comptes-bancaire',
   },
   {
     key: 'Caisse',
     label: 'Caisse',
     icon: <ScanBarcode />,
-    href: '/cashier',
+    href: '/admin-caisses',
   },
 
   {
     key:'machineAndMoulds',
     label: 'Machines & Moules',
     icon: <Factory />,
-    href: '/machines-and-moulds',
+    href: '/admin-equipements',
   },
   {
     key:'plastics',
     label: 'plastiques',
     icon: <Milk />,
-    href: '/plastics',
+    href: '/admin-plastiques',
   },
   {
     key:'recyclableProducts',
     label: 'produit recyclable',
     icon: <RecycleIcon />,
-    href: '/recyclable-products',
+    href: '/admin-produits-recyclable',
   },
   {
     key:'collecte',
     label: 'Collectes',
     icon: <Truck/>,
-    href: '/campagnes-collecte',
+    href: '/admin-campagnes-collecte',
   },
   {
     key:'stockPlastic',
     label: 'Stocks plastique',
     icon: <Star />,
-    href: '/plastic-stocks',
+    href: '/admin-paillettes-plastique',
   },
 
   {
     key:'recipes',
     label: 'Recettes',
     icon: <CookingPot />,
-    href: '/recipes',
+    href: '/admin-recettes-couleur',
   },
   {
     key:'agenda',
     label: 'Agenda',
     icon: <Calendar />,
-    href: '/calendar',
+    href: '/admin-agenda',
   },
   {
     key:'PROJET',
     label: 'Projet',
     icon: <FolderKanbanIcon />,
-    href: '/projet',
+    href: '/admin-projets',
   },
   {
     key:'Presentations',
     label: 'Presentations',
     icon: <Projector />,
-    href: '/presentations',
+    href: '/admin-presentations',
   },
   {
     key:'veilles',
     label: 'Veilles',
     icon: <Eye/>,
-    href: '/veilles',
+    href: '/admin-veilles',
   },
   
   // Ajoutez d'autres liens ici pour les autres menus du sidebar

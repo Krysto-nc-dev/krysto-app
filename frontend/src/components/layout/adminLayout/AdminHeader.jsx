@@ -25,7 +25,7 @@ const Header = () => {
         }
       }
   return (
-    <header className="h-20 pl-20 pr-10 flex justify-between items-center bg-gray-700 ">
+    <header className="h-20 pl-20 pr-10 flex justify-between items-center bg-primaryColor ">
       <div className="relative">
         <Search fontSize={20} className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-3" />
         <input 
@@ -39,7 +39,7 @@ const Header = () => {
           {({ open }) => (
             <>
               <Popover.Button className="p-1.5 rounded-sm inline-flex items-center text-primaryColor hover:text-opacity-100 focus:outline-none active:bg-gray-100">
-                <Bell fontSize={24} />
+                <Bell fontSize={24}  className="text-pink-50"/>
               </Popover.Button>
               <Transition
                 as={Fragment}
@@ -63,7 +63,7 @@ const Header = () => {
           {({ open }) => (
             <>
               <Popover.Button className="p-1.5 rounded-sm inline-flex items-center text-primaryColor  hover:text-opacity-100 focus:outline-none active:bg-gray-100">
-                <MessageCircle fontSize={24} />
+                <MessageCircle fontSize={24} className="text-pink-50"/>
               </Popover.Button>
               <Transition
                 as={Fragment}

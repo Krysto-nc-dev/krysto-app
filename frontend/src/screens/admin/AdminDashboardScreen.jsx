@@ -1,8 +1,11 @@
 import React from 'react'
+import { Calendar } from 'lucide-react';
 
 const AdminDashboardScreen = () => {
   return (
-    <div>AdminDashboardScreen</div>
+    <>
+        <h1 className='text-gray-800 text-2xl'>Tableaux de bord</h1>
+    </>
   )
 }
 
