@@ -3,7 +3,7 @@ import { apiSlice } from '../apiSlice'
 
 export const dolliProductApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getDolliProducts: builder.query({
       query: ({ mode, variant_filter, category } = {}) => {
         const params = new URLSearchParams()
 
@@ -31,7 +31,7 @@ export const dolliProductApiSlice = apiSlice.injectEndpoints({
       },
       keepUnusedDataFor: 5,
     }),
-    getProductCategories: builder.query({
+    getDolliProductCategories: builder.query({
       query: () => ({
         url: `${DOLIBAR_URL}/categories`,
         headers: {
@@ -43,7 +43,7 @@ export const dolliProductApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    getProductDetails: builder.query({
+    getDolliProductDetails: builder.query({
       query: (id) => ({
         url: `${DOLIBAR_URL}/products/${id}`,
         headers: {
@@ -56,8 +56,7 @@ export const dolliProductApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-  useGetProductsQuery,
-  useGetProductDetailsQuery,
-  useGetProductCategoriesQuery,
-  // Ajoutez d'autres exports ici pour les autres queries, mutations, etc.
+  useGetDolliProductCategoriesQuery,
+  useGetDolliProductsQuery,
+  useGetDolliProductDetailsQuery,
 } = dolliProductApiSlice

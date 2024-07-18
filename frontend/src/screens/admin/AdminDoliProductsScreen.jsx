@@ -1,8 +1,8 @@
 import React from 'react'
-import { useGetProductsQuery } from '../../slices/dolibarr/dolliProductApiSlice.js';
+import {useGetDolliProductsQuery } from '../../slices/dolibarr/dolliProductApiSlice'
 
 const AdminDoliProductsScreen = () => {
-  const {data: products , error: errorProducts , isLoading: productsLoading} = useGetProductsQuery()
+  const {data: products , error: errorProducts , isLoading: productsLoading} =  useGetDolliProductsQuery()
   console.log(products);
   return (
     <>
