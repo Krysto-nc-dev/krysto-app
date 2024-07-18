@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState , useEffect } from 'react';
 import CheckoutSteps from '../../components/user/CheckoutSteps';
 import Button from '../../components/shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,22 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import { savePaymentMethod } from '../../slices/cartSlice';
 
 const PaymentScreen = () => {
-  const [payment, setPayment] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('PayPal');
 
-  const cart = useSelector((state) => state.cart)
-  const { paymentMethod } = cart
+  
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
+  const cart = useSelector((state) => state.cart)
+  const shippingAddress = cart
+
+   useEffect(() => {
+    if (!shippingAddress) {
+     navigate('/adresse-de-livraison');
+    }
+  }, [shippingAddress, navigate]);
+
+
+
 
 
 
   const handlePaymentMethodChange = (e) => {
-    setPayment(e.target.value);
+    setPaymentMethod(e.target.value);
   };
+
+   
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod({payment}))
+    dispatch(savePaymentMethod({paymentMethod}))
     navigate('/validation-commande')
   };
 
@@ -32,13 +47,13 @@ const PaymentScreen = () => {
 
       <form onSubmit={handleSubmit} className='mt-4'>
         <div className="mb-4">
-          <label htmlFor="payment" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">
             Méthode de paiement :
           </label>
           <select
-            id="payment"
-            name="payment"
-            value={payment}
+            id="paymentMethod"
+            name="paymentMethod"
+            value={paymentMethod}
             onChange={handlePaymentMethodChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
