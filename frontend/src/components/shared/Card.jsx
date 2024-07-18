@@ -11,7 +11,7 @@ const Card = ({ children, image, variant, url }) => {
   };
 
   const cardContent = (
-    <div className={`relative container mx-auto shadow-md rounded-lg overflow-hidden transition-transform duration-300 ${variantClasses[variant] || 'bg-white text-black'} ${url ? 'hover:shadow-lg' : ''}`}>
+    <div className={` mb-4 relative container mx-auto shadow-md rounded-lg overflow-hidden transition-transform duration-300 ${variantClasses[variant] || 'bg-white text-black'} ${url ? 'hover:shadow-lg' : ''}`}>
       {image && (
         <div className="overflow-hidden h-[300px]">
           <img src={image} alt="Container Image" className="w-full  transform transition-transform duration-300 hover:scale-105" />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetProductDetailsQuery } from '../slices/productApiSlice'; // Assurez-vous que cette fonction peut accepter des params dynamiques
+import { useGetProductDetailsQuery } from '../slices/productApiSlice';
 import Loader from './FeedbackScreens/Loader';
 import Button from '../components/shared/Button';
 import { BsBasket } from 'react-icons/bs';
@@ -30,7 +30,6 @@ const ProductDetailsScreen = () => {
   const navigate = useNavigate();
   
   const [qty, setQty] = useState(1);
-  console.log(dolliProduct);
 
   useEffect(() => {
     // Optionnel : vous pouvez combiner les données ici si nécessaire
@@ -59,6 +58,13 @@ const ProductDetailsScreen = () => {
     return <div>Product not found</div>;
   }
 
+  // Vérification et sécurisation de la valeur de stock
+  const stockReel = Number(dolliProduct?.stock_reel) || 0;
+  const options = stockReel > 0 ? [...Array(stockReel).keys()].map((x) => ({
+    value: x + 1,
+    label: (x + 1).toString(),
+  })) : [];
+
   return (
     <div>
       <h1 className="text-2xl font-bold">Product Details - {product.name}</h1>
@@ -68,10 +74,7 @@ const ProductDetailsScreen = () => {
         <SelectFilter
           version={'primary'}
           label="Quantité"
-          options={[...Array( Number(dolliProduct.stock_reel)).keys()].map((x) => ({
-            value: x + 1,
-            label: (x + 1).toString(),
-          }))}
+          options={options}
           value={qty}
           onChange={(e) => setQty(Number(e.target.value))}
         />
