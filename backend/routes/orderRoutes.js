@@ -4,19 +4,30 @@ import {
   getOrders,
   getOrderById,
   addOrderItems,
-  getMyOrders,
   updateOrderToPaid,
   updateOrderToDelivered,
+  getMyOrders,
 } from '../controllers/orderController.js'
 
 // Middleware d'authentification (par exemple : protect, admin)
-// import { protect, admin } from '../middleware/authMiddleware.js';
+import { protect, admin } from '../middleware/authMiddleware.js'
 
-// Routes pour les commandes
-router.route('/').get(getOrders).post(addOrderItems)
-router.route('/myorders').get(getMyOrders)
-router.route('/:id').get(getOrderById)
-router.route('/:id/pay').get(updateOrderToPaid)
-router.route('/:id/deliver').get(updateOrderToDelivered)
+// Route pour récupérer les commandes de l'utilisateur connecté
+router.route('/myOrders').get(protect, getMyOrders)
+
+// Route pour ajouter une nouvelle commande
+router.route('/').post(protect, addOrderItems)
+
+// Route pour récupérer toutes les commandes (accessible seulement par l'admin)
+router.route('/').get(protect, admin, getOrders)
+
+// Route pour récupérer une commande par son ID
+router.route('/:id').get(protect, admin, getOrderById)
+
+// Route pour mettre à jour le statut de paiement d'une commande
+router.route('/:id/pay').put(protect, updateOrderToPaid)
+
+// Route pour mettre à jour le statut de livraison d'une commande (accessible seulement par l'admin)
+router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
 
 export default router

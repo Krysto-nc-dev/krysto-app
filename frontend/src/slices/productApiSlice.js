@@ -3,7 +3,7 @@ import { apiSlice } from './apiSlice'
 import { PRODUCTS_URL } from '../constants'
 
 // Use apiSlice to inject endpoints
-export const usersApiSlice = apiSlice.injectEndpoints({
+export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Existing getUsers query
     getProducts: builder.query({
@@ -25,4 +25,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 })
 
 // Export the generated hooks
-export const { useGetProductsQuery, useGetProductDetailsQuery } = usersApiSlice
+export const {
+  useGetProductsQuery,
+  useGetProductDetailsQuery,
+} = productsApiSlice

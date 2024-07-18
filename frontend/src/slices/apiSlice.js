@@ -4,7 +4,7 @@ import { BASE_URL, DOLIBAR_URL } from '../constants'
 const tagTypes = ['Product', 'User']
 
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL })
-// const doliBaseQuery = fetchBaseQuery({ baseUrl: DOLIBAR_URL })
+const doliBaseQuery = fetchBaseQuery({ baseUrl: DOLIBAR_URL })
 
 export const apiSlice = createApi({
   baseQuery,
@@ -12,8 +12,8 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({}),
 })
 
-// export const dolibarrApiSlice = createApi({
-//   baseQuery: doliBaseQuery,
-//   tagTypes: [],
-//   endpoints: (builder) => ({}),
-// })
+export const dolibarrApiSlice = createApi({
+  baseQuery: doliBaseQuery,
+  tagTypes: [],
+  endpoints: (builder) => ({}),
+})

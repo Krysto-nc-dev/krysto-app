@@ -9,7 +9,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 })
 
 // @desc Get logged in user orders
-// @route GET /api/orders/myorders
+// @route GET /api/orders/mine
 // @access Private
 const getMyOrders = asyncHandler(async (req, res) => {
   res.send('get my orders')
@@ -19,7 +19,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // @route GET /api/order/:id
 // @access Private
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id)
+  const order = await Order.findById(req.params._id)
   if (order) {
     res.status(200).json(order)
   } else {
