@@ -1,53 +1,46 @@
-import { useState , useEffect } from 'react';
-import CheckoutSteps from '../../components/user/CheckoutSteps';
-import Button from '../../components/shared/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { savePaymentMethod } from '../../slices/cartSlice';
+import { useState, useEffect } from 'react'
+import CheckoutSteps from '../../components/user/CheckoutSteps'
+import Button from '../../components/shared/Button'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { savePaymentMethod } from '../../slices/cartSlice'
 
 const PaymentScreen = () => {
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
-  
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   const cart = useSelector((state) => state.cart)
   const shippingAddress = cart
 
-   useEffect(() => {
+  useEffect(() => {
     if (!shippingAddress) {
-     navigate('/adresse-de-livraison');
+      navigate('/adresse-de-livraison')
     }
-  }, [shippingAddress, navigate]);
-
-
-
-
-
+  }, [shippingAddress, navigate])
 
   const handlePaymentMethodChange = (e) => {
-    setPaymentMethod(e.target.value);
-  };
-
-   
-
-
+    setPaymentMethod(e.target.value)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(savePaymentMethod({paymentMethod}))
+    e.preventDefault()
+    dispatch(savePaymentMethod({ paymentMethod }))
     navigate('/validation-commande')
-  };
+  }
 
   return (
     <>
       <CheckoutSteps step1 step2 step3 />
       <h1 className="text-2xl">Réglement de votre commande</h1>
 
-      <form onSubmit={handleSubmit} className='mt-4'>
+      <form onSubmit={handleSubmit} className="mt-4">
         <div className="mb-4">
-          <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="paymentMethod"
+            className="block text-sm font-medium text-gray-700"
+          >
             Méthode de paiement :
           </label>
           <select
@@ -61,16 +54,13 @@ const PaymentScreen = () => {
             <option value="Stripe">Stripe</option>
             <option value="Carte bancaire">Carte bancaire</option>
             <option value="Virement bancaire">Virement bancaire</option>
-  
           </select>
         </div>
-        
-        <Button type="submit" >
-         Continuer
-        </Button>
+
+        <Button type="submit">Continuer</Button>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default PaymentScreen;
+export default PaymentScreen
