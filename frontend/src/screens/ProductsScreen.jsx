@@ -25,7 +25,7 @@ const ProductsScreen = () => {
         {errorProducts && <Messages type="error" text="Une Erreur est survenue"/> }
         {products && products.map((product) => (
 
-        
+
           <Card key={product.id} product={product} image="/images/pot.jpg" url={`/produit/${product._id}`} >
             <h2>{product.name}</h2>
              <p className=' min-h-44'>

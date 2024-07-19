@@ -26,7 +26,7 @@ const PaymentScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(savePaymentMethod({ paymentMethod }))
+    dispatch(savePaymentMethod(paymentMethod))
     navigate('/validation-commande')
   }
 
