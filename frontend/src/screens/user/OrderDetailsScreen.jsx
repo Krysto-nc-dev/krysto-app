@@ -18,7 +18,7 @@ const OrderDetailsScreen = () => {
     data: orderDetails,
     error: orderDetailsError,
     isLoading: loadingOrderDetails,
-    refetch
+    refetch,
   } = useGetOrderDetailsQuery(orderId)
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation()
@@ -53,64 +53,64 @@ const OrderDetailsScreen = () => {
   }, [orderDetails, paypal, paypalDispatch, loadingPayPal, errorPayPal])
 
   async function onApprove(data, actions) {
-   return actions.order.capture().then( async function (details) {
-    try {
-        await payOrder({orderId , details})
+    return actions.order.capture().then(async function (details) {
+      try {
+        await payOrder({ orderId, details })
         refetch()
-        toast.success("paimnent effectué avec succès")
-    } catch (err) {
+        toast.success('paimnent effectué avec succès')
+      } catch (err) {
         toast.error(err?.data?.message.err.message)
-    }
-   })
+      }
+    })
   }
 
   async function onApproveTest() {
     await payOrder({
-      orderId, details: { payer: {} }
-    });
-    refetch();
-    toast.success('Paiement effectué avec succès');
+      orderId,
+      details: { payer: {} },
+    })
+    refetch()
+    toast.success('Paiement effectué avec succès')
   }
 
   function onError(err) {
-    toast.error(err.message);
+    toast.error(err.message)
   }
 
   function createOrder(data, actions) {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: orderDetails.totalPrice,
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: {
+              value: orderDetails.totalPrice,
+            },
           },
-        },
-      ],
-    }).then((orderId) => {
-      return orderId;
-    });
+        ],
+      })
+      .then((orderId) => {
+        return orderId
+      })
   }
 
   if (loadingOrderDetails) {
-    return <Loader />;
+    return <Loader />
   }
 
   if (orderDetailsError) {
     return (
       <Messages type={'danger'} message="Impossible de trouver la commande" />
-    );
+    )
   }
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl text-primaryColor font-bold mb-4">
-        Votre commande
+        Commande n°: {orderDetails._id}
       </h1>
       {orderDetails && (
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="mb-4">
-            <p className="text-lg font-semibold">
-              Order ID: <span className="font-normal">{orderDetails._id}</span>
-            </p>
             <p className="text-lg font-semibold">
               Date:{' '}
               <span className="font-normal">
@@ -180,7 +180,9 @@ const OrderDetailsScreen = () => {
               type={orderDetails.isPaid ? 'success' : 'danger'}
               message={
                 orderDetails.isPaid
-                  ? `payée le ${new Date(orderDetails.paidAt).toLocaleDateString()}`
+                  ? `payée le ${new Date(
+                      orderDetails.paidAt,
+                    ).toLocaleDateString()}`
                   : 'Non payée'
               }
             />

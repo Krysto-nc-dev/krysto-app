@@ -59,6 +59,10 @@ import PlaceOrderScreen from './screens/user/PlaceOrderScreen'
 import AdminWebsiteScreen from './screens/admin/AdminWebsiteScreen'
 import OrderDetailsScreen from './screens/user/OrderDetailsScreen'
 
+import AdminWebsiteOrdersScreen from './screens/admin/AdminWebsiteOrdersScreen'
+import AdminWebsiteUsersScreen from './screens/admin/AdminWebsiteUsersScreen'
+import AdminWebsiteProductsScreen from './screens/admin/AdminWebsiteProductsScreen'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -136,6 +140,18 @@ const router = createBrowserRouter(
           <Route
             path="/admin-administration-du-site"
             element={<AdminWebsiteScreen />}
+          />
+          <Route
+            path="/admin/website/commandes"
+            element={<AdminWebsiteOrdersScreen />}
+          />
+          <Route
+            path="/admin/website/utilisateurs"
+            element={<AdminWebsiteUsersScreen />}
+          />
+          <Route
+            path="/admin/website/produits"
+            element={<AdminWebsiteProductsScreen />}
           />
           <Route path="/admin-agenda" element={<AdminAgendaScreen />} />
           <Route path="/admin-projets" element={<AdminProjectsScreen />} />
