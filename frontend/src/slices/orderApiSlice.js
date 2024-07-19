@@ -1,5 +1,5 @@
 import { apiSlice } from './apiSlice'
-import { ORDERS_URL } from '../constants.js'
+import { ORDERS_URL, PAYPAL_URL } from '../constants.js'
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,12 +7,10 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: (order) => ({
         url: `${ORDERS_URL}`,
         method: 'POST',
-        body: { ...order },
+        body: order,
       }),
-      //   invalidatesTags: ['Order'],
-      //   refetchOnFailure: true,
-      //   refetchOnMount: true,
-      //   refetchInterval: 60 * 60 * 1000, // 1 hour
+      // Définir les tags pour invalider ou rafraîchir les données
+      invalidatesTags: [{ type: 'Order', id: 'LIST' }],
     }),
 
     getOrders: builder.query({
@@ -22,7 +20,41 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Order'],
       keepUnusedDataFor: 5,
     }),
+
+    getOrderDetails: builder.query({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}`,
+      }),
+      providesTags: (result, error, orderId) => [
+        { type: 'Order', id: orderId },
+      ],
+      keepUnusedDataFor: 5,
+    }),
+
+    payOrder: builder.mutation({
+      query: ({ orderId, details }) => ({
+        url: `${ORDERS_URL}/${orderId}/pay`,
+        method: 'PUT',
+        body: { ...details },
+      }),
+      //   // Définir les tags pour invalider ou rafraîchir les données
+      //   invalidatesTags: [{ type: 'Order', id: orderId }],
+    }),
+    getPayPalClientId: builder.query({
+      query: () => ({
+        url: `${PAYPAL_URL}`,
+      }),
+      providesTags: ['PayPalClientId'],
+      keepUnusedDataFor: 5,
+    }),
   }),
 })
 
-export const { useGetOrdersQuery, useCreateOrderMutation } = orderApiSlice
+// Export des hooks générés pour l'utilisation dans les composants
+export const {
+  useGetOrdersQuery,
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPayPalClientIdQuery,
+} = orderApiSlice

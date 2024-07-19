@@ -6,6 +6,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js' // Assurez-vous que cet export est disponible
 import { Provider } from 'react-redux'
 import store from './store'
 
@@ -48,7 +49,6 @@ import AdminPresentationsScreen from './screens/admin/AdminPresentationsScreen'
 import AdminWathMonitoringScreen from './screens/admin/AdminWathMonitoringScreen'
 import CartScreen from './screens/CartScreen'
 import RegisterScreen from './screens/RegisterScreen'
-import OrderScreen from './screens/user/OrderScreen'
 import UserLayout from './components/layout/userLayout/UserLayout'
 import ProfileScreen from './screens/user/ProfileScreen'
 import ShippingScreen from './screens/user/ShippingScreen'
@@ -57,6 +57,7 @@ import UserDashboardScreen from './screens/user/UserDashboardScreen'
 import PartnerDashboardScreen from './screens/partner/PartnerDashboardScreen'
 import PlaceOrderScreen from './screens/user/PlaceOrderScreen'
 import AdminWebsiteScreen from './screens/admin/AdminWebsiteScreen'
+import OrderDetailsScreen from './screens/user/OrderDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -159,7 +160,7 @@ const router = createBrowserRouter(
           />
           <Route path="/adresse-de-livraison" element={<ShippingScreen />} />
           <Route path="/paiment" element={<PaymentScreen />} />
-          <Route path="/commande/:id" element={<OrderScreen />} />
+          <Route path="/commande/:id" element={<OrderDetailsScreen />} />
           <Route path="/validation-commande" element={<PlaceOrderScreen />} />
           <Route path="/mon-profile" element={<ProfileScreen />} />
         </Route>
@@ -175,7 +176,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>,
 )

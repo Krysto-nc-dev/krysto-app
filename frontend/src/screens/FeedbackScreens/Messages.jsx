@@ -65,13 +65,13 @@ const Messages = ({ type, message }) => {
       style={{ animationName: `${animateIn ? 'bounceIn' : ''}`, animationDuration: '0.5s' }}
       role="alert"
     >
-      <div className={`bg-white border ${borderColor} ${textColor} px-4 py-3 rounded flex items-center justify-between ${bgColor}`}>
+      <div className={`bg-white border ${borderColor} ${textColor} my-4 px-4 py-3 rounded flex items-center justify-between ${bgColor}`}>
         <div className="flex items-center">
           <div className={`mr-3 ${iconColor}`}>
             {icon}
           </div>
           <div className="text-sm">
-            <strong className="font-bold">Alerte - </strong>
+            {/* <strong className="font-bold">Alerte - </strong> */}
             <span className="block sm:inline">{message}</span>
           </div>
         </div>
