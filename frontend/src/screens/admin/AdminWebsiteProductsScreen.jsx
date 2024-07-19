@@ -62,7 +62,9 @@ const AdminWebsiteProductsScreen = () => {
     Actions: (
       <div className="flex space-x-2">
         <Button version="primary" icon={EyeIcon} />
+        <Link to={`/admin/website/modifier-produit/${product._id}`}>
         <Button version="warning" icon={Edit} />
+        </Link>
         <Button onClick={() => deleteHandler(product._id)} version="danger" icon={Trash} />
       </div>
     ),

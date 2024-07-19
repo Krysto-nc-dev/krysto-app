@@ -63,6 +63,7 @@ import AdminWebsiteOrdersScreen from './screens/admin/AdminWebsiteOrdersScreen'
 import AdminWebsiteUsersScreen from './screens/admin/AdminWebsiteUsersScreen'
 import AdminWebsiteProductsScreen from './screens/admin/AdminWebsiteProductsScreen'
 import AdminDolibarrProductDetailsScreen from './screens/admin/AdminDolibarrProductDetailsScreen'
+import AdminWebsiteProductEditScreen from './screens/admin/AdminWebsiteProductEditScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -157,6 +158,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin/website/produits"
             element={<AdminWebsiteProductsScreen />}
+          />
+          <Route
+            path="/admin/website/modifier-produit/:id"
+            element={<AdminWebsiteProductEditScreen />}
           />
           <Route path="/admin-agenda" element={<AdminAgendaScreen />} />
           <Route path="/admin-projets" element={<AdminProjectsScreen />} />
