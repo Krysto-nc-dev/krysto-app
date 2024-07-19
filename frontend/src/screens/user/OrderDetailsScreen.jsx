@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useDeliverOrderMutation
 } from '../../slices/orderApiSlice'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import Messages from '../FeedbackScreens/Messages'
@@ -11,6 +12,7 @@ import Loader from '../FeedbackScreens/Loader'
 import { useSelector } from 'react-redux'
 import Button from '../../components/shared/Button'
 import { toast } from 'react-toastify'
+import { Loader2 } from 'lucide-react'
 
 const OrderDetailsScreen = () => {
   const { id: orderId } = useParams()
@@ -22,6 +24,7 @@ const OrderDetailsScreen = () => {
   } = useGetOrderDetailsQuery(orderId)
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation()
+  const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation()
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer()
 
   const {
@@ -91,6 +94,16 @@ const OrderDetailsScreen = () => {
       .then((orderId) => {
         return orderId
       })
+  }
+
+  const deliveredHandler = async () => {
+    try {
+      await deliverOrder({ orderId })
+      refetch()
+      toast.success('Commande livrée.')
+    } catch (err) {
+      toast.error(err?.data?.message.err.message || err.message)
+    }
   }
 
   if (loadingOrderDetails) {
@@ -217,6 +230,21 @@ const OrderDetailsScreen = () => {
             </div>
           )}
         </>
+      )}
+
+      {
+        userInfo && userInfo.isAdmin && (
+    <Link to={"/admin-administration-du-site"}>Reour a l'administration</Link>
+        )
+      }
+
+     
+      {userInfo && userInfo.isAdmin  && orderDetails.isPaid && !orderDetails.isDelivered && (
+        <div className="mt-6">
+          <Button onClick={deliveredHandler} version={'primary'}>
+          {loadingDeliver ? ( <Loader2/>) : ('Marqué comme livrée')}  
+          </Button>
+        </div>
       )}
     </div>
   )

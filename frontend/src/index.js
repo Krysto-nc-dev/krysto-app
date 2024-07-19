@@ -62,6 +62,7 @@ import OrderDetailsScreen from './screens/user/OrderDetailsScreen'
 import AdminWebsiteOrdersScreen from './screens/admin/AdminWebsiteOrdersScreen'
 import AdminWebsiteUsersScreen from './screens/admin/AdminWebsiteUsersScreen'
 import AdminWebsiteProductsScreen from './screens/admin/AdminWebsiteProductsScreen'
+import AdminDolibarrProductDetailsScreen from './screens/admin/AdminDolibarrProductDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -100,6 +101,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-dollibarr-products"
             element={<AdminDoliProductsScreen />}
+          />
+          <Route
+            path="admin-dollibarr-products-details/:id"
+            element={<AdminDolibarrProductDetailsScreen />}
           />
           <Route path="/admin-entrepots" element={<AdminWarehousesScreen />} />
           <Route
