@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       min: 1,
       max: 5,
-      default: 0,
+      default: 1,
       required: true,
     },
     numReviews: {

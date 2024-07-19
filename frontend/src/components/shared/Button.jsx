@@ -1,5 +1,5 @@
 const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = false, onClick }) => {
-    const baseStyle = 'flex items-center justify-center px-8 py-2 font-semibold rounded-lg shadow-md focus:outline-none transition duration-300';
+    const baseStyle = 'flex items-center gap-2 justify-center px-5 py-2 font-semibold rounded-lg shadow-md focus:outline-none transition duration-300';
     
     let versionStyle;
     if (version === 'primary') {
@@ -8,7 +8,10 @@ const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = f
       versionStyle = 'bg-secondaryColor hover:bg-primaryColor focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
     } 
     else if (version === 'danger') {
-      versionStyle = 'bg-dangerColor hover:bg-red-400 focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
+      versionStyle = 'bg-dangerColor hover:bg-red-600 focus:ring-2 focus:ring-secondaryColor focus:ring-opacity-50';
+    } 
+    else if (version === 'warning') {
+      versionStyle = 'bg-warningColor hover:bg-orange-400 focus:ring-2 focus:ring-warningColor focus:ring-opacity-50';
     } 
     
     else {
@@ -24,7 +27,7 @@ const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = f
         onClick={onClick}
         className={`${baseStyle} ${versionStyle} ${disabledStyle}`}
       >
-        {Icon && <Icon className="w-5 h-5 mr-2" />}
+        {Icon && <Icon className="w-5 h-5" />}
         {children}
       </button>
     );
