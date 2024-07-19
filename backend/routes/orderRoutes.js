@@ -22,7 +22,7 @@ router.route('/').post(protect, addOrderItems)
 router.route('/').get(protect, admin, getOrders)
 
 // Route pour récupérer une commande par son ID
-router.route('/:id').get(protect, admin, getOrderById)
+router.route('/:id').get(protect, getOrderById)
 
 // Route pour mettre à jour le statut de paiement d'une commande
 router.route('/:id/pay').put(protect, updateOrderToPaid)

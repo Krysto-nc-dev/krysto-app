@@ -111,7 +111,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
   if (user) {
     user.name = req.body.name || user.name
+    user.lastname = req.body.lastname || user.lastname // Ajout de la mise à jour du champ lastname
     user.email = req.body.email || user.email
+
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -120,7 +122,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,
-      lastname: updatedUser.lastname,
+      lastname: updatedUser.lastname, // Ajout du champ lastname dans la réponse
       role: updatedUser.role,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,

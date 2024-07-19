@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../components/shared/Button'
-import { Info, Loader } from 'lucide-react'
+import { Check, CheckCheck, Info, Loader, X } from 'lucide-react'
 import { useProfileMutation } from '../../slices/userApiSlice'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../../slices/authSlice'
+import { useGetMyOrdersQuery } from '../../slices/orderApiSlice'
+import Card from '../../components/shared/Card'
+import Messages from '../FeedbackScreens/Messages'
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [lastname, setLastname] = useState('')
@@ -15,18 +18,18 @@ const ProfileScreen = () => {
   const dispatch = useDispatch()
 
   const {userInfo} = useSelector((state) => state.auth)
-
-
-
+  
+  
   useEffect(() => {
-    if(userInfo) {
-        setName(userInfo.name)
-        setLastname(userInfo.lastname)
-        setEmail(userInfo.email)
-    }
-  }, [userInfo , userInfo.name, userInfo.lastname, userInfo.email])
-
-  const [updateProfile , {isLoading:loadingUpdateProfile}] = useProfileMutation()
+      if(userInfo) {
+          setName(userInfo.name)
+          setLastname(userInfo.lastname)
+          setEmail(userInfo.email)
+        }
+    }, [userInfo , userInfo.name, userInfo.lastname, userInfo.email])
+    
+    const [updateProfile , {isLoading:loadingUpdateProfile}] = useProfileMutation()
+    const {data:orders, isLoading: ordersLoading , error:ordersError} = useGetMyOrdersQuery()
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -83,6 +86,34 @@ const ProfileScreen = () => {
       </div>
       
     </form>
+  </div>
+
+  <div>
+    <h2 className="text-gray-700 text-2xl mb-6">Mes commandes</h2>
+    {ordersLoading? <Loader/> : ordersError? <p>{ordersError.message}</p> : orders?.length? orders.map(order => (
+      <Card url={`/commande/${order._id}`} variant={'dark'} key={order._id} className="border-b p-4 mb-4">
+        <p>Commande n°{order._id}</p>
+        <p>Date : {new Date(order.createdAt).toLocaleDateString()}</p>
+        <p>Montant total : {order.totalPrice} XPF</p>
+        {order.isPaid ? (
+            <>
+           
+            <p className='flex items-center gap-2'>  <CheckCheck className='text-green-400'/>  Payé le {new Date (order.paidAt).toLocaleDateString()}</p>
+            </>
+        ) : (
+            <X className='text-red-400'/>
+        )}
+        {order.isDeliverd ? (
+            <>
+           
+            <p className='flex items-center gap-2'>  <CheckCheck className='text-green-400'/>  Délivrer le {new Date (order.deliveredAt).toLocaleDateString()}</p>
+            </>
+        ) : (
+            <p className='flex items-center gap-2'>   <X className='text-red-400'/>  Non livrée</p>
+           
+        )}
+      </Card>
+    )) : <Messages message={"Vous n'avez pas encore passé de commande."}/>}
   </div>
   </>
   

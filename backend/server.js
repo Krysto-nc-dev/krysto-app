@@ -30,6 +30,14 @@ app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/orders', orderRoutes)
 
+// faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??
+app.get('/api/v1/config/paypal', (req, res) => {
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+})
+app.get('/api/v1/config/dolibarr', (req, res) => {
+  res.send({ DOLAPIKEY: process.env.DOLAPIKEY })
+})
+
 const __dirname = path.resolve()
 
 // Middleware de Multer pour téléverser des fichiers dans le répertoire 'uploads'
