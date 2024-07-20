@@ -60,6 +60,7 @@ const AdminPlasticsScreen = () => {
   return (
     <>
     <div className='flex items-center justify-between mb-8'>
+      
 
       <h1 className="text-gray-800 text-2xl ">Types de Plastique</h1>
       <Button

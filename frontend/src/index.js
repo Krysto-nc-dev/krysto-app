@@ -72,6 +72,9 @@ import ArticleDetailsScreen from './screens/ArticleDetailsScreen'
 import AdminPlasticTypeEditScreen from './screens/admin/AdminPlasticTypeEditScreen'
 import AdminPlasticDetailsScreen from './screens/admin/AdminPlasticDetailsScreen'
 import AdminPlasticColorsScreen from './screens/admin/AdminPlasticColorsScreen'
+import AdminPlasticColorDetailsScreen from './screens/admin/AdminPlasticColorDetailsScreen'
+import AdminPlasticColorEditScreen from './screens/admin/AdminPlasticColorEditScreen'
+import AdminColorCalculatorScreen from './screens/admin/AdminColorCalculatorScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -145,8 +148,20 @@ const router = createBrowserRouter(
             element={<AdminPlasticDetailsScreen />}
           />
           <Route
+            path="/admin-color-calculator"
+            element={<AdminColorCalculatorScreen />}
+          />
+          <Route
             path="/admin-plastique-colors"
             element={<AdminPlasticColorsScreen />}
+          />
+          <Route
+            path="/admin-plastique-couleurs-details/:id"
+            element={<AdminPlasticColorDetailsScreen />}
+          />
+          <Route
+            path="/admin-plastique-couleurs-edit/:id"
+            element={<AdminPlasticColorEditScreen />}
           />
           <Route
             path="/admin-campagnes-collecte"
