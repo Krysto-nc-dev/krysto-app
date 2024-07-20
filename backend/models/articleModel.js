@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// Schéma des avis (reviews)
 const reviewsSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -11,6 +12,22 @@ const reviewsSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
+// Schéma des paragraphes
+const paragraphSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    content: {
+      type: String,
+      required: true,
+      minlength: 10,
+      maxlength: 500,
+      trim: true,
+    },
+  },
+  { _id: false }, // Évite la création d'un ID pour chaque paragraphe
+)
+
+// Schéma des articles
 const articleSchema = new mongoose.Schema(
   {
     author: {
@@ -27,18 +44,10 @@ const articleSchema = new mongoose.Schema(
     ],
     title: { type: String, required: true },
     subtitle: { type: String, required: true },
-    paragraphs: [
-      {
-        type: String,
-        minlength: 10,
-        maxlength: 500,
-        trim: true,
-      },
-    ],
+    paragraphs: [paragraphSchema], // Utilisation du schéma des paragraphes
     reviews: [reviewsSchema],
     rating: {
       type: Number,
-
       default: 0,
       required: true,
     },
