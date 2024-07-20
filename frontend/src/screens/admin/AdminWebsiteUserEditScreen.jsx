@@ -14,6 +14,7 @@ const AdminWebsiteUserEditScreen = () => {
   const [lastname, setLastName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [role, setRole] = useState('')
+  const [email, setEmail] = useState('')
 
   const {
     data: user,
@@ -37,6 +38,7 @@ const AdminWebsiteUserEditScreen = () => {
       setLastName(user.lastname || '')
       setIsAdmin(user.isAdmin || false)
       setRole(user.role || '')
+      setEmail(user.email || '')
     }
   }, [user])
 
@@ -49,6 +51,7 @@ const AdminWebsiteUserEditScreen = () => {
       lastname,
       isAdmin,
       role,
+      email,
     }
 
     try {
@@ -82,7 +85,7 @@ const AdminWebsiteUserEditScreen = () => {
       <form onSubmit={submitHandler}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Nom
+            Prènom
           </label>
           <input
             type="text"
@@ -93,13 +96,24 @@ const AdminWebsiteUserEditScreen = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Prénom
+           Nom
           </label>
           <input
             type="text"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+           Email
+          </label>
+          <input
+            type="email"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-4">
