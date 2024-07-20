@@ -1,5 +1,5 @@
 const Button = ({ children, icon: Icon, version, type = 'button', isDisabled = false, onClick }) => {
-    const baseStyle = 'flex items-center gap-2 justify-center px-5 py-2 font-semibold rounded-lg shadow-md focus:outline-none transition duration-300';
+    const baseStyle = 'flex items-center gap-2 justify-center text-xs px-5 py-2 font-semibold rounded-lg shadow-md focus:outline-none transition duration-300';
     
     let versionStyle;
     if (version === 'primary') {
