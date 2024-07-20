@@ -70,6 +70,8 @@ import AdminWebsiteArticleEditScreen from './screens/admin/AdminWebsiteArticleEd
 import ArticleDetailsScreen from './screens/ArticleDetailsScreen'
 
 import AdminPlasticTypeEditScreen from './screens/admin/AdminPlasticTypeEditScreen'
+import AdminPlasticDetailsScreen from './screens/admin/AdminPlasticDetailsScreen'
+import AdminPlasticColorsScreen from './screens/admin/AdminPlasticColorsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -137,6 +139,14 @@ const router = createBrowserRouter(
           <Route
             path="/admin/plastic-type-modifier/:id"
             element={<AdminPlasticTypeEditScreen />}
+          />
+          <Route
+            path="/admin/plastic-type-details/:id"
+            element={<AdminPlasticDetailsScreen />}
+          />
+          <Route
+            path="/admin-plastique-colors"
+            element={<AdminPlasticColorsScreen />}
           />
           <Route
             path="/admin-campagnes-collecte"

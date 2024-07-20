@@ -1,7 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BASE_URL, DOLIBAR_URL } from '../constants'
 
-const tagTypes = ['Product', 'User', 'Order', 'Article', 'PlasticType']
+const tagTypes = [
+  'Product',
+  'User',
+  'Order',
+  'Article',
+  'PlasticType',
+  'PlasticColor',
+]
 
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL })
 const doliBaseQuery = fetchBaseQuery({ baseUrl: DOLIBAR_URL })

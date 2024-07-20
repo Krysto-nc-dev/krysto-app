@@ -105,7 +105,7 @@ const AdminPlasticsScreen = () => {
                   <strong>Densité:</strong> {plastic.density}
                 </p>
               </div>
-              <div className="mb-4 flex justify-center items-center gap-5">
+              <div className="mb-4 mt-4 flex justify-center items-center gap-5">
                 <Button
                 version={"primary"}
                   url={`/admin/plastic-type-details/${plastic._id}`}
