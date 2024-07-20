@@ -44,11 +44,30 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    deleteProduct: builder.mutation({
+    deleteProject: builder.mutation({
       query: (projectId) => ({
         url: `${PROJECTS_URL}/${projectId}`,
         method: 'DELETE',
       }),
+    }),
+    addProjectStage: builder.mutation({
+      query: (data) => {
+        const { projectId, stage } = data // Déstructuration à l'intérieur de la fonction query
+        return {
+          url: `${PROJECTS_URL}/${projectId}/stages`,
+          method: 'POST',
+          body: stage,
+        }
+      },
+      invalidatesTags: ['Project'],
+    }),
+    updateProjectStage: builder.mutation({
+      query: ({ projectId, stageId, updatedStage }) => ({
+        url: `${PROJECTS_URL}/${projectId}/stages/${stageId}`,
+        method: 'PUT',
+        body: updatedStage,
+      }),
+      invalidatesTags: ['Project'],
     }),
   }),
 })
@@ -61,5 +80,8 @@ export const {
   useUpdateProjectMutation,
   useUploadProjectDocumentsMutation,
   useDeleteProjectMutation,
+  useAddProjectStageMutation,
+  useUpdateProjectStageMutation,
+
   useCreateProjectReviewMutation,
 } = projectsApiSlice

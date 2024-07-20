@@ -1,14 +1,53 @@
 import React from 'react'
-import { useGetProjectsQuery } from '../../slices/projectApiSlice'
-import { Link } from 'react-router-dom'
+import { useCreateProjectMutation, useDeleteProjectMutation, useGetProjectsQuery } from '../../slices/projectApiSlice'
 import Button from '../../components/shared/Button'
-import { Edit, EyeIcon } from 'lucide-react'
+import { Edit, EyeIcon, Loader2, PlusCircle, Trash } from 'lucide-react'
+import Loader from '../FeedbackScreens/Loader'
+import { toast } from 'react-toastify'
 
 const AdminProjectsScreen = () => {
-  const { data: projects, error: errorProjects, isLoading: projectsLoading } = useGetProjectsQuery()
+  const { data: projects, error: errorProjects, isLoading: projectsLoading, refetch } = useGetProjectsQuery()
+
+  const [
+    createProject,
+    { isLoading: loadingCreate },
+  ] = useCreateProjectMutation()
+
+  const [
+    deleteProject,
+    { isLoading: deleteProjectLoading },
+  ] = useDeleteProjectMutation()
+
+  
+  const createProjectHandler = async () => {
+    if (window.confirm('Voulez-vous créer un projet ?')) {
+      try {
+        await createProject()
+        refetch()
+        toast.success('Type de plastique créé avec succès')
+      } catch (err) {
+        toast.error('Erreur lors de la création du type de plastique')
+      }
+    }
+  }
+
+  const deleteHandler = async (id) => {
+    if (window.confirm('Etes-vous sur de vouloir supprimer ce projet ?')) {
+      try {
+        await deleteProject(id).unwrap()
+        toast.success('projet supprimé avec succès!')
+        refetch()
+      } catch (err) {
+        toast.error('Erreur lors de la suppression du projet')
+      }
+    }
+  }
+
+  if (deleteProjectLoading) return <Loader />
+
 
   if (projectsLoading) {
-    return <p>Chargement des projets...</p>
+    return <Loader/>
   }
 
   if (errorProjects) {
@@ -17,7 +56,17 @@ const AdminProjectsScreen = () => {
 
   return (
     <div className='text-gray-800'>
-      <h1 className='text-2xl mb-4'>Projets</h1>
+      <div className="flex items-center justify-between mb-6">
+
+      <h1 className='text-2xl'>Projets</h1>
+      <Button
+        onClick={createProjectHandler}
+        icon={PlusCircle}
+        version="success"
+        >
+        {loadingCreate ? <Loader2 /> : 'Ajouter'}
+      </Button>
+          </div>
       <table className='min-w-full divide-y divide-gray-200'>
         <thead>
           <tr className='bg-primaryColor'>
@@ -39,8 +88,9 @@ const AdminProjectsScreen = () => {
               <td className='px-6 py-4 whitespace-nowrap'>{new Date(project.endDate).toLocaleDateString()}</td>
               <td className='px-6 py-4 whitespace-nowrap flex gap-2 items-center'>
                 
-                <Button url={`/admin/project-details/${project._id}`} version={"primary"} icon={EyeIcon}/>
-                <Button url={`/admin/project/edit/${project._id}`} version={"warning"} icon={Edit}/>
+                <Button url={`/admin-projet-details/${project._id}`} version={"primary"} icon={EyeIcon}/>
+                <Button url={`/admin-projet/edit/${project._id}`} version={"warning"} icon={Edit}/>
+                <Button onClick={() => deleteHandler(project._id)} version={"danger"} icon={Trash}/>
                 
               </td>
             </tr>

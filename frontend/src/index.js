@@ -77,6 +77,8 @@ import AdminPlasticColorEditScreen from './screens/admin/AdminPlasticColorEditSc
 import AdminColorCalculatorScreen from './screens/admin/AdminColorCalculatorScreen'
 import AdminRecyclableProductEditScreen from './screens/admin/AdminRecyclableProductEditScreen'
 import AdminRecyclableProductDetailsScreen from './screens/admin/AdminRecyclableProductDetailsScreen'
+import AdminProjectEditScreen from './screens/admin/AdminProjectEditScreen'
+import AdminProjectDetailsScreen from './screens/admin/AdminProjectDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -223,6 +225,14 @@ const router = createBrowserRouter(
           />
           <Route path="/admin-agenda" element={<AdminAgendaScreen />} />
           <Route path="/admin-projets" element={<AdminProjectsScreen />} />
+          <Route
+            path="/admin-projet-details/:id"
+            element={<AdminProjectDetailsScreen />}
+          />
+          <Route
+            path="/admin-projet/edit/:id"
+            element={<AdminProjectEditScreen />}
+          />
           <Route
             path="/admin-presentations"
             element={<AdminPresentationsScreen />}

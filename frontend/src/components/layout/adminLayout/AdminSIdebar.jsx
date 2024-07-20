@@ -13,15 +13,15 @@ const AdminSidebar = () => {
   };
 
   return (
-    <aside className={`bg-primaryColor p-3 py-11 text-gray-800 h-full absolute top-0 left-0 transition-all duration-300 ease-in-out z-50 ${isSidebarOpen ? 'w-55' : 'w-15'}`}>
+    <aside className={`bg-primaryColor p-3  text-gray-800 h-full absolute top-0 left-0 transition-all duration-300 ease-in-out z-50 ${isSidebarOpen ? 'w-55' : 'w-15'}`}>
     
-      <div className="flex items-center justify-between gap-2 px-1 ">
+      <div className="flex items-center justify-between   ">
         {/* Menu icon to toggle sidebar */}
         <button onClick={toggleSidebar} className="text-secondaryColor focus:outline-none">
           {isSidebarOpen ? (
             <X className="text-red-600" size="25" />
           ) : (
-            <AlignJustify size="22" />
+            <AlignJustify className='text-gray-700 ml-[1px]' size="25" />
           )}
         </button>
         
