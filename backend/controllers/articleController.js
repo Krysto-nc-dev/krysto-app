@@ -20,7 +20,7 @@ const createArticle = asyncHandler(async (req, res) => {
     title: 'Sample title',
     subtitle: 'Sample subtitle',
   })
-  const createdArticle = await Article.save()
+  const createdArticle = await article.save()
   res.status(201).json(createdArticle)
 })
 // @desc UPDATE article
@@ -98,7 +98,7 @@ const createArticleReview = asyncHandler(async (req, res) => {
       article.reviews.reduce((acc, review) => acc + review.rating, 0) /
       article.reviews.length
 
-    await Article.save()
+    await article.save()
     res.status(201).json({ message: 'Votre avis a été ajouté.', article })
   } else {
     res.status(404)
