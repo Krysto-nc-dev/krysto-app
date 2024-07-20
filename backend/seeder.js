@@ -6,10 +6,12 @@ import products from './_data/products.js'
 import plasticTypes from './_data/plastic_types.js'
 import plasticColors from './_data/plastic_colors.js'
 import recyclableProducts from './_data/recyclable_products.js'
+import projects from './_data/projects.js'
 
 // Import des models
 import Order from './models/orderModel.js'
 import RecyclableProduct from './models/recyclableProductModel.js' // Correction ici
+import Project from './models/ProjectModel.js' // Correction ici
 import Product from './models/productModel.js'
 import PlasticTypes from './models/plasticTypeModel.js'
 import PlasticColors from './models/plasticColorModel.js'
@@ -27,7 +29,7 @@ const importData = async () => {
     // await User.deleteMany()
 
     // await PlasticTypes.deleteMany()
-    await RecyclableProduct.deleteMany()
+    await Project.deleteMany()
     // const createdUsers = await User.insertMany(users)
     // const adminUser = createdUsers[0]._id
     // const sampleProducts = products.map((product) => ({
@@ -36,7 +38,7 @@ const importData = async () => {
     // }))
     // await Product.insertMany(sampleProducts)
     // await PlasticTypes.insertMany(plasticTypes)
-    await RecyclableProduct.insertMany(recyclableProducts)
+    await Project.insertMany(projects)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {
