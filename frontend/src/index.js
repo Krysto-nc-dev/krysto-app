@@ -75,6 +75,8 @@ import AdminPlasticColorsScreen from './screens/admin/AdminPlasticColorsScreen'
 import AdminPlasticColorDetailsScreen from './screens/admin/AdminPlasticColorDetailsScreen'
 import AdminPlasticColorEditScreen from './screens/admin/AdminPlasticColorEditScreen'
 import AdminColorCalculatorScreen from './screens/admin/AdminColorCalculatorScreen'
+import AdminRecyclableProductEditScreen from './screens/admin/AdminRecyclableProductEditScreen'
+import AdminRecyclableProductDetailsScreen from './screens/admin/AdminRecyclableProductDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -162,6 +164,14 @@ const router = createBrowserRouter(
           <Route
             path="/admin-plastique-couleurs-edit/:id"
             element={<AdminPlasticColorEditScreen />}
+          />
+          <Route
+            path="/admin/recyclable-product-details/:id"
+            element={<AdminRecyclableProductDetailsScreen />}
+          />
+          <Route
+            path="/admin/recyclable-product-edit/:id"
+            element={<AdminRecyclableProductEditScreen />}
           />
           <Route
             path="/admin-campagnes-collecte"

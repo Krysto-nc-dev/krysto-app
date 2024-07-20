@@ -8,6 +8,7 @@ const tagTypes = [
   'Article',
   'PlasticType',
   'PlasticColor',
+  'RecyclableProduct',
 ]
 
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL })

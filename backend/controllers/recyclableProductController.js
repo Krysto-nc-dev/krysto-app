@@ -6,8 +6,8 @@ import RecyclableProduct from '../models/recyclableProductModel.js'
 // @access Public
 const getRecyclableProducts = asyncHandler(async (req, res) => {
   const recyclableProducts = await RecyclableProduct.find({})
-    .populate('colors', 'name')
-    .populate('plastic_types', 'type')
+  // .populate('colors', 'name')
+  // .populate('plastic_types', 'type')
   res.status(200).json(recyclableProducts)
 })
 
@@ -16,8 +16,8 @@ const getRecyclableProducts = asyncHandler(async (req, res) => {
 // @access Public
 const getRecyclableProductById = asyncHandler(async (req, res) => {
   const recyclableProduct = await RecyclableProduct.findById(req.params.id)
-    .populate('colors', 'name')
-    .populate('plastic_types', 'type')
+  // .populate('colors', 'name')
+  // .populate('plastic_types', 'type')
   if (recyclableProduct) {
     res.status(200).json(recyclableProduct)
   } else {
