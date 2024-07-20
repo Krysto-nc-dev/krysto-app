@@ -5,9 +5,11 @@ import users from './_data/users.js'
 import products from './_data/products.js'
 import plasticTypes from './_data/plastic_types.js'
 import plasticColors from './_data/plastic_colors.js'
+import recyclableProducts from './_data/recyclable_products.js'
 
-// import des models
+// Import des models
 import Order from './models/orderModel.js'
+import RecyclableProduct from './models/recyclableProductModel.js' // Correction ici
 import Product from './models/productModel.js'
 import PlasticTypes from './models/plasticTypeModel.js'
 import PlasticColors from './models/plasticColorModel.js'
@@ -19,22 +21,22 @@ dotenv.config()
 connectDB()
 
 const importData = async () => {
-  await Order.deleteMany()
-  // await Product.deleteMany()
-  // await User.deleteMany()
-
-  // await PlasticTypes.deleteMany()
-  await PlasticColors.deleteMany()
-  // const createdUsers = await User.insertMany(users)
-  // const adminUser = createdUsers[0]._id
-  // const sampleProducts = products.map((product) => ({
-  //   ...product,
-  //   user: adminUser,
-  // }))
-  // await Product.insertMany(sampleProducts)
-  // await PlasticTypes.insertMany(plasticTypes)
-  await PlasticColors.insertMany(plasticColors)
   try {
+    await Order.deleteMany()
+    // await Product.deleteMany()
+    // await User.deleteMany()
+
+    // await PlasticTypes.deleteMany()
+    await RecyclableProduct.deleteMany()
+    // const createdUsers = await User.insertMany(users)
+    // const adminUser = createdUsers[0]._id
+    // const sampleProducts = products.map((product) => ({
+    //   ...product,
+    //   user: adminUser,
+    // }))
+    // await Product.insertMany(sampleProducts)
+    // await PlasticTypes.insertMany(plasticTypes)
+    await RecyclableProduct.insertMany(recyclableProducts)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {
