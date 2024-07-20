@@ -19,7 +19,12 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
     category: { type: String, required: true },
-    image: { type: String, required: true },
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     title: { type: String, required: true },
     subtitle: { type: String, required: true },
     paragraphs: [
