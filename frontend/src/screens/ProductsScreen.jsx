@@ -26,7 +26,7 @@ const ProductsScreen = () => {
         {products && products.map((product) => (
 
 
-          <Card key={product.id} product={product} image={product.image} url={`/produit/${product._id}`} >
+          <Card key={product.id} product={product} image={product.images[0]} url={`/produit/${product._id}`} >
             <h2>{product.name}</h2>
              <p className=' min-h-44'>
               

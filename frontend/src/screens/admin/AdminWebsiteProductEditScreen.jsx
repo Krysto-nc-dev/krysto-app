@@ -25,6 +25,7 @@ const AdminWebsiteProductEditScreen = () => {
     data: product,
     error: productError,
     isLoading: productLoading,
+    refetch
   } = useGetProductDetailsQuery(productId)
 
   console.log(product)
@@ -70,6 +71,7 @@ const AdminWebsiteProductEditScreen = () => {
     try {
       await updateProduct(updatedProduct).unwrap()
       toast.success('Produit mis à jour avec succès!')
+      refetch()
       navigate('/admin/website/produits')
     } catch (err) {
       console.error('Erreur lors de la mise à jour du produit:', err)
@@ -77,25 +79,7 @@ const AdminWebsiteProductEditScreen = () => {
     }
   }
 
-  // const uploadFileHandler = async (e) => {
-  //   e.preventDefault()
-  //   const files = Array.from(e.target.files)
-  //   const formData = new FormData()
 
-  //   files.forEach((file) => formData.append('images', file)) // Ajouter plusieurs fichiers
-
-  //   try {
-  //     const res = await uploadProductImage(formData).unwrap()
-  //     console.log("Réponse de l'upload:", res) // Ajoutez ce log pour inspecter la réponse
-  //     setImagesArray((prevImages) => [...prevImages, ...res.images]) // Ajouter les nouvelles images
-  //     toast.success('Images téléchargées avec succès!')
-  //   } catch (err) {
-  //     toast.error(
-  //       'Erreur lors du téléchargement des images',
-  //       err?.data?.message || err.error,
-  //     )
-  //   }
-  // }
   const uploadFileHandler = async (e) => {
     const formData = new FormData()
     formData.append('images', e.target.files[0])
