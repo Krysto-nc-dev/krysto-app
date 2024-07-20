@@ -85,7 +85,7 @@ const AdminWebsiteUserEditScreen = () => {
       <form onSubmit={submitHandler}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Prènom
+            Prénom
           </label>
           <input
             type="text"
@@ -131,12 +131,15 @@ const AdminWebsiteUserEditScreen = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Rôle
           </label>
-          <input
-            type="text"
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-          />
+          >
+            <option value="">Sélectionner un rôle</option>
+            <option value="User">Utilisateur</option>
+            <option value="Partner">Partenaire</option>
+          </select>
         </div>
         
         <Button type="submit" icon={Send}>
