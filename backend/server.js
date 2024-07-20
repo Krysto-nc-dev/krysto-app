@@ -10,6 +10,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import articleRoutes from './routes/articleRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 
 const port = process.env.PORT || 5000
@@ -30,6 +31,7 @@ app.use(cookieParser())
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/orders', orderRoutes)
+app.use('/api/v1/articles', articleRoutes)
 app.use('/api/v1/upload', uploadRoutes)
 
 // faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??

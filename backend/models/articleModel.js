@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const reviewsShema = new mongoose.Schema(
+const reviewsSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
@@ -30,13 +30,12 @@ const articleSchema = new mongoose.Schema(
     paragraphs: [
       {
         type: String,
-        required: true,
         minlength: 10,
         maxlength: 500,
         trim: true,
       },
     ],
-    reviews: [reviewsShema],
+    reviews: [reviewsSchema],
     rating: {
       type: Number,
       min: 1,
@@ -52,6 +51,21 @@ const articleSchema = new mongoose.Schema(
   },
   { timestamps: true },
 )
+
+// Middleware pour mettre à jour la note moyenne et le nombre d'avis
+articleSchema.pre('save', function (next) {
+  if (this.isModified('reviews')) {
+    // Calculez la nouvelle moyenne des évaluations
+    const numReviews = this.reviews.length
+    const totalRating = this.reviews.reduce(
+      (acc, review) => acc + review.rating,
+      0,
+    )
+    this.rating = numReviews > 0 ? totalRating / numReviews : 0
+    this.numReviews = numReviews
+  }
+  next()
+})
 
 const Article = mongoose.model('Article', articleSchema)
 
