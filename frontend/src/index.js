@@ -69,6 +69,8 @@ import AdminWebsiteUserEditScreen from './screens/admin/AdminWebsiteUserEditScre
 import AdminWebsiteArticleEditScreen from './screens/admin/AdminWebsiteArticleEditScreen'
 import ArticleDetailsScreen from './screens/ArticleDetailsScreen'
 
+import AdminPlasticTypeEditScreen from './screens/admin/AdminPlasticTypeEditScreen'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -131,7 +133,11 @@ const router = createBrowserRouter(
             path="/admin-equipements"
             element={<AdminEquipmentsScreen />}
           />
-          <Route path="/admin-plastiques" element={<AdminPlasticsScreen />} /> "
+          <Route path="/admin-plastiques" element={<AdminPlasticsScreen />} />
+          <Route
+            path="/admin/plastic-type-modifier/:id"
+            element={<AdminPlasticTypeEditScreen />}
+          />
           <Route
             path="/admin-campagnes-collecte"
             element={<AdminCollectCampagnesScreen />}

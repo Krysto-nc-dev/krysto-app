@@ -68,8 +68,9 @@ const storage = multer.diskStorage({
 })
 
 function fileFilter(req, file, cb) {
-  const filetypes = /jpe?g|png|webp/
-  const mimetypes = /image\/jpe?g|image\/png|image\/webp/
+  // Ajouter SVG aux types de fichiers acceptés
+  const filetypes = /jpe?g|png|webp|svg/
+  const mimetypes = /image\/jpe?g|image\/png|image\/webp|image\/svg\+xml/
 
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
   const mimetype = mimetypes.test(file.mimetype)

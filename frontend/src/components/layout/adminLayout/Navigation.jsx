@@ -1,4 +1,4 @@
-import { LayoutDashboard, Box, Users, Calendar, CreditCard,  DollarSign,  Warehouse, FilePen,  CookingPot, Factory, Eye, RecycleIcon, Truck, Milk, Palette, Projector,  Star, Receipt, Mail, ScanBarcode, FolderKanbanIcon, WebhookIcon, MonitorCogIcon } from 'lucide-react';
+import { LayoutDashboard, Box, Users, Calendar, CreditCard,  DollarSign,  Warehouse, FilePen,  CookingPot, Factory, Eye, RecycleIcon, Truck, Milk, Palette, Projector,  Star, Receipt, Mail, ScanBarcode, FolderKanbanIcon, WebhookIcon, MonitorCogIcon, Brush, PaletteIcon } from 'lucide-react';
 
 export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
   {
@@ -75,6 +75,18 @@ export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
     label: 'plastiques',
     icon: <Milk />,
     href: '/admin-plastiques',
+  },
+  {
+    key:'plasticColors',
+    label: 'couleurs plastique',
+    icon: <Brush/>,
+    href: '/admin-plastique-colors',
+  },
+  {
+    key:'colorMix',
+    label: 'couleurs plastique',
+    icon: <PaletteIcon/>,
+    href: '/admin-color-calculator',
   },
   {
     key:'recyclableProducts',

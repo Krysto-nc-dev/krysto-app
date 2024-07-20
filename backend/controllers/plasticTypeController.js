@@ -5,13 +5,13 @@ import PlasticType from '../models/plasticTypeModel.js'
 // @route   GET /api/plasticTypes
 // @access  Public
 const getPlasticTypes = asyncHandler(async (req, res) => {
-  const plasticTypes = await PlasticType.find()
+  const plasticTypes = await PlasticType.find({})
   res.status(200).json(plasticTypes)
 })
 
 // @desc    Create a new plastic type
 // @route   POST /api/plasticTypes
-// @access  Public
+// @access  Private/Admin
 const createPlasticType = asyncHandler(async (req, res) => {
   const {
     sigleFr,
@@ -32,21 +32,26 @@ const createPlasticType = asyncHandler(async (req, res) => {
   } = req.body
 
   const plasticType = new PlasticType({
-    sigleFr,
-    sigleEn,
-    scientificNameFr,
-    scientificNameEn,
-    description,
-    images,
-    flotability,
-    injectionTemperature,
-    density,
-    meltingPoint,
-    heatResistance,
-    chemicalResistance,
-    rigidity,
-    toxicity,
-    environmentalImpact,
+    sigleFr: 'sample sigle fr',
+    sigleEn: 'sample sigle en',
+    scientificNameFr: 'sample scientific name fr',
+    scientificNameEn: 'sample scientific name en',
+    description: 'sample description',
+    images: ['/uploads/no-photo.png'],
+    flotability: {
+      alcohol: false,
+      vegetableOil: false,
+      water: false,
+      glycerine: false,
+    },
+    injectionTemperature: 'sample injection temperature',
+    density: '0',
+    meltingPoint: '0',
+    heatResistance: 'sample',
+    chemicalResistance: 'sample ressistance',
+    rigidity: 'sample rigidity',
+    toxicity: 'sample toxification',
+    environmentalImpact: 'sample impact',
   })
 
   const createdPlasticType = await plasticType.save()
@@ -63,13 +68,13 @@ const getPlasticTypeById = asyncHandler(async (req, res) => {
     res.status(200).json(plasticType)
   } else {
     res.status(404)
-    throw new Error('Plastic type not found')
+    throw new Error('Type de plastique non trouvé.')
   }
 })
 
 // @desc    Update plastic type
 // @route   PUT /api/plasticTypes/:id
-// @access  Public
+// @access  Private/Admin
 const updatePlasticType = asyncHandler(async (req, res) => {
   const {
     sigleFr,
@@ -117,22 +122,22 @@ const updatePlasticType = asyncHandler(async (req, res) => {
     res.status(200).json(updatedPlasticType)
   } else {
     res.status(404)
-    throw new Error('Plastic type not found')
+    throw new Error('Type de plastique non trouvé.')
   }
 })
 
 // @desc    Delete plastic type
 // @route   DELETE /api/plasticTypes/:id
-// @access  Public
+// @access  Private/Admin
 const deletePlasticType = asyncHandler(async (req, res) => {
   const plasticType = await PlasticType.findById(req.params.id)
 
   if (plasticType) {
     await plasticType.deleteOne()
-    res.status(200).json({ message: 'Plastic type removed' })
+    res.status(200).json({ message: 'Type de plastique supprimé avec succès.' })
   } else {
     res.status(404)
-    throw new Error('Plastic type not found')
+    throw new Error('Type de plastique non trouvé.')
   }
 })
 
