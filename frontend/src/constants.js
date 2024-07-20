@@ -7,10 +7,11 @@ export const PRODUCTS_URL = `/api/v1/products`
 export const ORDERS_URL = `/api/v1/orders`
 export const ARTICLES_URL = `/api/v1/articles`
 export const PAYPAL_URL = `/api/v1/config/paypal`
-export const UPLOAD_URL = `/api/v1/upload`
 export const PLASTIC_TYPES_URL = `/api/v1/plastic-types`
 export const PLASTIC_COLORS_URL = `/api/v1/plastic-colors`
 export const RECYCLABLE_PRODUCTS_URL = `/api/v1/recyclable-products`
+export const PROJECTS_URL = `/api/v1/projects`
+export const UPLOAD_URL = `/api/v1/upload`
 
 export const DOLIBAR_URL = 'https://crm.krysto.nc/api/index.php'
 export const DOLIBARR_API_KEY = 'IQhnZ7jq08asIF2RZVkxRJ03a918T5um'
