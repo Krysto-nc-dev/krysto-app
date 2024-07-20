@@ -37,7 +37,7 @@ const AdminWebsiteUsersScreen = () => {
       <div className="mb-10 flex items-center justify-between">
         <h1 className="text-2xl">Liste des utilisateurs</h1>
         <Button icon={ArrowBigLeft}>
-          <Link to="/admin-dashboard"> Retour</Link>
+        <Link to="/admin-administration-du-site"> Retour</Link>
         </Button>
       </div>
 
@@ -59,7 +59,7 @@ const AdminWebsiteUsersScreen = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.isAdmin ? (<CheckCheck className='text-green-600' />) : (<X className='text-red-500'/> )}</td>
               <td className=" flex justify-center items-center gap-3 px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <Button version={'warning'} icon={Edit} onClick={() => handleUpdate(user)} className="mr-2"></Button>
+                <Button version={'warning'} icon={Edit} className="mr-2"><Link to={`/admin/website/modifier-utilisateur/${user._id}`}>Editer</Link></Button>
                 <Button version={'danger'} icon={Trash} onClick={() => handleDelete(user._id)} className="bg-red-500 text-white"></Button>
               </td>
             </tr>
