@@ -22,10 +22,12 @@ const plasticTypeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    icone: {
-      type: String,
-      required: true,
-    },
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     flotability: {
       alcohol: {
         type: Boolean,
