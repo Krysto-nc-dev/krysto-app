@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
+  
   useGetProductDetailsQuery,
   useUpdateProductMutation,
   useUploadProductImageMutation,
@@ -39,6 +40,7 @@ const AdminWebsiteProductEditScreen = () => {
     uploadProductImage,
     { isLoading: uploadMutationLoading },
   ] = useUploadProductImageMutation()
+
 
   const navigate = useNavigate()
 

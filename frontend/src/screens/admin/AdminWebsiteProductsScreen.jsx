@@ -1,7 +1,7 @@
 import React from 'react';
-import { useCreateProductMutation, useGetProductsQuery} from '../../slices/productApiSlice';
+import { useCreateProductMutation, useDeleteProductMutation, useGetProductsQuery} from '../../slices/productApiSlice';
 import Table from '../../components/shared/Table'; // Assurez-vous que le chemin est correct
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/shared/Button';
 import { Edit, EyeIcon,  Loader2, Paperclip, PlusCircle, Trash } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -15,7 +15,13 @@ const AdminWebsiteProductsScreen = () => {
     refetch,
   } = useGetProductsQuery();
 
+  const navigate = useNavigate()
+
   const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
+  const [
+    deleteProduct,
+    { isLoading: deleteProductLoading },
+  ] = useDeleteProductMutation()
 
   if (productsLoading) return <Loader/> ;
   if (productsError) return <p>Error: {productsError.message}</p>;
@@ -33,10 +39,22 @@ const AdminWebsiteProductsScreen = () => {
     }
   };
 
-  const deleteHandler = (id) => {
-    console.log('delete', id);
-    // Vous devez ajouter ici la logique pour supprimer un produit
-  };
+  
+const deleteHandler = async (id) => {
+  if (window.confirm('Etes-vous sur de vouloir supprimer ce produit?')) {
+    try {
+      await deleteProduct(id).unwrap()
+      toast.success('Produit supprimé avec succès!')
+      refetch()
+      navigate('/admin/website/produits')
+    } catch (err) {
+      console.error('Erreur lors de la suppression du produit:', err)
+      toast.error('Erreur lors de la suppression du produit')
+    }
+  }
+
+}
+
 
   // Définir les en-têtes pour le tableau dynamiquement
   const headers = [
