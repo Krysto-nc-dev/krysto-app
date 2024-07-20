@@ -80,11 +80,12 @@ export const articlesApiSlice = apiSlice.injectEndpoints({
     }),
 
     // New mutation to add a paragraph to an article
+    // New mutation to add a paragraph to an article
     addArticleParagraph: builder.mutation({
       query: ({ articleId, paragraph }) => ({
         url: `${ARTICLES_URL}/${articleId}/paragraphs`,
         method: 'POST',
-        body: { paragraph },
+        body: paragraph, // Envoyer directement l'objet paragraph
       }),
       invalidatesTags: (result, error, { articleId }) => [
         { type: 'Article', id: articleId },

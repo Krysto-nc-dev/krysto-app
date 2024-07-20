@@ -24,7 +24,6 @@ const AdminWebsiteArticleEditScreen = () => {
   const [paragraphTitle, setParagraphTitle] = useState('');
   const [paragraphContent, setParagraphContent] = useState('');
   const [paragraphs, setParagraphs] = useState([]);
-
   const [listItems, setListItems] = useState([]);
   const [newListItem, setNewListItem] = useState('');
 
@@ -32,19 +31,19 @@ const AdminWebsiteArticleEditScreen = () => {
 
   const { data: article, error: articleError, isLoading: articleLoading, refetch } = useGetArticleDetailsQuery(articleId);
   const [updateArticle, { isLoading: loadingUpdate }] = useUpdateArticleMutation();
-  const [uploadArticleImage, { isLoading: uploadMutationLoading }] = useUploadArticleImageMutation();
+  const [uploadArticleImage] = useUploadArticleImageMutation();
   const [addArticleParagraph, { isLoading: addingParagraph }] = useAddArticleParagraphMutation();
-  const [updateArticleParagraph, { isLoading: updatingParagraph }] = useUpdateArticleParagraphMutation();
+  const [updateArticleParagraph] = useUpdateArticleParagraphMutation();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (article) {
-      setTitle(article?.title || '');
-      setSubtitle(article?.subtitle || '');
-      setImagesArray(article?.images || []);
-      setCategory(article?.category || '');
-      setParagraphs(article?.paragraphs || []);
+      setTitle(article.title || '');
+      setSubtitle(article.subtitle || '');
+      setImagesArray(article.images || []);
+      setCategory(article.category || '');
+      setParagraphs(article.paragraphs || []);
     }
   }, [article]);
 
@@ -72,8 +71,9 @@ const AdminWebsiteArticleEditScreen = () => {
   };
 
   const uploadFileHandler = async (e) => {
+    const files = Array.from(e.target.files);
     const formData = new FormData();
-    formData.append('images', e.target.files[0]);
+    files.forEach(file => formData.append('images', file));
 
     try {
       const res = await uploadArticleImage(formData).unwrap();
@@ -84,21 +84,30 @@ const AdminWebsiteArticleEditScreen = () => {
   };
 
   const removeImage = (index) => {
-    const newImagesArray = [...imagesArray];
-    newImagesArray.splice(index, 1);
-    setImagesArray(newImagesArray);
+    setImagesArray(imagesArray.filter((_, i) => i !== index));
   };
 
   const addParagraphHandler = async (e) => {
     e.preventDefault();
-
+  
+    // Validation des champs
+    if (!paragraphTitle.trim()) {
+      toast.error('Le titre du paragraphe est requis.');
+      return;
+    }
+  
+    if (!paragraphContent.trim()) {
+      toast.error('Le contenu du paragraphe est requis.');
+      return;
+    }
+  
     try {
-      const updatedArticle = await addArticleParagraph({
+      const response = await addArticleParagraph({
         articleId,
         paragraph: {
           title: paragraphTitle,
           content: paragraphContent,
-          listItems: listItems,
+          listItems: listItems, // Passer directement les listItems
         },
       }).unwrap();
       
@@ -107,11 +116,11 @@ const AdminWebsiteArticleEditScreen = () => {
       setParagraphContent('');
       setListItems([]);
       setNewListItem('');
-      setParagraphs(updatedArticle.paragraphs || []);
+      setParagraphs(response.paragraphs || []);
       refetch();
     } catch (err) {
       console.error("Erreur lors de l'ajout du paragraphe:", err);
-      toast.error("Erreur lors de l'ajout du paragraphe");
+      toast.error(`Erreur lors de l'ajout du paragraphe: ${err?.data?.message || err.message}`);
     }
   };
 

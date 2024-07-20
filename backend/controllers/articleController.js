@@ -102,6 +102,7 @@ const addArticleParagraph = asyncHandler(async (req, res) => {
       .json({ message: "Erreur lors de l'ajout du paragraphe", error: err })
   }
 })
+
 // @desc Create a new review
 // @route POST /api/articles/:id/reviews
 // @access Private
