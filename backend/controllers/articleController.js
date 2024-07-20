@@ -81,20 +81,27 @@ const deleteArticle = asyncHandler(async (req, res) => {
 // @route POST /api/articles/:id/paragraphs
 // @access Private/Admin
 const addArticleParagraph = asyncHandler(async (req, res) => {
-  const { title, content } = req.body
-  const article = await Article.findById(req.params.id)
+  const { title, content, listItems } = req.body
+  const articleId = req.params.id // Récupération de l'ID depuis les paramètres de la requête
 
-  if (article) {
-    const newParagraph = { title, content }
-    article.paragraphs.push(newParagraph)
+  try {
+    const article = await Article.findById(articleId)
+
+    if (!article) {
+      return res.status(404).json({ message: 'Article non trouvé' })
+    }
+
+    // Ajouter le nouveau paragraphe à l'article
+    article.paragraphs.push({ title, content, listItems })
     await article.save()
-    res.status(201).json({ message: 'Paragraph added successfully.', article })
-  } else {
-    res.status(404)
-    throw new Error('Article not found.')
+
+    res.status(200).json(article)
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Erreur lors de l'ajout du paragraphe", error: err })
   }
 })
-
 // @desc Create a new review
 // @route POST /api/articles/:id/reviews
 // @access Private

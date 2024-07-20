@@ -7,12 +7,17 @@ const reviewsSchema = new mongoose.Schema(
     name: { type: String, required: true },
     rating: { type: Number, min: 1, max: 5, required: true },
     comment: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
   },
-  { timestamps: true },
+  { timestamps: true }, // Ajoute les champs createdAt et updatedAt automatiquement
 )
 
-// Schéma des paragraphes
+const listItemSchema = new mongoose.Schema(
+  {
+    content: { type: String, required: true },
+  },
+  { _id: false }, // Évite la création d'un ID pour chaque élément de liste
+)
+
 const paragraphSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -20,9 +25,9 @@ const paragraphSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 10,
-      maxlength: 500,
       trim: true,
     },
+    listItems: [listItemSchema], // Liste des éléments
   },
   { _id: false }, // Évite la création d'un ID pour chaque paragraphe
 )
@@ -57,7 +62,7 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }, // Ajoute les champs createdAt et updatedAt automatiquement
 )
 
 // Middleware pour mettre à jour la note moyenne et le nombre d'avis
