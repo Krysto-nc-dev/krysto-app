@@ -6,7 +6,7 @@ import {
 } from '../../slices/plasticTypesSlice'
 import Button from '../../components/shared/Button'
 import { Edit, EyeIcon, Loader2, PlusCircle, Trash } from 'lucide-react'
-import { Link } from 'react-router-dom'
+
 import { toast } from 'react-toastify'
 import Loader from '../FeedbackScreens/Loader'
 

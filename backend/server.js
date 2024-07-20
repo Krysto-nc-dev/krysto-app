@@ -14,7 +14,7 @@ import articleRoutes from './routes/articleRoutes.js'
 import plasticTypeRoutes from './routes/plasticTypeRoutes.js'
 import plasticColorRoutes from './routes/plasticColorRoutes.js'
 import recyclableProductRoutes from './routes/recyclableProductRoutes.js'
-import projectRoutes from './routes/productRoutes.js'
+import projectRoutes from './routes/projectRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 
 const port = process.env.PORT || 5000
