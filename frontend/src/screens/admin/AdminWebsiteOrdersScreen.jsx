@@ -16,7 +16,7 @@ const AdminWebsiteOrdersScreen = () => {
   if (ordersLoading) return <Loader/>;
   if (ordersError) return <p>Error: {ordersError.message}</p>;
 
-  if (!orders || orders.length === 0) return <Messages version={"danger"} message={"une erreur est survenue, merci de reesayer"}/>;
+  if (!orders || orders.length === 0) return <Messages  message={"Aucune commandes trouvé"}/>;
 
   // Définir les en-têtes pour le tableau dynamiquement
   const headers = [

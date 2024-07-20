@@ -4,7 +4,7 @@ import Loader from '../FeedbackScreens/Loader'
 import Button from '../../components/shared/Button'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { ArrowBigLeft, Edit, Trash } from 'lucide-react'
+import { ArrowBigLeft, CheckCheck, Edit, Trash , X } from 'lucide-react'
 
 const AdminWebsiteUsersScreen = () => {
   const { data: users, error: errorUsers, isLoading: loadingUsers , refetch} = useGetUsersQuery()
@@ -42,12 +42,13 @@ const AdminWebsiteUsersScreen = () => {
       </div>
 
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+        <thead className="bg-primaryColor">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th className="px-6 py-3 text-left text-xs  text-gray-700 font-bold uppercase tracking-wider">Nom</th>
+            <th className="px-6 py-3 text-left text-xs  text-gray-700 font-bold uppercase tracking-wider">Email</th>
+            <th className="px-6 py-3 text-left text-xs  text-gray-700 font-bold uppercase tracking-wider">Rôle</th>
+            <th className="px-6 py-3 text-left text-xs  text-gray-700 font-bold uppercase tracking-wider">Admin</th>
+            <th className="px-6 py-3 text-left text-xs  text-gray-700 font-bold uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -56,9 +57,10 @@ const AdminWebsiteUsersScreen = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.name} {user.lastname}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <Button icon={Edit} onClick={() => handleUpdate(user)} className="mr-2">Modifier</Button>
-                <Button icon={Trash} onClick={() => handleDelete(user._id)} className="bg-red-500 text-white">Supprimer</Button>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.isAdmin ? (<CheckCheck className='text-green-600' />) : (<X className='text-red-500'/> )}</td>
+              <td className=" flex justify-center items-center gap-3 px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <Button version={'warning'} icon={Edit} onClick={() => handleUpdate(user)} className="mr-2"></Button>
+                <Button version={'danger'} icon={Trash} onClick={() => handleDelete(user._id)} className="bg-red-500 text-white"></Button>
               </td>
             </tr>
           ))}
