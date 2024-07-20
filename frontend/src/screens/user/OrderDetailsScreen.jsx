@@ -23,6 +23,8 @@ const OrderDetailsScreen = () => {
     refetch,
   } = useGetOrderDetailsQuery(orderId)
 
+  console.log(orderDetails);
+
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation()
   const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation()
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer()

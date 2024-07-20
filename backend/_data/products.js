@@ -9,24 +9,9 @@ const products = [
     images: ['/uploads/no-photo.png'],
 
     category: 'Mode',
-    reviews: [
-      //   {
-      //     user: mongoose.Types.ObjectId('60c72b2f9b1d8c0015fbb020'),
-      //     name: 'John Doe',
-      //     rating: 5,
-      //     comment: 'Great product! Highly recommended.',
-      //     createdAt: new Date('2024-06-15'),
-      //   },
-      //   {
-      //     user: mongoose.Types.ObjectId('60c72b2f9b1d8c0015fbb021'),
-      //     name: 'Jane Smith',
-      //     rating: 4,
-      //     comment: 'Very good, but could be cheaper.',
-      //     createdAt: new Date('2024-06-16'),
-      //   },
-    ],
-    rating: 4.5,
-    numReviews: 2,
+    reviews: [],
+    rating: 0,
+    numReviews: 0,
     countInStock: 50,
   },
   {
@@ -39,17 +24,9 @@ const products = [
     images: ['/uploads/no-photo.png'],
 
     category: 'Maison et jardin',
-    // reviews: [
-    //   {
-
-    //     name: 'Emily Brown',
-    //     rating: 3,
-    //     comment: 'Average product, nothing special.',
-    //     createdAt: new Date('2024-06-17'),
-    //   },
-    // ],
-    rating: 3,
-    numReviews: 1,
+    reviews: [],
+    rating: 0,
+    numReviews: 0,
     countInStock: 30,
   },
   {
@@ -60,17 +37,9 @@ const products = [
     quantity: 20,
     images: ['/uploads/no-photo.png'],
     category: 'Maison et Jardin',
-    reviews: [
-      //   {
-      //     user: mongoose.Types.ObjectId('60c72b2f9b1d8c0015fbb023'),
-      //     name: 'Stoyann VELTEN',
-      //     rating: 5,
-      //     comment: 'An excellent read, highly recommend!',
-      //     createdAt: new Date('2024-06-18'),
-      //   },
-    ],
-    rating: 5,
-    numReviews: 1,
+    reviews: [],
+    rating: 0,
+    numReviews: 0,
     countInStock: 20,
   },
   {
@@ -82,17 +51,9 @@ const products = [
     images: ['/uploads/no-photo.png'],
 
     category: 'Maison et jardin',
-    reviews: [
-      //   {
-      //     user: mongoose.Types.ObjectId('60c72b2f9b1d8c0015fbb023'),
-      //     name: 'Stoyann VELTEN',
-      //     rating: 5,
-      //     comment: 'An excellent read, highly recommend!',
-      //     createdAt: new Date('2024-06-18'),
-      //   },
-    ],
-    rating: 5,
-    numReviews: 1,
+    reviews: [],
+    rating: 0,
+    numReviews: 0,
     countInStock: 0,
   },
   // Ajoutez d'autres produits si nécessaire

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const reviewsShema = new mongoose.Schema(
+const reviewsSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
@@ -14,7 +14,6 @@ const reviewsShema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     dolibarrId: { type: String, required: true, default: '0' },
-
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -31,12 +30,10 @@ const productSchema = new mongoose.Schema(
       },
     ],
     category: { type: String, required: true },
-    reviews: [reviewsShema],
+    reviews: [reviewsSchema],
     rating: {
       type: Number,
-      min: 1,
-      max: 5,
-      default: 1,
+      default: 0,
       required: true,
     },
     numReviews: {
@@ -52,6 +49,21 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true },
 )
+
+// Middleware pour mettre à jour la note moyenne et le nombre d'avis
+productSchema.pre('save', function (next) {
+  if (this.isModified('reviews')) {
+    // Calculez la nouvelle moyenne des évaluations
+    const numReviews = this.reviews.length
+    const totalRating = this.reviews.reduce(
+      (acc, review) => acc + review.rating,
+      0,
+    )
+    this.rating = numReviews > 0 ? totalRating / numReviews : 0
+    this.numReviews = numReviews
+  }
+  next()
+})
 
 const Product = mongoose.model('Product', productSchema)
 

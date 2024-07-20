@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../components/shared/Card';
+import Rating from '../components/shared/Rating';
 import { useGetProductsQuery } from '../slices/productApiSlice';
 import Loader from './FeedbackScreens/Loader';
 import Messages from './FeedbackScreens/Messages';
@@ -32,7 +33,8 @@ const ProductsScreen = () => {
               
              </p>
              <p className='absolute top-3'>{product.price} XPF</p>
-            
+              
+              <Rating value={product.rating} text={product.numReviews + " avis"}/>
           </Card>
          
         ))}
