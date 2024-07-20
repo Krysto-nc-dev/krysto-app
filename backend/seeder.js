@@ -7,6 +7,7 @@ import plasticTypes from './_data/plastic_types.js'
 import plasticColors from './_data/plastic_colors.js'
 import recyclableProducts from './_data/recyclable_products.js'
 import projects from './_data/projects.js'
+import emails from './_data/emails.js'
 
 // Import des models
 import Order from './models/orderModel.js'
@@ -16,6 +17,7 @@ import Product from './models/productModel.js'
 import PlasticTypes from './models/plasticTypeModel.js'
 import PlasticColors from './models/plasticColorModel.js'
 import User from './models/userModel.js'
+import EmailBank from './models/EmailBankModel.js'
 import connectDB from './config/db.js'
 
 dotenv.config()
@@ -29,7 +31,7 @@ const importData = async () => {
     // await User.deleteMany()
 
     // await PlasticTypes.deleteMany()
-    await Project.deleteMany()
+    await EmailBank.deleteMany()
     // const createdUsers = await User.insertMany(users)
     // const adminUser = createdUsers[0]._id
     // const sampleProducts = products.map((product) => ({
@@ -38,7 +40,7 @@ const importData = async () => {
     // }))
     // await Product.insertMany(sampleProducts)
     // await PlasticTypes.insertMany(plasticTypes)
-    await Project.insertMany(projects)
+    await EmailBank.insertMany(emails)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {
