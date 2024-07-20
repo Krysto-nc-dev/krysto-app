@@ -1,6 +1,5 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Article from '../models/articleModel.js'
-import CartScreen from './../../frontend/src/screens/CartScreen'
 
 // @desc Get articles
 // @route GET /api/articles
