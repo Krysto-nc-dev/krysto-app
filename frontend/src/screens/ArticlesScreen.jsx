@@ -3,6 +3,7 @@ import { useGetArticlesQuery } from '../slices/articleApiSlice';
 
 import { Link } from 'react-router-dom';
 import Loader from './FeedbackScreens/Loader';
+import Rating from '../components/shared/Rating';
 
 const ArticlesScreen = () => {
   const { data: articles, error: articleError, isLoading: loadingArticles } = useGetArticlesQuery();
@@ -29,9 +30,10 @@ const ArticlesScreen = () => {
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
               <p className="text-gray-700 mb-4">{article.subtitle}</p>
-              <Link to={`/article-details/${article._id}`} className="text-blue-500 hover:underline">
+              <Link to={`/article-details/${article._id}`} className=" mb-2 text-blue-500 hover:underline">
                 Lire plus
               </Link>
+            <Rating value={article.rating} text={article.numReviews + " Avis"}/>
             </div>
           </div>
         ))}
