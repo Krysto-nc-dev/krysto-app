@@ -108,7 +108,7 @@ export const DASHBOARD_ADMIN_SIDEBAR_LINKS = [
     href: '/admin-agenda',
   },
   {
-    key:'agenda',
+    key:'administrationSite',
     label: 'Administration site',
     icon: <MonitorCogIcon/>,
     href: '/admin-administration-du-site',

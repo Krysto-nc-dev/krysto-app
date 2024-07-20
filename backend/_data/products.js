@@ -6,7 +6,8 @@ const products = [
       'En choisissant nos bagues écologiques, vous faites plus qu’adopter un bijou élégant. Vous exprimez votre individualité et votre engagement envers la mode durable. Soyez fier de porter une bague qui allie style et responsabilité, et montrez au monde que l’élégance et l’éthique peuvent aller de pair',
     price: 200,
     quantity: 50,
-    image: '/images/product1.jpg',
+    images: ['/sample.png'],
+
     category: 'Mode',
     reviews: [
       //   {
@@ -35,7 +36,8 @@ const products = [
       'Proteger vos surfaces et la planétes avec nos sous verres en plastique recyclée',
     price: 400,
     quantity: 30,
-    image: '/images/product2.jpg',
+    images: ['/sample.png'],
+
     category: 'Maison et jardin',
     // reviews: [
     //   {
@@ -77,7 +79,8 @@ const products = [
     description: 'Porte savon en plastique recyclé',
     price: 800,
     quantity: 20,
-    image: '/images/product3.jpg',
+    images: ['/sample.png'],
+
     category: 'Maison et jardin',
     reviews: [
       //   {
