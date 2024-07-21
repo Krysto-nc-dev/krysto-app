@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowBigLeft } from 'lucide-react';
+import { ArrowBigLeft, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Button from '../../components/shared/Button';
 
 const AdminDolibarrNewThidpartyScreen = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -15,10 +16,9 @@ const AdminDolibarrNewThidpartyScreen = () => {
     <div className="p-6 max-w-9xl mx-auto bg-white rounded-lg shadow-md">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">Ajouter un Nouveau Tier</h1>
-        <button className="flex items-center bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded">
-          <ArrowBigLeft className="mr-2" />
-          <Link to="/admin-tiers">Retour</Link>
-        </button>
+      
+          <Button version={"primary"} icon={ArrowBigLeft} url={"/admin-tiers"}>Retour</Button>
+        
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -148,14 +148,14 @@ const AdminDolibarrNewThidpartyScreen = () => {
           </div>
         </section>
 
-        <div className="flex justify-end mt-8">
-          <button
+        <div className="flex flex-1 mt-8">
+          <Button
             type="submit"
-            className="bg-blue-500 text-white hover:bg-blue-600 font-semibold py-2 px-4 rounded"
-          >
+            icon={Send}
+            >
             Ajouter le Tier
-          </button>
-        </div>
+          </Button>
+              </div>
       </form>
     </div>
   );
