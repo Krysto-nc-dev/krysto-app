@@ -1,11 +1,11 @@
-const machines = [
+const equipments = [
   {
     name: 'Arbour press injection',
     description: 'Machine injection Arbour press',
     category: 'Machine',
     type: 'injection',
     user: '6686899f7f0f7be0d5780336',
-    images: ['injection.png'],
+    images: ['/uploads/no-photo.png'],
     status: 'Operationel',
     operatingHours: 1200,
     buyDate: new Date('2023-01-15'),
@@ -50,7 +50,7 @@ const machines = [
     category: 'Machine',
     type: 'Broyeur',
     user: '6686899f7f0f7be0d5780336',
-    images: ['shredder.png'],
+    images: ['/uploads/no-photo.png'],
     status: 'En Maintenance',
     operatingHours: 850,
     buyDate: new Date('2023-02-15'),
@@ -94,7 +94,7 @@ const machines = [
     category: 'Moule',
     type: 'injection',
     user: '6686899f7f0f7be0d5780336',
-    images: ['mold.png'],
+    images: ['/uploads/no-photo.png'],
     status: 'Operationel',
     operatingHours: 500,
     buyDate: new Date('2023-03-10'),
@@ -136,7 +136,7 @@ const machines = [
     category: 'Moule',
     type: 'injection',
     user: '6686899f7f0f7be0d5780336',
-    images: ['ruler.jpg'],
+    images: ['/uploads/no-photo.png'],
     status: 'Operationel',
     operatingHours: 700,
     buyDate: new Date('2023-04-05'),
@@ -179,7 +179,7 @@ const machines = [
     category: 'Outillage',
     type: 'Autres',
     user: '6686899f7f0f7be0d5780336',
-    images: ['toolset.jpeg'],
+    images: ['/uploads/no-photo.png'],
     status: 'Operationel',
     operatingHours: 300,
     buyDate: new Date('2023-05-25'),
@@ -218,4 +218,4 @@ const machines = [
   },
 ]
 
-export default machines
+export default equipments
