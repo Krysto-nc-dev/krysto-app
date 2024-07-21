@@ -63,16 +63,20 @@ const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmail
   };
 
   const handleDelete = async (emailId) => {
-    try {
-      await deleteEmail(emailId); // Utilisation de la mutation pour supprimer l'email
-      toast.success("Email supprimé avec succès.");
-      refetchEmails(); // Rafraîchir la liste des emails après la suppression
-    } catch (error) {
-      console.error('Error deleting email:', error);
-      toast.error("Une erreur est survenue lors de l'ajout de l'email.");
-      // Handle error state if needed
-    }
-  };
+
+    if(window.confirm('Voulez-vous vraiment supprimer cet email ?')) {
+
+      try {
+        await deleteEmail(emailId); // Utilisation de la mutation pour supprimer l'email
+        toast.success("Email supprimé avec succès.");
+        refetchEmails(); // Rafraîchir la liste des emails après la suppression
+      } catch (error) {
+        console.error('Error deleting email:', error);
+        toast.error("Une erreur est survenue lors de l'ajout de l'email.");
+        // Handle error state if needed
+      }
+    };
+  }
 
 
   if (emailLoading) {
@@ -224,9 +228,9 @@ const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmail
                   </td>
                   <td className="px-4 py-2 border-b text-left">
                     {email.acceptMailing ? (
-                      <XCircle className="text-red-500" size={24} />
-                    ) : (
                       <CheckCircle className="text-green-500" size={24} />
+                    ) : (
+                      <XCircle className="text-red-500" size={24} />
                     )}
                   </td>
                   <td className="px-4 py-2 border-b text-left">

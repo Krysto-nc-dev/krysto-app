@@ -79,6 +79,9 @@ import AdminRecyclableProductEditScreen from './screens/admin/AdminRecyclablePro
 import AdminRecyclableProductDetailsScreen from './screens/admin/AdminRecyclableProductDetailsScreen'
 import AdminProjectEditScreen from './screens/admin/AdminProjectEditScreen'
 import AdminProjectDetailsScreen from './screens/admin/AdminProjectDetailsScreen'
+import AdminDoliProductScreen from './screens/admin/AdminDoliProductsScreen'
+import AdminDollibarNewProductScreen from './screens/admin/AdminDollibarNewProductScreen'
+import AdminDolibarrNewThidpartyScreen from './screens/admin/AdminDolibarrNewThidpartyScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -112,12 +115,20 @@ const router = createBrowserRouter(
           <Route path="/admin-dashboard" element={<AdminDashboardScreen />} />
           <Route path="/admin-tiers" element={<AdminThirdpartiesScreen />} />
           <Route
+            path="/admin-dolibarr-nouveaux-tier"
+            element={<AdminDolibarrNewThidpartyScreen />}
+          />
+          <Route
             path="/admin-mails-repertoire"
             element={<AdminBanksScreen />}
           />
           <Route
             path="/admin-dollibarr-products"
             element={<AdminDoliProductsScreen />}
+          />
+          <Route
+            path="/admin-dolibarr-nouveaux-produit"
+            element={<AdminDollibarNewProductScreen />}
           />
           <Route
             path="admin-dollibarr-products-details/:id"

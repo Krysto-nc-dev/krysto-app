@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useGetThirdPartiesQuery } from '../../slices/dolibarr/dolliThirdPartyApiSlice';
 import { Link } from 'react-router-dom';
 import Loader from '../FeedbackScreens/Loader';
+import Button from '../../components/shared/Button';
+import { PlusCircleIcon } from 'lucide-react';
 
 
 const AdminThirdpartiesScreen = () => {
@@ -41,7 +43,11 @@ const AdminThirdpartiesScreen = () => {
 
   return (
     <div className="p-4">
+      <div className="flex items-center justify-between">
+
       <h1 className="text-2xl font-bold mb-4">Tiers ({filteredTiers.length})</h1>
+      <Button url={"/admin-dolibarr-nouveaux-tier"} icon={PlusCircleIcon}>Nouveaux tier</Button>
+      </div>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-4 ml-1">Filter par:</label>
         <select id="filter" value={filter} onChange={handleFilterChange} className="p-1 text-sm  bg-gray-300 rounded">
