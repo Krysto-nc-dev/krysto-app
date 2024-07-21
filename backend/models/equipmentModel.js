@@ -1,11 +1,16 @@
 import mongoose from 'mongoose'
 
+// Fonction pour générer un code-barres aléatoire
 const generateBarcode = () => {
-  return Math.floor(1000000000000 + Math.random() * 9000000000000).toString()
+  const barcode = Math.floor(
+    1000000000000 + Math.random() * 9000000000000,
+  ).toString()
+  console.log(`Generated Barcode: ${barcode}`) // Log pour débogage
+  return barcode
 }
 
 // Sous-schéma pour les maintenances et réparations
-const maintenanceSchema = new mongoose.Schema(
+const MaintenanceSchema = new mongoose.Schema(
   {
     date: {
       type: Date,
@@ -53,7 +58,7 @@ const maintenanceSchema = new mongoose.Schema(
 )
 
 // Sous-schéma pour les procédures d'utilisation
-const usageProcedureSchema = new mongoose.Schema(
+const UsageProcedureSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -75,7 +80,8 @@ const usageProcedureSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-const equipmentSchema = new mongoose.Schema(
+// Schéma principal pour les équipements
+const EquipmentSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -89,12 +95,12 @@ const equipmentSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['Machine', 'Moule', 'Outillage', 'bureautique'],
+      enum: ['Machine', 'Moule', 'Outillage', 'Bureautique'],
       required: true,
     },
     type: {
       type: String,
-      enum: ['injection', 'extrusion', 'compression', 'Broyeur', 'Autres'],
+      enum: ['Injection', 'Extrusion', 'Compression', 'Broyeur', 'Autres'],
       required: true,
       default: 'Autres',
     },
@@ -151,20 +157,22 @@ const equipmentSchema = new mongoose.Schema(
       type: Date,
       required: false,
     },
-    maintenances: [maintenanceSchema],
-    usageProcedures: [usageProcedureSchema],
+    maintenances: [MaintenanceSchema],
+    usageProcedures: [UsageProcedureSchema],
   },
   { timestamps: true },
 )
 
 // Middleware pour générer automatiquement le code-barres avant de sauvegarder
-equipmentSchema.pre('save', function (next) {
+EquipmentSchema.pre('save', function (next) {
   if (!this.barcode) {
     this.barcode = generateBarcode()
+    console.log(`Setting Barcode: ${this.barcode}`) // Log pour débogage
   }
   next()
 })
 
-const Equipment = mongoose.model('Equipment', equipmentSchema)
+// Création du modèle Mongoose
+const Equipment = mongoose.model('Equipment', EquipmentSchema)
 
 export default Equipment

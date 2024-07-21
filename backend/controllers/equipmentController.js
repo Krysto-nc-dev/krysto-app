@@ -5,7 +5,7 @@ import Equipment from '../models/equipmentModel.js'
 // @route   GET /api/machines
 // @access  Public
 const getMachines = asyncHandler(async (req, res) => {
-  const machines = await Machine.find()
+  const machines = await Equipment.find()
   res.status(200).json(machines)
 })
 
@@ -33,7 +33,7 @@ const createMachine = asyncHandler(async (req, res) => {
     usageProcedures,
   } = req.body
 
-  const machine = new Machine({
+  const machine = new Equipment({
     name,
     description,
     category,
@@ -61,7 +61,7 @@ const createMachine = asyncHandler(async (req, res) => {
 // @route   GET /api/machines/:id
 // @access  Public
 const getMachineById = asyncHandler(async (req, res) => {
-  const machine = await Machine.findById(req.params.id)
+  const machine = await Equipment.findById(req.params.id)
 
   if (machine) {
     res.status(200).json(machine)
@@ -95,7 +95,7 @@ const updateMachine = asyncHandler(async (req, res) => {
     usageProcedures,
   } = req.body
 
-  const machine = await Machine.findById(req.params.id)
+  const machine = await Equipment.findById(req.params.id)
 
   if (machine) {
     machine.name = name || machine.name
@@ -128,7 +128,7 @@ const updateMachine = asyncHandler(async (req, res) => {
 // @route   DELETE /api/machines/:id
 // @access  Public
 const deleteMachine = asyncHandler(async (req, res) => {
-  const machine = await Machine.findById(req.params.id)
+  const machine = await Equipment.findById(req.params.id)
 
   if (machine) {
     await machine.deleteOne()
@@ -146,7 +146,7 @@ const addMaintenance = asyncHandler(async (req, res) => {
   const { id } = req.params
   const maintenance = req.body
 
-  const machine = await Machine.findById(id)
+  const machine = await Equipment.findById(id)
 
   if (machine) {
     machine.maintenances.push(maintenance)
@@ -165,7 +165,7 @@ const addUsageProcedure = asyncHandler(async (req, res) => {
   const { id } = req.params
   const usageProcedure = req.body
 
-  const machine = await Machine.findById(id)
+  const machine = await Equipment.findById(id)
 
   if (machine) {
     machine.usageProcedures.push(usageProcedure)
