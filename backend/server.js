@@ -17,6 +17,7 @@ import recyclableProductRoutes from './routes/recyclableProductRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
 import emailBankRoutes from './routes/emailBankRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import recipeRoutes from './routes/recipeRoutes.js'
 
 const port = process.env.PORT || 5000
 
@@ -43,6 +44,7 @@ app.use('/api/v1/plastic-colors', plasticColorRoutes)
 app.use('/api/v1/recyclable-products', recyclableProductRoutes)
 app.use('/api/v1/emails', emailBankRoutes)
 app.use('/api/v1/projects', projectRoutes)
+app.use('/api/v1/recipes', recipeRoutes)
 
 // faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??
 app.get('/api/v1/config/paypal', (req, res) => {
