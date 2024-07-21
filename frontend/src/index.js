@@ -29,7 +29,7 @@ import InitiationsScreen from './screens/InitiationsScreen'
 import ContactScreen from './screens/ContactScreen'
 import AdminThirdpartiesScreen from './screens/admin/AdminThirdpartiesScreen'
 import AdminContactsScreen from './screens/admin/AdminContactsScreen'
-import AdminMailsBankScreen from './screens/admin/AdminMaisBankScreen'
+
 import AdminDoliProductsScreen from './screens/admin/AdminDoliProductsScreen'
 import AdminWarehousesScreen from './screens/admin/AdminWarehousesScreen'
 import AdminPropalsScreen from './screens/admin/AdminPropalsScreen'
@@ -113,7 +113,7 @@ const router = createBrowserRouter(
           <Route path="/admin-tiers" element={<AdminThirdpartiesScreen />} />
           <Route
             path="/admin-mails-repertoire"
-            element={<AdminMailsBankScreen />}
+            element={<AdminBanksScreen />}
           />
           <Route
             path="/admin-dollibarr-products"

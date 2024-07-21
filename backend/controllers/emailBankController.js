@@ -15,7 +15,7 @@ const getEmails = asyncHandler(async (req, res) => {
 const createEmail = asyncHandler(async (req, res) => {
   const { email, civility, firstname, lastname, city, birthdate } = req.body
 
-  const newEmail = new Email({
+  const newEmail = new EmailBank({
     email,
     civility,
     firstname,

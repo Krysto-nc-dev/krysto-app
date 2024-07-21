@@ -41,6 +41,7 @@ app.use('/api/v1/upload', uploadRoutes)
 app.use('/api/v1/plastic-types', plasticTypeRoutes)
 app.use('/api/v1/plastic-colors', plasticColorRoutes)
 app.use('/api/v1/recyclable-products', recyclableProductRoutes)
+app.use('/api/v1/emails', emailBankRoutes)
 app.use('/api/v1/projects', projectRoutes)
 
 // faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??

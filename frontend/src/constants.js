@@ -11,6 +11,7 @@ export const PLASTIC_TYPES_URL = `/api/v1/plastic-types`
 export const PLASTIC_COLORS_URL = `/api/v1/plastic-colors`
 export const RECYCLABLE_PRODUCTS_URL = `/api/v1/recyclable-products`
 export const PROJECTS_URL = `/api/v1/projects`
+export const EMAILS_URL = `/api/v1/emails`
 export const UPLOAD_URL = `/api/v1/upload`
 
 export const DOLIBAR_URL = 'https://crm.krysto.nc/api/index.php'
