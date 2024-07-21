@@ -11,7 +11,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet1.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: "Nuage d'Encre",
@@ -25,7 +25,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet2.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Aube Ombreuse',
@@ -39,7 +39,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet3.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Marbre Nocturne',
@@ -53,7 +53,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet4.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Marbre Fumé',
@@ -67,7 +67,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet5.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Nuit Brumeuse',
@@ -81,7 +81,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet6.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Ébène Pâle',
@@ -95,7 +95,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheet7.png'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Solar Flare',
@@ -110,7 +110,7 @@ const recipes = [
     ],
     productionType: 'injection',
     user: '6686899f7f0f7be0d5780336',
-    images: ['solarFlare.jpg'],
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Mélodie des Fleurs',
@@ -128,7 +128,7 @@ const recipes = [
     ],
     productionType: 'compression',
     user: '6686899f7f0f7be0d5780336',
-    images: ['sheetPE_1.jpg'],
+    images: ['/uploads/no-photo.png'],
   },
 ]
 
