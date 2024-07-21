@@ -82,6 +82,8 @@ import AdminProjectDetailsScreen from './screens/admin/AdminProjectDetailsScreen
 import AdminDoliProductScreen from './screens/admin/AdminDoliProductsScreen'
 import AdminDollibarNewProductScreen from './screens/admin/AdminDollibarNewProductScreen'
 import AdminDolibarrNewThidpartyScreen from './screens/admin/AdminDolibarrNewThidpartyScreen'
+import AdminEquipmentDetailsScreen from './screens/admin/AdminEquipmentDetailsScreen'
+import AdminEquipmentEditScreen from './screens/admin/AdminEquipmentEditScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -152,6 +154,14 @@ const router = createBrowserRouter(
           <Route
             path="/admin-equipements"
             element={<AdminEquipmentsScreen />}
+          />
+          <Route
+            path="/admin-equipement-details/:id"
+            element={<AdminEquipmentDetailsScreen />}
+          />
+          <Route
+            path="/admin-equipement-edit/:id"
+            element={<AdminEquipmentEditScreen />}
           />
           <Route path="/admin-plastiques" element={<AdminPlasticsScreen />} />
           <Route
