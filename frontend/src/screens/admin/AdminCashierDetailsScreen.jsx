@@ -158,7 +158,7 @@ const UserCashierDetailsScreen = () => {
   const realGainClass = realGain >= 0 ? 'text-green-500' : 'text-red-500'
 
   return (
-    <div className="mx-auto p-4 max-w-6xl bg-white shadow-lg rounded-lg">
+    <div className="mx-auto p-2 max-w-9xl bg-white shadow-lg rounded-lg">
       <div className="p-6">
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
