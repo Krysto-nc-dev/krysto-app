@@ -22,7 +22,8 @@ import eventRoutes from './routes/eventRoutes.js'
 import equipmentRoutes from './routes/equipmentRoutes.js'
 import campagneCollectRoutes from './routes/campagneCollectRouter.js'
 import presentationRoutes from './routes/presentationRouter.js'
-import cashiers from './routes/cashierRouter.js'
+import cashierRoutes from './routes/cashierRouter.js'
+import veilleRoutes from './routes/veilleRoutes.js'
 
 const port = process.env.PORT || 5000
 
@@ -54,7 +55,8 @@ app.use('/api/v1/equipments', equipmentRoutes)
 app.use('/api/v1/events', eventRoutes)
 app.use('/api/v1/campagnes-collect', campagneCollectRoutes)
 app.use('/api/v1/presentations', presentationRoutes)
-app.use('/api/v1/cashiers', cashiers)
+app.use('/api/v1/cashiers', cashierRoutes)
+app.use('/api/v1/veilles', veilleRoutes)
 
 // faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??
 app.get('/api/v1/config/paypal', (req, res) => {
