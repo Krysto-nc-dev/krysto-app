@@ -1,14 +1,24 @@
 import React from 'react'
-import { useGetPresentationsQuery } from '../../slices/presentationApiSlice'
+import { useCreatePresentationMutation, useDeletePresentationMutation, useGetPresentationsQuery } from '../../slices/presentationApiSlice'
 import { FaClock } from 'react-icons/fa'
 import Button from '../../components/shared/Button'
 import { Edit, EyeIcon, PlayCircleIcon, PlusCircleIcon, Trash } from 'lucide-react'
 import Loader from '../FeedbackScreens/Loader'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const AdminPresentationsScreen = () => {
-  const { data: presentations, error: presentationsError, isLoading: presentationsLoading } = useGetPresentationsQuery()
+  const { data: presentations, error: presentationsError, isLoading: presentationsLoading , refetch} = useGetPresentationsQuery()
+ const navigate = useNavigate()
+  const [
+    createPresentation,
+    { isLoading: loadingCreate },
+  ] = useCreatePresentationMutation()
 
-  console.log(presentations);
+  const [
+    deletePresentation,
+    { isLoading: deletePresentationLoading },
+  ] = useDeletePresentationMutation()
 
   if (presentationsLoading) {
     return <Loader/>
@@ -17,13 +27,36 @@ const AdminPresentationsScreen = () => {
   if (presentationsError) {
     return <p>Error: {presentationsError.message}</p>
   }
+  const createProductHandler = async () => {
+    if (window.confirm('Voulez-vous ajouter une nouvelle présentation ?')) {
+      try {
+        await createPresentation()
+        refetch()
+        toast.success('Présentation créé avec succès')
+      } catch (err) {
+        toast.error('Erreur lors de la création de la présentation')
+      }
+    }
+  }
+  const deleteHandler = async (id) => {
+    if (window.confirm('Etes-vous sur de vouloir supprimer cette présentation?')) {
+      try {
+        await deletePresentation(id).unwrap()
+        toast.success('Présentation supprimé avec succès!')
+        refetch()
+
+      } catch (err) {
+        toast.error('Erreur lors de la suppression de la présentation')
+      }
+    }
+  }
 
   return (
     <div className='p-2 '>
 
       <div className="flex items-center justify-between mb-6">
       <h1 className='text-xl '>Presentations</h1>
-        <Button  icon={PlusCircleIcon} version={"success"} />
+        <Button onClick={createProductHandler} icon={PlusCircleIcon} version={"success"} />
 
       </div>
 
@@ -45,8 +78,8 @@ const AdminPresentationsScreen = () => {
               <div className='mt-4 flex items-center justify-between px-10'>
           
                 <Button url={`/presentation/${presentation._id}`} icon={PlayCircleIcon} version={"primary"}/>
-                <Button icon={Edit} version={"warning"}/>
-                <Button icon={Trash} version={"danger"}/>
+                <Button url={`/admin-presentation-edit/${presentation._id}`} icon={Edit} version={"warning"}/>
+                <Button  onClick={() => deleteHandler(presentation._id)} icon={Trash} version={"danger"}/>
               </div>
             </div>
           </div>

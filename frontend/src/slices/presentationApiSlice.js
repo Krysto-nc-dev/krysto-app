@@ -26,10 +26,9 @@ export const presentationsApiSlice = apiSlice.injectEndpoints({
 
     // Mutation to create a new presentation
     createPresentation: builder.mutation({
-      query: (data) => ({
+      query: () => ({
         url: `${PRESENTATIONS_URL}`,
         method: 'POST',
-        body: data,
       }),
       invalidatesTags: ['Presentation'],
     }),

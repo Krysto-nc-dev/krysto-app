@@ -87,6 +87,7 @@ import AdminEquipmentEditScreen from './screens/admin/AdminEquipmentEditScreen'
 import AdminCampagneCollectDetailsScreen from './screens/admin/AdminCampagneCollectDetailsScreen'
 import AdminCampagneCollectEditScreen from './screens/admin/AdminCampagneCollectEditScreen'
 import AdminCashierDetailsScreen from './screens/admin/AdminCashierDetailsScreen'
+import AdminPresentationEditScreen from './screens/admin/AdminPresentationEditScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -272,6 +273,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-presentations"
             element={<AdminPresentationsScreen />}
+          />
+          <Route
+            path="/admin-presentation-edit/:id"
+            element={<AdminPresentationEditScreen />}
           />
           <Route
             path="/admin-veilles"
