@@ -74,7 +74,7 @@ const AdminCollectCampagnesScreen = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <Link to={`/campagne-details/${campagne._id}`} className="inline-flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                  <Link to={`/admin-campagne-collecte-details/${campagne._id}`} className="inline-flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
                     Voir détails <BsFillInfoCircleFill className="ml-2" />
                   </Link>
                 </td>
