@@ -50,7 +50,7 @@ app.use('/api/v1/projects', projectRoutes)
 app.use('/api/v1/recipes', recipeRoutes)
 app.use('/api/v1/equipments', equipmentRoutes)
 app.use('/api/v1/events', eventRoutes)
-app.use('/api/v1/campagnes-collecte', campagneCollectRoutes)
+app.use('/api/v1/campagnes-collect', campagneCollectRoutes)
 
 // faire le même systeme avec dollapikey ! pour ne pas stocker dans le frontend ??
 app.get('/api/v1/config/paypal', (req, res) => {
