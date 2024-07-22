@@ -92,6 +92,7 @@ import AdminWatchMonitoringDetailsScreen from './screens/admin/AdminWatchMonitor
 import AdminSupportScreen from './screens/admin/AdminSupportScreen'
 import AdminSettingsScreen from './screens/admin/AdminSettingsScreen'
 import AdminWasteTypesScreen from './screens/admin/AdminWasteTypesScreen'
+import AdminWasteTypeDetailsScreen from './screens/admin/AdminWasteTypeDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -132,6 +133,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-types-de-dechets"
             element={<AdminWasteTypesScreen />}
+          />
+          <Route
+            path="/admin-types-de-dechet-detail/:id"
+            element={<AdminWasteTypeDetailsScreen />}
           />
           <Route
             path="/admin-mails-repertoire"

@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
+
   subTotal: {
     type: Number,
     required: true,
@@ -38,6 +39,9 @@ const saleSchema = new mongoose.Schema(
     clientCity: {
       type: String,
     },
+    paymentMethod: {
+      type: String,
+    },
     touriste: {
       type: Boolean,
       default: false,
@@ -56,12 +60,7 @@ const saleSchema = new mongoose.Schema(
       required: true,
       default: 'Nouvelle-Calédonie',
     },
-    PaymentMethod: {
-      type: String,
-      enum: ['Chéque', 'Espèces', 'Carte Bancaire'],
-      required: true,
-      default: 'Espèces',
-    },
+
     title: {
       type: String,
       required: true,

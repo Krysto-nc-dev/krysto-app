@@ -1,6 +1,6 @@
 const wasteTypes = [
   {
-    waste: 'Plastisque',
+    waste: 'Plastique',
   },
   {
     waste: 'Carton',
