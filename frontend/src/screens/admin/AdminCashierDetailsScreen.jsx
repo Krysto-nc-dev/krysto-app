@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Loader } from 'lucide-react'
 import { useGetCashierByIdQuery, useAddSaleMutation, useCloseCashierMutation } from '../../slices/cashierApiSlice'
-import { useGetProductsQuery } from '../../slices/dolibarr/dolliProductApiSlice'
 import { toast } from 'react-toastify'
+import { useGetDolliProductsQuery } from '../../slices/dolibarr/dolliProductApiSlice'
 
 const UserCashierDetailsScreen = () => {
   const { id: cashierId } = useParams()
-
   const [formData, setFormData] = useState({
     clientFirstname: '',
     clientLastname: '',
@@ -23,13 +22,14 @@ const UserCashierDetailsScreen = () => {
     data: cashierDetails,
     error: errorCashierDetails,
     isLoading: loadingCashierDetails,
+    refetch
   } = useGetCashierByIdQuery(cashierId)
 
   const {
     data: products,
     error: productError,
     isLoading: loadingProducts,
-  } = useGetProductsQuery({
+  } = useGetDolliProductsQuery({
     mode: '1',
     variant_filter: '1',
   })
@@ -86,11 +86,6 @@ const UserCashierDetailsScreen = () => {
     )
   }
 
-  const getProductLabel = (productId) => {
-    const product = products.find((p) => p.id === productId)
-    return product ? product.label : 'Produit inconnu'
-  }
-
   const handleSubmitSale = async (e) => {
     e.preventDefault()
 
@@ -110,14 +105,13 @@ const UserCashierDetailsScreen = () => {
         clientCity: formData.clientCity,
         touriste: formData.touriste,
         clientCountry: formData.clientCountry,
-        title: 'Achat divers', // Ajoutez le titre si nécessaire
+        title: 'Achat divers',
         products: filteredProducts,
       },
     }
 
     try {
       await addSale({ cashierId, sale: saleData })
-      console.log('Sale added successfully')
       toast.success('Vente ajoutée avec succès.')
       setFormData({
         clientFirstname: '',
@@ -134,7 +128,6 @@ const UserCashierDetailsScreen = () => {
         })),
       })
     } catch (error) {
-      console.error('Error adding sale:', error)
       toast.error('Une erreur est survenue lors de la création de la vente.')
     }
   }
@@ -144,8 +137,8 @@ const UserCashierDetailsScreen = () => {
       try {
         await closeCashier(cashierId)
         toast.success('Caisse fermée et ventes enregistrées.')
+        refetch()
       } catch (error) {
-        console.error('Error closing cashier:', error)
         toast.error('Une erreur est survenue lors de la fermeture de la caisse.')
       }
     } else {
@@ -157,113 +150,66 @@ const UserCashierDetailsScreen = () => {
     return <Loader />
   }
 
-  const placePrice = cashierDetails && cashierDetails.placePrice
-  const totalSales = cashierDetails && cashierDetails.totalSales
+  const placePrice = cashierDetails?.placePrice || 0
+  const totalSales = cashierDetails?.totalSales || 0
 
   const progressPercentage = (totalSales / placePrice) * 100
-
-  let realGain = totalSales - placePrice
-  let realGainClass = realGain >= 0 ? 'text-green-500' : 'text-red-500'
+  const realGain = totalSales - placePrice
+  const realGainClass = realGain >= 0 ? 'text-green-500' : 'text-red-500'
 
   return (
-    <div className="mx-auto p-4 max-w-9xl">
-      <div className="rounded-lg shadow-md p-6 bg-gray-700 text-textColor">
-        <div className="relative pt-1">
-          <div className="flex mb-2 items-center justify-between">
-            <div className="text-right">
-              <span className="text-xs font-semibold inline-block text-primaryColor">
-                {progressPercentage.toFixed(2)}%
-              </span>
+    <div className="mx-auto p-4 max-w-6xl bg-white shadow-lg rounded-lg">
+      <div className="p-6">
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-xs font-semibold text-primaryColor">
+              {progressPercentage.toFixed(2)}%
+            </span>
+            <div className="w-full bg-gray-200 rounded-full overflow-hidden">
+              <div
+                style={{ width: `${progressPercentage}%` }}
+                className={`h-2 rounded-full ${
+                  progressPercentage >= 100
+                    ? 'bg-green-500'
+                    : progressPercentage >= 50
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500'
+                }`}
+              />
             </div>
           </div>
-          <div className="overflow-hidden h-6 mb-4 text-xs flex rounded bg-gray-200">
-            <div
-              style={{ width: `${progressPercentage}%` }}
-              className={`shadow-none flex flex-col text-center whitespace-nowrap justify-center ${
-                progressPercentage >= 100
-                  ? 'bg-green-500'
-                  : progressPercentage >= 50
-                  ? 'bg-yellow-500'
-                  : 'bg-red-500'
-              } text-white`}
-            ></div>
-          </div>
         </div>
-        <div className="flex justify-between items-center mb-5">
-          <div className="text-gray-200">
-            {cashierDetails && cashierDetails.title}
-          </div>
-          <div className="mb-4">
-            <span
-              className={`px-2 py-1 rounded ${
-                cashierDetails && cashierDetails.status === 'Ouvert'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-red-500 text-white'
-              }`}
-            >
-              {cashierDetails && cashierDetails.status === 'Ouvert'
-                ? 'Ouvert'
-                : 'Fermé'}
-            </span>
-          </div>
+
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold text-gray-800">{cashierDetails?.title || 'Détails de la Caisse'}</h2>
+          <span className={`px-3 py-1 rounded-full text-white ${
+            cashierDetails?.status === 'Ouvert' ? 'bg-green-500' : 'bg-red-500'
+          }`}>
+            {cashierDetails?.status === 'Ouvert' ? 'Ouvert' : 'Fermé'}
+          </span>
         </div>
 
         <form onSubmit={handleSubmitSale}>
-          <details className="group">
-            <summary className="font-medium cursor-pointer text-lg">
+          <details className="group mb-6">
+            <summary className="cursor-pointer font-medium text-lg text-blue-600">
               Informations du Client
             </summary>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-textColor text-sm">
-                  Prénom du Client
-                </label>
-                <input
-                  type="text"
-                  name="clientFirstname"
-                  value={formData.clientFirstname}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
-              </div>
-              <div>
-                <label className="block text-textColor text-sm">
-                  Nom du Client
-                </label>
-                <input
-                  type="text"
-                  name="clientLastname"
-                  value={formData.clientLastname}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
-              </div>
-              <div>
-                <label className="block text-textColor text-sm">
-                  Email du Client
-                </label>
-                <input
-                  type="email"
-                  name="clientMail"
-                  value={formData.clientMail}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
-              </div>
-              <div>
-                <label className="block text-textColor text-sm">Ville</label>
-                <input
-                  type="text"
-                  name="clientCity"
-                  value={formData.clientCity}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              {['Prénom', 'Nom', 'Email', 'Ville', 'Pays', 'Méthode de Paiement'].map((label, index) => (
+                <div key={index}>
+                  <label className="block text-gray-700 text-sm font-medium mb-1">
+                    {label} du Client
+                  </label>
+                  <input
+                    type={label === 'Email' ? 'email' : 'text'}
+                    name={`client${label.replace(' ', '')}`}
+                    value={formData[`client${label.replace(' ', '')}`]}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded mt-1 text-sm"
+                    disabled={cashierDetails?.status !== 'Ouvert'}
+                  />
+                </div>
+              ))}
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -271,38 +217,17 @@ const UserCashierDetailsScreen = () => {
                   checked={formData.touriste}
                   onChange={handleChange}
                   className="rounded text-primaryColor"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
+                  disabled={cashierDetails?.status !== 'Ouvert'}
                 />
-                <label className="text-textColor text-sm">Touriste</label>
-              </div>
-              <div>
-                <label className="block text-textColor text-sm">Pays</label>
-                <input
-                  type="text"
-                  name="clientCountry"
-                  value={formData.clientCountry}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
-              </div>
-              <div>
-                <label className="block text-textColor text-sm">Méthode de Paiement</label>
-                <input
-                  type="text"
-                  name="paymentMethod"
-                  value={formData.paymentMethod}
-                  onChange={handleChange}
-                  className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                  disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
-                />
+                <label className="text-gray-700 text-sm">Touriste</label>
               </div>
             </div>
           </details>
-          <div className="overflow-x-auto">
-            <table className="table-auto w-full text-textColor">
+
+          <div className="overflow-x-auto mb-6">
+            <table className="table-auto w-full bg-gray-50 border border-gray-200 rounded-lg shadow-md">
               <thead>
-                <tr>
+                <tr className="bg-gray-100 text-gray-700">
                   <th className="px-4 py-2 text-left">Produit</th>
                   <th className="px-4 py-2 text-left">Prix Unitaire</th>
                   <th className="px-4 py-2 text-left">Quantité</th>
@@ -322,40 +247,43 @@ const UserCashierDetailsScreen = () => {
                         onChange={(e) =>
                           handleProductChange(product.productId, product.unitPrice, parseInt(e.target.value, 10))
                         }
-                        className="w-full p-2 border bg-gray-500 rounded mt-1 text-sm"
-                        disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
+                        className="w-full p-2 border border-gray-300 rounded mt-1 text-sm"
+                        disabled={cashierDetails?.status !== 'Ouvert'}
                       />
                     </td>
-                    <td className="px-4 py-2">
-                      {product.subTotal.toFixed(2)}€
-                    </td>
+                    <td className="px-4 py-2">{product.subTotal.toFixed(2)}€</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="text-right mt-4">
-            <span className="text-lg font-bold text-textColor">Total: {calculateTotalSale().toFixed(2)}€</span>
+
+          <div className="text-right mb-6">
+            <span className="text-lg font-semibold text-gray-800">
+              Total: {calculateTotalSale().toFixed(2)}€
+            </span>
           </div>
-          <div className="text-right mt-4">
+
+          <div className="flex justify-end mb-6">
             <button
               type="submit"
-              className={`bg-primaryColor text-white py-2 px-4 rounded ${
-                cashierDetails && cashierDetails.status === 'Ouvert'
-                  ? ''
-                  : 'opacity-50 cursor-not-allowed'
+              className={`bg-primaryColor text-white py-2 px-6 rounded-lg font-semibold ${
+                cashierDetails?.status === 'Ouvert' ? '' : 'opacity-50 cursor-not-allowed'
               }`}
-              disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
+              disabled={cashierDetails?.status !== 'Ouvert'}
             >
               {addingSale ? 'Ajout en cours...' : 'Ajouter Vente'}
             </button>
           </div>
         </form>
-        <div className="mt-6 text-center">
+
+        <div className="flex justify-center">
           <button
             onClick={handleCloseCashier}
-            className="bg-red-500 text-white py-2 px-4 rounded"
-            disabled={cashierDetails && cashierDetails.status !== 'Ouvert'}
+            className={`bg-red-500 text-white py-2 px-6 rounded-lg font-semibold ${
+              cashierDetails?.status === 'Ouvert' ? '' : 'opacity-50 cursor-not-allowed'
+            }`}
+            disabled={cashierDetails?.status !== 'Ouvert'}
           >
             {closingCashier ? 'Fermeture en cours...' : 'Fermer Caisse'}
           </button>

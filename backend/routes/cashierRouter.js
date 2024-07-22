@@ -6,6 +6,7 @@ import {
   updateCashier,
   deleteCashier,
   addSale,
+  closeCashier,
 } from '../controllers/cashierControlleur.js'
 
 const router = express.Router()

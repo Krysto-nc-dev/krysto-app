@@ -48,6 +48,17 @@ export const cashierApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Cashier'], // Invalide les données en cache associées aux caissiers après l'ajout de la vente
     }),
+    closeCashier: builder.mutation({
+      query: ({ cashierId, details }) => ({
+        url: `${CASHIERS_URL}/${cashierId}/close`,
+        method: 'PUT',
+        body: details, // On suppose que details est déjà bien structuré
+      }),
+      // Définir les tags pour invalider ou rafraîchir les données
+      invalidatesTags: (result, error, { orderId }) => [
+        { type: 'Cashier', id: orderId },
+      ],
+    }),
   }),
 })
 
@@ -58,4 +69,5 @@ export const {
   useUpdateCashierMutation,
   useDeleteCashierMutation,
   useAddSaleMutation,
+  useCloseCashierMutation,
 } = cashierApiSlice
