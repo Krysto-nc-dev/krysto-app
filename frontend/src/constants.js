@@ -16,6 +16,7 @@ export const RECIPES_URL = `/api/v1/recipes`
 export const EQUIPMENTS_URL = `/api/v1/equipments`
 export const EVENTS_URL = `/api/v1/events`
 export const CAMPAGNE_COLLECTE_URL = `/api/v1/campagnes-collect`
+export const CASHIERS_URL = `/api/v1/cashiers`
 export const UPLOAD_URL = `/api/v1/upload`
 
 export const DOLIBAR_URL = 'https://crm.krysto.nc/api/index.php'
