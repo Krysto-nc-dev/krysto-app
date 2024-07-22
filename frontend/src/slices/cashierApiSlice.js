@@ -1,5 +1,5 @@
+import { CASHIERS_URL } from '../constants'
 import { apiSlice } from './apiSlice' // Assurez-vous que apiSlice est correctement importé depuis votre configuration générale de l'API
-import { CASHIERS_URL } from './constants' // Assurez-vous d'avoir défini votre URL d'API correctement dans constants.js
 
 export const cashierApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
