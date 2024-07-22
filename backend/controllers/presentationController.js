@@ -29,10 +29,11 @@ const createPresentation = asyncHandler(async (req, res) => {
   const { title, description, images, slides } = req.body
 
   const presentation = new Presentation({
-    title,
-    description,
-    images,
-    slides,
+    title: 'Sample presentation',
+    description: 'sample description',
+    images: ['/uploads/no-photo.png'],
+    slides: [],
+    estimatedDuration: 0,
     user: req.user._id,
   })
 

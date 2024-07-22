@@ -2,7 +2,8 @@ import React from 'react'
 import { useGetPresentationsQuery } from '../../slices/presentationApiSlice'
 import { FaClock } from 'react-icons/fa'
 import Button from '../../components/shared/Button'
-import { Edit, EyeIcon, Trash } from 'lucide-react'
+import { Edit, EyeIcon, PlayCircleIcon, PlusCircleIcon, Trash } from 'lucide-react'
+import Loader from '../FeedbackScreens/Loader'
 
 const AdminPresentationsScreen = () => {
   const { data: presentations, error: presentationsError, isLoading: presentationsLoading } = useGetPresentationsQuery()
@@ -10,7 +11,7 @@ const AdminPresentationsScreen = () => {
   console.log(presentations);
 
   if (presentationsLoading) {
-    return <p>Loading...</p>
+    return <Loader/>
   }
 
   if (presentationsError) {
@@ -18,8 +19,14 @@ const AdminPresentationsScreen = () => {
   }
 
   return (
-    <div className='p-6'>
-      <h1 className='text-3xl font-bold mb-6'>Presentations</h1>
+    <div className='p-2 '>
+
+      <div className="flex items-center justify-between mb-6">
+      <h1 className='text-xl '>Presentations</h1>
+        <Button  icon={PlusCircleIcon} version={"success"} />
+
+      </div>
+
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {presentations.map((presentation) => (
           <div key={presentation._id} className='bg-white shadow-lg rounded-lg overflow-hidden'>
@@ -37,7 +44,7 @@ const AdminPresentationsScreen = () => {
               </div>
               <div className='mt-4 flex items-center justify-between px-10'>
           
-                <Button url={`/presentation/${presentation._id}`} icon={EyeIcon} version={"primary"}/>
+                <Button url={`/presentation/${presentation._id}`} icon={PlayCircleIcon} version={"primary"}/>
                 <Button icon={Edit} version={"warning"}/>
                 <Button icon={Trash} version={"danger"}/>
               </div>
