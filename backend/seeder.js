@@ -12,6 +12,7 @@ import recipes from './_data/recipes.js'
 import equipments from './_data/equipments.js'
 import events from './_data/events.js'
 import campagnesCollect from './_data/campagneCollecte.js'
+import cashiers from './_data/cashiers.js'
 
 // Import des models
 import Order from './models/orderModel.js'
@@ -26,6 +27,7 @@ import Recipe from './models/recipeModel.js'
 import Equipment from './models/equipmentModel.js'
 import Event from './models/eventModel.js'
 import CampagneCollect from './models/CampagneCollecteModel.js'
+import Cashier from './models/CashierModel.js'
 import connectDB from './config/db.js'
 
 dotenv.config()
@@ -39,7 +41,8 @@ const importData = async () => {
     // await User.deleteMany()
 
     // await PlasticTypes.deleteMany()
-    await CampagneCollect.deleteMany()
+    // await CampagneCollect.deleteMany()
+    await Cashier.deleteMany()
     // const createdUsers = await User.insertMany(users)
     // const adminUser = createdUsers[0]._id
     // const sampleProducts = products.map((product) => ({
@@ -48,7 +51,7 @@ const importData = async () => {
     // }))
     // await Product.insertMany(sampleProducts)
     // await PlasticTypes.insertMany(plasticTypes)
-    await CampagneCollect.insertMany(campagnesCollect)
+    await Cashier.insertMany(cashiers)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {
