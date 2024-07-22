@@ -89,6 +89,9 @@ import AdminCampagneCollectEditScreen from './screens/admin/AdminCampagneCollect
 import AdminCashierDetailsScreen from './screens/admin/AdminCashierDetailsScreen'
 import AdminPresentationEditScreen from './screens/admin/AdminPresentationEditScreen'
 import AdminWatchMonitoringDetailsScreen from './screens/admin/AdminWatchMonitoringDetailsScreen'
+import AdminSupportScreen from './screens/admin/AdminSupportScreen'
+import AdminSettingsScreen from './screens/admin/AdminSettingsScreen'
+import AdminWasteTypesScreen from './screens/admin/AdminWasteTypesScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -120,10 +123,15 @@ const router = createBrowserRouter(
       <Route path="" element={<AdminRoute />}>
         <Route path="/" element={<AdminDashboardLayout />}>
           <Route path="/admin-dashboard" element={<AdminDashboardScreen />} />
+          <Route path="/admin-settings" element={<AdminSettingsScreen />} />
           <Route path="/admin-tiers" element={<AdminThirdpartiesScreen />} />
           <Route
             path="/admin-dolibarr-nouveaux-tier"
             element={<AdminDolibarrNewThidpartyScreen />}
+          />
+          <Route
+            path="/admin-types-de-dechets"
+            element={<AdminWasteTypesScreen />}
           />
           <Route
             path="/admin-mails-repertoire"
@@ -287,6 +295,7 @@ const router = createBrowserRouter(
             path="/admin-veille-details/:id"
             element={<AdminWatchMonitoringDetailsScreen />}
           />
+          <Route path="/admin-support" element={<AdminSupportScreen />} />
           {/* Route générique pour gérer toutes les autres routes non définies */}
         </Route>
       </Route>

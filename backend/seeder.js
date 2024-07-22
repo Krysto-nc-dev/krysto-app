@@ -15,6 +15,7 @@ import campagnesCollect from './_data/campagneCollecte.js'
 import cashiers from './_data/cashiers.js'
 import presentations from './_data/presentations.js'
 import veilles from './_data/veilles.js'
+import wastes from './_data/wasteTypes.js'
 
 // Import des models
 import Order from './models/orderModel.js'
@@ -32,6 +33,7 @@ import CampagneCollect from './models/CampagneCollecteModel.js'
 import Cashier from './models/CashierModel.js'
 import Presentation from './models/presentationModel.js'
 import Veille from './models/veilleModel.js'
+import Waste from './models/WasteTypeModel.js'
 import connectDB from './config/db.js'
 
 dotenv.config()
@@ -48,7 +50,8 @@ const importData = async () => {
     // await CampagneCollect.deleteMany()
     // await Cashier.deleteMany()
     // await Presentation.deleteMany()
-    await Veille.deleteMany()
+    // await Veille.deleteMany()
+    await Waste.deleteMany()
     // const createdUsers = await User.insertMany(users)
     // const adminUser = createdUsers[0]._id
     // const sampleProducts = products.map((product) => ({
@@ -59,7 +62,8 @@ const importData = async () => {
     // await PlasticTypes.insertMany(plasticTypes)
     // await Cashier.insertMany(cashiers)
     // await Presentation.insertMany(presentations)
-    await Veille.insertMany(veilles)
+    // await Veille.insertMany(veilles)
+    await Waste.insertMany(wastes)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {

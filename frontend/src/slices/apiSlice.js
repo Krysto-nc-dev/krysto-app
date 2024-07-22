@@ -14,6 +14,7 @@ const tagTypes = [
   'Recipe',
   'CampagneCollect',
   'Cashier',
+  'Waste',
 ]
 
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL })

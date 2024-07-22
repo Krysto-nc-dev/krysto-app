@@ -14,15 +14,17 @@ const collecteSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    wasteType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'WasteType',
+    },
     PlasticType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'PlasticType',
-      required: true,
     },
     PlasticColor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'PlasticColor',
-      required: true,
     },
     collectedBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -63,6 +65,13 @@ const campagneCollectSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    wasteType: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'WasteType',
+        required: true,
+      },
+    ],
     frequency: {
       type: String,
       enum: ['Hebdomadaire', 'Mensuelle'],
