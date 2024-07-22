@@ -52,10 +52,12 @@ const veilleSchema = new mongoose.Schema(
       enum: ['français', 'anglais', 'espagnol', 'allemand', 'autre'],
       required: true,
     },
-    photo: {
-      type: String,
-      default: 'no-photo.png',
-    },
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   { timestamps: true },
 )

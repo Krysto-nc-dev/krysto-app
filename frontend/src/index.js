@@ -88,6 +88,7 @@ import AdminCampagneCollectDetailsScreen from './screens/admin/AdminCampagneColl
 import AdminCampagneCollectEditScreen from './screens/admin/AdminCampagneCollectEditScreen'
 import AdminCashierDetailsScreen from './screens/admin/AdminCashierDetailsScreen'
 import AdminPresentationEditScreen from './screens/admin/AdminPresentationEditScreen'
+import AdminWatchMonitoringDetailsScreen from './screens/admin/AdminWatchMonitoringDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -281,6 +282,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-veilles"
             element={<AdminWathMonitoringScreen />}
+          />
+          <Route
+            path="/admin-veille-details/:id"
+            element={<AdminWatchMonitoringDetailsScreen />}
           />
           {/* Route générique pour gérer toutes les autres routes non définies */}
         </Route>

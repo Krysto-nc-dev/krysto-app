@@ -10,7 +10,7 @@ const veilles = [
     url: 'https://www.youtube.com/@BrothersMake',
     source: 'YouTube',
     lang: 'anglais',
-    photo: 'brother_make.jpg',
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Atlas du plastique',
@@ -24,7 +24,7 @@ const veilles = [
       'https://fr.boell.org/sites/default/files/2020-09/ATLAS%20DU%20PLASTIQUE%20VF%202020.pdf',
     source: 'Fondation Heinrich-Böll Stiftung',
     lang: 'français',
-    photo: 'atlas_plastique.png',
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Atlas du Plastique : faits et chiffres sur la crise du plastique',
@@ -37,7 +37,7 @@ const veilles = [
     url: 'https://www.youtube.com/watch?v=cNlKijCTyFM',
     source: 'Fondation Heinrich-Böll Stiftung',
     lang: 'français',
-    photo: 'atlas_video.png',
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Actualités sur les réglementations du plastique',
@@ -50,6 +50,7 @@ const veilles = [
     url: 'https://example.com/actualites-reglementations-plastique',
     source: 'Government News',
     lang: 'allemand',
+    images: ['/uploads/no-photo.png'],
   },
   {
     title: 'Vidéo de Precious Plastic sur le recyclage à domicile',
@@ -62,6 +63,7 @@ const veilles = [
     url: 'https://example.com/precious-plastic-recyclage-domicile',
     source: 'Precious Plastic',
     lang: 'français',
+    images: ['/uploads/no-photo.png'],
   },
 ]
 
