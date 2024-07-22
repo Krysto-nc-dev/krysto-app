@@ -87,6 +87,11 @@ const presentationSchema = new mongoose.Schema(
       type: String,
       required: [true, 'La description est requise'],
     },
+    estimatedDuration: {
+      type: Number,
+      required: [true, 'La durée estimée est requise'],
+    },
+
     slides: [slideSchema],
   },
   { timestamps: true },

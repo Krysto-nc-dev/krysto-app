@@ -8,6 +8,7 @@ const presentations = [
       '/uploads/no-photo.png',
       '/uploads/no-photo.png',
     ],
+    estimatedDuration: 15,
 
     slides: [
       {
@@ -52,6 +53,7 @@ const presentations = [
       '/uploads/no-photo.png',
       '/uploads/no-photo.png',
     ],
+    estimatedDuration: 30,
     slides: [
       {
         title: 'Collecte de Plastique 2024',
@@ -84,6 +86,7 @@ const presentations = [
       '/uploads/no-photo.png',
       '/uploads/no-photo.png',
     ],
+    estimatedDuration: 90,
     slides: [
       {
         title: "Plasti'quizz",
