@@ -2,6 +2,8 @@ import React from 'react';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useGetCampagnesCollecteQuery } from '../../slices/campagneCollectApiSlice';
+import Button from '../../components/shared/Button';
+import { Edit, EyeIcon, Trash } from 'lucide-react';
 
 const AdminCollectCampagnesScreen = () => {
   const { data: collectCampagnes, error: errorCampagnes, isLoading: loadingCampagnes } = useGetCampagnesCollecteQuery();
@@ -73,10 +75,11 @@ const AdminCollectCampagnesScreen = () => {
                     {campagne.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-center">
-                  <Link to={`/admin-campagne-collecte-details/${campagne._id}`} className="inline-flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                    Voir détails <BsFillInfoCircleFill className="ml-2" />
-                  </Link>
+                <td className="px-6 py-4 text-center flex gap-3">
+          
+                  <Button version={'primary'} url={`/admin-campagne-collecte-details/${campagne._id}`} icon={EyeIcon}/>
+                  <Button version={'warning'} url={`/admin-campagne-collecte-edit/${campagne._id}`} icon={Edit}/>
+                  <Button version={'danger'}  icon={Trash}/>
                 </td>
               </tr>
             ))}

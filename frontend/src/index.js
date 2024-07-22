@@ -85,6 +85,7 @@ import AdminDolibarrNewThidpartyScreen from './screens/admin/AdminDolibarrNewThi
 import AdminEquipmentDetailsScreen from './screens/admin/AdminEquipmentDetailsScreen'
 import AdminEquipmentEditScreen from './screens/admin/AdminEquipmentEditScreen'
 import AdminCampagneCollectDetailsScreen from './screens/admin/AdminCampagneCollectDetailsScreen'
+import AdminCampagneCollectEditScreen from './screens/admin/AdminCampagneCollectEditScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -204,6 +205,10 @@ const router = createBrowserRouter(
           <Route
             path="/admin-campagne-collecte-details/:id"
             element={<AdminCampagneCollectDetailsScreen />}
+          />
+          <Route
+            path="/admin-campagne-collecte-edit/:id"
+            element={<AdminCampagneCollectEditScreen />}
           />
           <Route
             path="/admin-produits-recyclable"
