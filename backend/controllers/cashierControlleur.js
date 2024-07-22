@@ -161,10 +161,26 @@ const addSale = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 })
+// @desc close cashier
+// @route PUT  /api/cashiers/:id/close
+// @access Private/admin
+const closeCashier = asyncHandler(async (req, res) => {
+  const cashier = await Cashier.findById(req.params.id)
+  if (cashier) {
+    cashier.status = 'Fermé'
+
+    const updatedcashier = await cashier.save()
+    res.status(200).json(updatedcashier)
+  } else {
+    res.status(404)
+    throw new Error('Caisse non trouvée.')
+  }
+})
 
 export {
   createCashier,
   getCashiers,
+  closeCashier,
   getCashierById,
   updateCashier,
   deleteCashier,

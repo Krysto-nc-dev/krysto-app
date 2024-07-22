@@ -120,7 +120,7 @@ const AdminCashierScreen = () => {
   return (
     <div className="mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">Historique des caisses</h1>
+        <h1 className="text-2xl font-bold">Historique des caisses</h1>
         <div>
           <button
             onClick={openModal}
@@ -167,7 +167,7 @@ const AdminCashierScreen = () => {
                   </td>
                   <td className="py-3 px-2 text-right">
                     <Link
-                      to={`/cashier-details/${cashier._id}`}
+                      to={`/admin-caisse-details/${cashier._id}`}
                       className="inline-flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600"
                     >
                       <EyeIcon className="w-5 h-5" />

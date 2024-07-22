@@ -17,6 +17,7 @@ router
   .get(getCashierById)
   .put(updateCashier)
   .delete(deleteCashier)
+router.route('/:id/close').put(closeCashier)
 
 // Route for adding sale to a specific cashier
 router.route('/:cashierId/sales').post(addSale)

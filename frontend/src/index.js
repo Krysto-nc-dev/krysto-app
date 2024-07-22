@@ -86,6 +86,7 @@ import AdminEquipmentDetailsScreen from './screens/admin/AdminEquipmentDetailsSc
 import AdminEquipmentEditScreen from './screens/admin/AdminEquipmentEditScreen'
 import AdminCampagneCollectDetailsScreen from './screens/admin/AdminCampagneCollectDetailsScreen'
 import AdminCampagneCollectEditScreen from './screens/admin/AdminCampagneCollectEditScreen'
+import AdminCashierDetailsScreen from './screens/admin/AdminCashierDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -153,6 +154,10 @@ const router = createBrowserRouter(
             element={<AdminBanksScreen />}
           />
           <Route path="/admin-caisses" element={<AdminCashiersScreen />} />
+          <Route
+            path="/admin-caisse-details/:id"
+            element={<AdminCashierDetailsScreen />}
+          />
           <Route
             path="/admin-equipements"
             element={<AdminEquipmentsScreen />}
