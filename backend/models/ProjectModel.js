@@ -77,7 +77,7 @@ const projectSchema = new mongoose.Schema(
       type: String,
       enum: ['Proposition', 'Approuvé', 'En cours', 'Terminé', 'Abandonné'],
       required: true,
-      default: 'Proposed',
+      default: 'Proposition',
     },
     teamMembers: [
       {
