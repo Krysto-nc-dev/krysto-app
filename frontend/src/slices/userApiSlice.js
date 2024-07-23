@@ -1,6 +1,7 @@
 // Import necessary constants and the apiSlice
 import { apiSlice } from './apiSlice'
 import { USERS_URL } from '../constants'
+
 // Use apiSlice to inject endpoints
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -73,6 +74,40 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+
+    // New getPartnerProfile query
+    getPartnerProfile: builder.query({
+      query: (partnerId) => ({
+        url: `${USERS_URL}/partner/${partnerId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+
+    // New updatePartnerProfile mutation
+    updatePartnerProfile: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/partner/${data.partnerId}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+
+    // New getResellerProfile query
+    getResellerProfile: builder.query({
+      query: (resellerId) => ({
+        url: `${USERS_URL}/reseller/${resellerId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+
+    // New updateResellerProfile mutation
+    updateResellerProfile: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/reseller/${data.resellerId}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 })
 
@@ -81,9 +116,13 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
-  useGetUsersQuery,
   useProfileMutation,
+  useGetUsersQuery,
   useDeleteUsersMutation, // Added
   useGetUserDetailsQuery, // Added
   useUpdateUserMutation,
+  useGetPartnerProfileQuery, // Added
+  useUpdatePartnerProfileMutation, // Added
+  useGetResellerProfileQuery, // Added
+  useUpdateResellerProfileMutation, // Added
 } = usersApiSlice

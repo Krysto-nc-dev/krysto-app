@@ -93,6 +93,24 @@ import AdminSupportScreen from './screens/admin/AdminSupportScreen'
 import AdminSettingsScreen from './screens/admin/AdminSettingsScreen'
 import AdminWasteTypesScreen from './screens/admin/AdminWasteTypesScreen'
 import AdminWasteTypeDetailsScreen from './screens/admin/AdminWasteTypeDetailsScreen'
+import PartnerRoute from './components/utils/PartnerRoute'
+import PartnerDashboardLayout from './components/layout/partnerLayout/PartnerDashboardLayout'
+
+import ResellerDashboardScreen from './screens/reseller/ResellerDashboardScreen'
+import ResellerRoute from './components/utils/ResellerRoute'
+import ResellerDashboardLayout from './components/layout/resellerLayout/ResellerDashboardLayout'
+import ResellerCatalogueScreen from './screens/reseller/ResellerCatalogueScreen'
+
+import ResellerStockScreen from './screens/reseller/ResellerStockScreen'
+import ResellerReassortScreen from './screens/reseller/ResellerReassortScreen'
+import ResellerSalesScreen from './screens/reseller/ResellerSalesScreen'
+import ResellerCollectesScreen from './screens/reseller/ResellerCollectesScreen'
+import ResellerQuoteScreeen from './screens/reseller/ResellerQuoteScreeen'
+import ResellerBillsScreen from './screens/reseller/ResellerBillsScreen'
+import ResellerSettingsScreen from './screens/reseller/ResellerSettingsScreen'
+import ResellerSupportsScreen from './screens/reseller/ResellerSupportsScreen'
+import ResellerProfileScreen from './screens/reseller/ResellerProfileScreen'
+import ResellerDocumentionScreen from './screens/reseller/ResellerDocumentionScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -112,12 +130,58 @@ const router = createBrowserRouter(
         <Route path="/produit/:id" element={<ProductDetailsScreen />} />
       </Route>
 
-      {/* Registered users */}
-      <Route path="" element={<PrivateRoute />}>
-        <Route
-          path="/partenaire-dashboard"
-          element={<PartnerDashboardScreen />}
-        />
+      {/* users with role reseller */}
+      <Route path="" element={<ResellerRoute />}>
+        <Route path="/" element={<ResellerDashboardLayout />}>
+          <Route
+            path="/revendeur-dashboard"
+            element={<ResellerDashboardScreen />}
+          />
+          <Route
+            path="/revendeur-catalogue"
+            element={<ResellerCatalogueScreen />}
+          />
+          <Route
+            path="/revendeur-paramétres"
+            element={<ResellerSettingsScreen />}
+          />
+          <Route
+            path="/revendeur-stock-reel"
+            element={<ResellerStockScreen />}
+          />
+          <Route
+            path="/revendeur-demande-reassorts"
+            element={<ResellerReassortScreen />}
+          />
+          <Route
+            path="/revendeur-support"
+            element={<ResellerSupportsScreen />}
+          />
+          <Route path="/revendeur-ventes" element={<ResellerSalesScreen />} />
+          <Route
+            path="/revendeur-profile"
+            element={<ResellerProfileScreen />}
+          />
+          <Route
+            path="/revendeur-documentation"
+            element={<ResellerDocumentionScreen />}
+          />
+          <Route
+            path="/revendeur-collectes"
+            element={<ResellerCollectesScreen />}
+          />
+          <Route path="/revendeur-devis" element={<ResellerQuoteScreeen />} />
+          <Route path="/revendeur-factures" element={<ResellerBillsScreen />} />
+        </Route>
+      </Route>
+      {/* users with role partner  */}
+      <Route path="" element={<PartnerRoute />}>
+        <Route path="/" element={<PartnerDashboardLayout />}>
+          <Route
+            path="/partenaire-dashboard"
+            element={<PartnerDashboardScreen />}
+          />
+        </Route>
       </Route>
 
       {/* Admin users */}

@@ -1,18 +1,44 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
+// Sous-schéma pour le niveau de stock souhaité
+const preferredStockLevelSchema = new mongoose.Schema({
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true,
+  },
+  desiredQuantity: {
+    type: Number,
+    required: true,
+  },
+})
+
+// Sous-schéma pour le profil de Partenaire
+const partnerProfileSchema = new mongoose.Schema({
+  companyName: { type: String },
+  dollibarThirdPartyId: { type: String },
+})
+
+// Sous-schéma pour le profil de Revendeur
+const resellerProfileSchema = new mongoose.Schema({
+  storeName: { type: String },
+  dollibarThirdPartyId: { type: String },
+  dollibarWarehousId: { type: String },
+  preferredStockLevels: [preferredStockLevelSchema],
+})
+
+// Schéma principal de l'utilisateur
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-
     lastname: {
       type: String,
       required: true,
     },
-
     email: {
       type: String,
       required: true,
@@ -27,11 +53,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: function (value) {
-          // Au moins 8 caractères
-          // Au moins une lettre minuscule
-          // Au moins une lettre majuscule
-          // Au moins un chiffre
-          // Au moins un caractère spécial (parmi !@#$%^&*)
           const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
           return regex.test(value)
         },
@@ -41,7 +62,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['User', 'Partner', 'Recycler'],
+      enum: ['User', 'Partner', 'Reseller'],
       required: true,
       default: 'User',
     },
@@ -50,6 +71,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    // Champs pour les profils spécifiques
+    partnerProfile: partnerProfileSchema,
+    resellerProfile: resellerProfileSchema,
   },
   { timestamps: true },
 )
@@ -60,10 +84,11 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    next()
+    return next()
   }
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
+  next()
 })
 
 const User = mongoose.model('User', userSchema)

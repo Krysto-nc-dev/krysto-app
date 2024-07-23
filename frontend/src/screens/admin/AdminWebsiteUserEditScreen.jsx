@@ -139,6 +139,7 @@ const AdminWebsiteUserEditScreen = () => {
             <option value="">Sélectionner un rôle</option>
             <option value="User">Utilisateur</option>
             <option value="Partner">Partenaire</option>
+            <option value="Reseller">Revendeur</option>
           </select>
         </div>
         

@@ -29,8 +29,10 @@ const LoginScreen = () => {
         navigate('/admin-dashboard')
       } else if (userInfo.role === 'User') {
         navigate('/utilisateur-dashboard')
-      } else if (userInfo.role === 'User') {
-        navigate('/partnenaire-dashboard')
+      } else if (userInfo.role === 'Partner') {
+        navigate('/partenaire-dashboard')
+      } else if (userInfo.role === 'Reseller') {
+        navigate('/revendeur-dashboard')
       } else {
         navigate(redirect)
       }
@@ -49,14 +51,15 @@ const LoginScreen = () => {
   }
 
   return (
-
     <>
       <div className="flex items-center justify-center ">
         <div className="relative flex flex-col m-1 space-y-10 bg-gray-700 shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0">
           {/* left side  */}
           <div className="p-3 md:p-14 ">
             {/* top content */}
-            <h2 className="mb-4 text-4xl font-bold text-gray-200 ">Connection</h2>
+            <h2 className="mb-4 text-4xl font-bold text-gray-200 ">
+              Connection
+            </h2>
             <p className="max-w-md mb-8 font-light text-gray-200">
               Connectez-vous à votre compte pour profiter de notre plateforme.
             </p>
@@ -85,29 +88,38 @@ const LoginScreen = () => {
               </button>
             </form>
             <div className="flex items-center justify-between mt-6">
-              <Link to="/inscription" className="text-primaryColor hover:text-opacity-90">
+              <Link
+                to="/inscription"
+                className="text-primaryColor hover:text-opacity-90"
+              >
                 Créer un compte
               </Link>
-              <Link to="/forgot-password" className="text-primaryColor hover:text-opacity-90">
+              <Link
+                to="/forgot-password"
+                className="text-primaryColor hover:text-opacity-90"
+              >
                 Mot de passe oublié ?
               </Link>
             </div>
 
             {/* middle-content */}
-           
+
             <div className="mt-4 border-b border-b-gray-200"></div>
 
-               <div className="flex flex-col items-center justify-between mt-6 space-y-6 md:flex-row md:space-y-0">
-              <Link to={"/"} className="w-full  flex justify-center items-center p-3 space-x-4 font-bold text-white  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg  transition hover:-translate-y-0.5 duration-150">
+            <div className="flex flex-col items-center justify-between mt-6 space-y-6 md:flex-row md:space-y-0">
+              <Link
+                to={'/'}
+                className="w-full  flex justify-center items-center p-3 space-x-4 font-bold text-white  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg  transition hover:-translate-y-0.5 duration-150"
+              >
                 <MoveRightIcon className="mr-5" />
-               Retour au site
+                Retour au site
               </Link>
             </div>
           </div>
 
           {/* right side  */}
           <img
-            src='/images/BG_bouchons.jpeg'
+            src="/images/BG_bouchons.jpeg"
             className="w-[600px] hidden md:block object-cover rounded-r-2xl"
             alt="Bouchons de bouteilles en plastique"
           />

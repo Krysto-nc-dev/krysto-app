@@ -5,9 +5,7 @@ import User from '../models/userModel.js'
 import ErrorResponse from '../utils/errorResponse.js'
 import sendEmail from '../utils/sendEmail.js'
 
-// @desc Auth user & get token
-// @route POST /api/users/login
-// @access Public
+// Auth user & get token
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
@@ -28,23 +26,33 @@ const authUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc Register a new user
-// @route POST /api/users
-// @access Public
+// Register a new user
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, lastname } = req.body
+  const { name, email, password, lastname, role } = req.body
   const userExist = await User.findOne({ email })
+
   if (userExist) {
     res.status(400)
     throw new Error('Cet utilisateur existe déjà')
   }
+
   const user = await User.create({
     name,
     lastname,
     email,
     password,
+    role,
   })
+
   if (user) {
+    // Create profile based on role
+    if (user.role === 'Partner') {
+      user.partnerProfile = {} // Initialize partner profile
+    } else if (user.role === 'Reseller') {
+      user.resellerProfile = { preferredStockLevels: [] } // Initialize reseller profile
+    }
+    await user.save()
+
     generateToken(res, user._id)
     res.status(201).json({
       _id: user._id,
@@ -60,9 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc Logout user / clear cookie
-// @route POST /api/users/logout
-// @access Private
+// Logout user / clear cookie
 const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('token', '', {
     httpOnly: true,
@@ -72,11 +78,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Vous êtes déconnecté' })
 })
 
-// @desc Get user profile
-// @route GET /api/users/profile
-// @access Private
+// Get user profile
 const getUserProfile = asyncHandler(async (req, res) => {
-  // Vérifier si req.user existe et contient _id
   if (!req.user || !req.user._id) {
     res
       .status(400)
@@ -84,10 +87,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
     return
   }
 
-  // Trouver l'utilisateur par son ID
   const user = await User.findById(req.user._id)
 
-  // Vérifier si l'utilisateur existe
   if (user) {
     res.status(200).json({
       _id: user._id,
@@ -96,6 +97,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       role: user.role,
+      partnerProfile: user.partnerProfile,
+      resellerProfile: user.resellerProfile,
     })
   } else {
     res.status(404)
@@ -103,15 +106,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc update profile
-// @route PUT /api/users/profile
-// @access Private
+// Update profile
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
     user.name = req.body.name || user.name
-    user.lastname = req.body.lastname || user.lastname // Ajout de la mise à jour du champ lastname
+    user.lastname = req.body.lastname || user.lastname
     user.email = req.body.email || user.email
 
     if (req.body.password) {
@@ -122,7 +123,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,
-      lastname: updatedUser.lastname, // Ajout du champ lastname dans la réponse
+      lastname: updatedUser.lastname,
       role: updatedUser.role,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
@@ -133,17 +134,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc Get users
-// @route GET /api/users
-// @access Private/Admin
+// Get users
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
 })
 
-// @desc Get user by id
-// @route GET /api/users/:id
-// @access Private/Admin
+// Get user by id
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
   if (user) {
@@ -154,9 +151,7 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc Get users
-// @route DELETE /api/users/:id
-// @access Private/Admin
+// Delete user
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
   if (user) {
@@ -172,9 +167,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc Update user
-// @route PUT /api/users/:id
-// @access Private/Admin
+// Update user
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
   if (user) {
@@ -183,6 +176,13 @@ const updateUser = asyncHandler(async (req, res) => {
     user.role = req.body.role || user.role
     user.lastname = req.body.lastname || user.lastname
     user.isAdmin = Boolean(req.body.isAdmin)
+
+    // Update profile based on role
+    if (user.role === 'Partner' && !user.partnerProfile) {
+      user.partnerProfile = {}
+    } else if (user.role === 'Reseller' && !user.resellerProfile) {
+      user.resellerProfile = { preferredStockLevels: [] }
+    }
 
     const updatedUser = await user.save()
     res.status(200).json({
@@ -199,15 +199,12 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc      Update password
-// @route     PUT /api/users/updatepassword
-// @access    Private
+// Update password
 const updatePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password')
 
-  // Check current password
   if (!(await user.matchPassword(req.body.currentPassword))) {
-    return next(new ErrorResponse('Password is incorrect', 401))
+    return next(new ErrorResponse('Mot de passe incorrect', 401))
   }
 
   user.password = req.body.newPassword
@@ -216,28 +213,23 @@ const updatePassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res)
 })
 
-// @desc      Forgot password
-// @route     POST /api/users/forgotpassword
-// @access    Public
+// Forgot password
 const forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email })
 
   if (!user) {
-    return next(new ErrorResponse('There is no user with that email', 404))
+    return next(new ErrorResponse('Aucun utilisateur avec cet e-mail', 404))
   }
 
-  // Get reset token
   const resetToken = user.getResetPasswordToken()
 
   await user.save({ validateBeforeSave: false })
 
-  // Create reset url
   const resetUrl = `${req.protocol}://${req.get(
     'host',
   )}/api/users/resetpassword/${resetToken}`
 
-  const message = `
-  Vous recevez cet e-mail car vous (ou une autre personne) avez demandé la réinitialisation d'un mot de passe sur Sollen. Veuillez effectuer une requête à : \n\n ${resetUrl}`
+  const message = `Vous recevez cet e-mail car vous (ou une autre personne) avez demandé la réinitialisation d'un mot de passe. Veuillez effectuer une requête à : \n\n ${resetUrl}`
 
   try {
     await sendEmail({
@@ -261,18 +253,10 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
       ),
     )
   }
-
-  res.status(200).json({
-    success: true,
-    data: user,
-  })
 })
 
-// @desc      Reset password
-// @route     PUT /api/users/resetpassword/:resettoken
-// @access    Public
+// Reset password
 const resetPassword = asyncHandler(async (req, res, next) => {
-  // Get hashed token
   const resetPasswordToken = crypto
     .createHash('sha256')
     .update(req.params.resettoken)
@@ -284,10 +268,9 @@ const resetPassword = asyncHandler(async (req, res, next) => {
   })
 
   if (!user) {
-    return next(new ErrorResponse('Invalid token', 400))
+    return next(new ErrorResponse('Token invalide', 400))
   }
 
-  // Set new password
   user.password = req.body.password
   user.resetPasswordToken = undefined
   user.resetPasswordExpire = undefined
@@ -296,9 +279,73 @@ const resetPassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res)
 })
 
+// Get partner profile
+const getPartnerProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user || user.role !== 'Partner') {
+    return res.status(404).json({ message: 'Profil de partenaire non trouvé' })
+  }
+
+  res.status(200).json(user.partnerProfile)
+})
+
+// Update partner profile
+const updatePartnerProfile = asyncHandler(async (req, res) => {
+  const { companyName, dollibarThirdPartyId } = req.body
+  const user = await User.findById(req.params.id)
+
+  if (!user || user.role !== 'Partner') {
+    return res.status(404).json({ message: 'Profil de partenaire non trouvé' })
+  }
+
+  if (companyName) user.partnerProfile.companyName = companyName
+  if (dollibarThirdPartyId)
+    user.partnerProfile.dollibarThirdPartyId = dollibarThirdPartyId
+
+  await user.save()
+  res.status(200).json(user.partnerProfile)
+})
+
+// Get reseller profile
+const getResellerProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user || user.role !== 'Reseller') {
+    return res.status(404).json({ message: 'Profil de revendeur non trouvé' })
+  }
+
+  res.status(200).json(user.resellerProfile)
+})
+
+// Update reseller profile
+const updateResellerProfile = asyncHandler(async (req, res) => {
+  const {
+    storeName,
+    dollibarThirdPartyId,
+    dollibarWarehousId,
+    preferredStockLevels,
+  } = req.body
+  const user = await User.findById(req.params.id)
+
+  if (!user || user.role !== 'Reseller') {
+    return res.status(404).json({ message: 'Profil de revendeur non trouvé' })
+  }
+
+  if (storeName) user.resellerProfile.storeName = storeName
+  if (dollibarThirdPartyId)
+    user.resellerProfile.dollibarThirdPartyId = dollibarThirdPartyId
+  if (dollibarWarehousId)
+    user.resellerProfile.dollibarWarehousId = dollibarWarehousId
+  if (preferredStockLevels)
+    user.resellerProfile.preferredStockLevels = preferredStockLevels
+
+  await user.save()
+  res.status(200).json(user.resellerProfile)
+})
+
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
-  // Create token
   const token = user.getSignedJwtToken()
 
   const options = {
@@ -329,4 +376,8 @@ export {
   updatePassword,
   forgotPassword,
   resetPassword,
+  getPartnerProfile,
+  updatePartnerProfile,
+  getResellerProfile,
+  updateResellerProfile,
 }
