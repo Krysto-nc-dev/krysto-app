@@ -222,7 +222,7 @@ const AdminDoliProductScreen = () => {
               {filteredData.map((product) => (
                 <tr key={product.id}  className="hover:bg-primaryColor bg-gray-300">
                   <td className="px-4 py-2 border-b">
-                    <Link to={`/user-product-details/${product.id}`}>
+                    <Link to={`/admin-dollibarr-products-details/${product.id}`}>
                       {product.ref}
                     </Link>
                   </td>

@@ -146,6 +146,7 @@ const router = createBrowserRouter(
             path="/admin-dollibarr-products"
             element={<AdminDoliProductsScreen />}
           />
+
           <Route
             path="/admin-dolibarr-nouveaux-produit"
             element={<AdminDollibarNewProductScreen />}
