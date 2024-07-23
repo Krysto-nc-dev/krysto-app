@@ -44,13 +44,13 @@ router
 // Partner profile routes
 router
   .route('/partner/:id')
-  .get(protect, admin, getPartnerProfile) // Admin can get partner profile by ID
-  .put(protect, admin, updatePartnerProfile) // Admin can update partner profile by ID
+  .get(protect, getPartnerProfile) // Admin can get partner profile by ID
+  .put(protect, updatePartnerProfile) // Admin can update partner profile by ID
 
 // Reseller profile routes
 router
   .route('/reseller/:id')
-  .get(protect, admin, getResellerProfile) // Admin can get reseller profile by ID
-  .put(protect, admin, updateResellerProfile) // Admin can update reseller profile by ID
+  .get(protect, getResellerProfile) // Admin can get reseller profile by ID
+  .put(protect, updateResellerProfile) // Admin can update reseller profile by ID
 
 export default router
