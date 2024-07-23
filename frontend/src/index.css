@@ -161,7 +161,9 @@ body {
 }
 
 
-
+input, select {
+  background: rgb(234, 230, 234);
+}
 
 /* ================= Rating component ========================= */
 

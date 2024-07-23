@@ -16,36 +16,42 @@ const campagnesCollecte = [
         dateCollecte: new Date('2024-01-15'),
         PlasticWeightKg: 50,
         PlasticType: '737a3694e5fc335f796a4943', // Remplacez par un ID valide
-        PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        PlasticColor: '737a3694e5fc335f796a4925', // Remplacez par un ID valide
+        collectedBy: '669b57b2ca6e9541ff044561',
+        wasteType: '737a3694e5fc335f796a5742',
+        // Remplacez par un ID utilisateur valide
       },
       {
         dateCollecte: new Date('2024-02-15'),
         PlasticWeightKg: 4,
         PlasticType: '737a3694e5fc335f796a4949', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
       {
         dateCollecte: new Date('2024-02-25'),
         PlasticWeightKg: 50,
-        PlasticType: '737a3694e5fc335f796a4944', // Remplacez par un ID valide
+        PlasticType: '737a3694e5fc335f796a4947', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
       {
         dateCollecte: new Date('2024-03-10'),
         PlasticWeightKg: 20,
-        PlasticType: '737a3694e5fc335f796a4946', // Remplacez par un ID valide
+        PlasticType: '737a3694e5fc335f796a4947', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
       {
         dateCollecte: new Date('2024-04-10'),
         PlasticWeightKg: 32,
-        PlasticType: '737a3694e5fc335f796a4946', // Remplacez par un ID valide
+        PlasticType: '737a3694e5fc335f796a4947', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
     ],
   },
@@ -66,16 +72,18 @@ const campagnesCollecte = [
       {
         dateCollecte: new Date('2024-01-20'),
         PlasticWeightKg: 80,
-        PlasticType: '737a3694e5fc335f796a4947', // Remplacez par un ID valide
+        PlasticType: '737a3694e5fc335f796a4946', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc335f796a4921', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
       {
         dateCollecte: new Date('2024-02-20'),
         PlasticWeightKg: 75,
-        PlasticType: '737a3694e5fc335f796a4947', // Remplacez par un ID valide
+        PlasticType: '737a3694e5fc335f796a4946', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc335f796a4921', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561', // Remplacez par un ID utilisateur valide
+        wasteType: '737a3694e5fc335f796a5742',
       },
     ],
   },
@@ -96,7 +104,9 @@ const campagnesCollecte = [
         PlasticWeightKg: 30,
         PlasticType: '737a3694e5fc335f796a4946', // Remplacez par un ID valide
         PlasticColor: '737a3694e5fc336f796a413b', // Remplacez par un ID valide
-        collectedBy: '6686899f7f0f7be0d5780336', // Remplacez par un ID utilisateur valide
+        collectedBy: '669b57b2ca6e9541ff044561',
+        wasteType: '737a3694e5fc335f796a5742',
+        // Remplacez par un ID utilisateur valide
       },
     ],
   },

@@ -51,7 +51,7 @@ const importData = async () => {
     // await Cashier.deleteMany()
     // await Presentation.deleteMany()
     // await Veille.deleteMany()
-    await Waste.deleteMany()
+    // await Waste.deleteMany()
     // const createdUsers = await User.insertMany(users)
     // const adminUser = createdUsers[0]._id
     // const sampleProducts = products.map((product) => ({
@@ -63,7 +63,8 @@ const importData = async () => {
     // await Cashier.insertMany(cashiers)
     // await Presentation.insertMany(presentations)
     // await Veille.insertMany(veilles)
-    await Waste.insertMany(wastes)
+    // await CampagneCollect.insertMany(campagnesCollect)
+    // await Waste.insertMany(wastes)
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {

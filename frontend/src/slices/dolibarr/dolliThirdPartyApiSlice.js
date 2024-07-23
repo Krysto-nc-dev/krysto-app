@@ -40,11 +40,22 @@ export const dolliThirdPartyApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createThirdParty: builder.mutation({
+      query: (invoiceData) => ({
+        url: `${DOLIBAR_URL}/thirdparties`,
+        method: 'POST',
+        headers: {
+          DOLAPIKEY: DOLIBARR_API_KEY,
+        },
+        body: invoiceData,
+      }),
+    }),
   }),
 })
 
 export const {
   useGetThirdPartiesQuery,
   useGetThirdPartyDetailsQuery,
+  useCreateThirdPartyMutation,
   // Ajoutez d'autres exports ici pour les autres queries, mutations, etc.
 } = dolliThirdPartyApiSlice
