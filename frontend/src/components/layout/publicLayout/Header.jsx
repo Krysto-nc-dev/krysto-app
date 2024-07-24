@@ -69,7 +69,7 @@ const Header = () => {
   }
 
   return (
-    <header className=" py-3 bg-primaryColor relative mx-auto">
+    <header className=" py-3 bg-gray-800 relative mx-auto">
       <nav className="flex gap-2 text-sm items-center justify-between">
         <div className="flex items-center space-x-10">
           <Link to={'/'}>
@@ -77,37 +77,37 @@ const Header = () => {
           </Link>
           <div className="hidden lg:flex gap-7 mt-3">
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/'}
             >
               <HomeIcon className="w-[20px] mr-1" /> Accueil
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/krysto-shop'}
             >
               <ShoppingBasket className="w-[20px] mr-2" /> Nos produits
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/initiations'}
             >
               <RecycleIcon className="w-[20px] mr-2" /> Initiations
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/blog'}
             >
               <Newspaper className="w-[20px] mr-2" /> Blog
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/contacts'}
             >
               <PhoneForwarded className="w-[20px] mr-2" /> Nous contacter
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/a-propos'}
             >
               <Gem className="w-[20px] mr-2" /> A propos
@@ -170,7 +170,7 @@ const Header = () => {
             <>
 
               <Link
-                className="flex items-center  text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+                className="flex items-center  text-primaryColor hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
                 to={'/pannier'}
               >
                 <ShoppingCart className="w-5 h-5 " />

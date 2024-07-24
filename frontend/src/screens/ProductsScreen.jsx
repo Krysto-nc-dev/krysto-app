@@ -5,6 +5,7 @@ import { useGetProductsQuery } from '../slices/productApiSlice';
 import Loader from './FeedbackScreens/Loader';
 import Messages from './FeedbackScreens/Messages';
 import { useGetDolliProductsQuery } from '../slices/dolibarr/dolliProductApiSlice';
+import AnimatedPageTitle from '../components/shared/AnimatedPageTitle';
 
 
 const ProductsScreen = () => {
@@ -19,8 +20,8 @@ const ProductsScreen = () => {
     <>
     {errorProducts && errorProducts.message && <Messages type="error" text="Une Erreur est survenue"/>}
   
+    <AnimatedPageTitle title={"Découvrez nos produits"}/>
     
-      <h1 className="text-3xl font-bold mb-6">Découvrez nos produits</h1>
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {loadingProducts && <Loader/>}
         {errorProducts && <Messages type="error" text="Une Erreur est survenue"/> }

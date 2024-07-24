@@ -25,7 +25,7 @@ const Header = () => {
         }
       }
   return (
-    <header className="h-20 pl-20 pr-10 flex justify-between items-center bg-primaryColor ">
+    <header className="h-20 pl-20 pr-10 flex justify-between items-center bg-gray-800 ">
       <div className="relative">
         <Search fontSize={20} className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-3" />
         <input 

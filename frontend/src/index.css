@@ -169,15 +169,15 @@ input, select {
 
 
 .rating span {
-margin: 0 1rem;
-
-
-
+  margin: 0 1rem;
+  
+  
+  
 }
 
 .rating svg {
-
-
+  
+  
   stroke-width: 2;
 }
 
@@ -187,3 +187,32 @@ margin: 0 1rem;
   padding-left: 0.5rem;
 }
 
+
+/* ================= FRAMER MOTION ========================= */
+/* styles.css */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px; /* Hauteur augmentée pour tester */
+  background-color:  var(--primaryColor); /* Couleur vive pour tester */
+  transform-origin: 0%;
+  z-index: 9999;
+}
+
+.parallax {
+  position: relative;
+  overflow: hidden;
+  height: 100vh; /* Ajustez la hauteur selon vos besoins */
+}
+
+.scroller {
+  display: flex;
+  white-space: nowrap;
+}
+
+.scroller span {
+  display: inline-block;
+  padding: 0 2rem; /* Ajustez l'espacement entre les répétitions du texte */
+}

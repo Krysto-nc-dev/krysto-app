@@ -1,8 +1,11 @@
 import React from 'react'
+import AnimatedPageTitle from '../components/shared/AnimatedPageTitle'
 
 const InitiationsScreen = () => {
   return (
-    <div>InitiationsScreen</div>
+    <div>
+      <AnimatedPageTitle title={"Initiations au recyclage"}/>
+    </div>
   )
 }
 

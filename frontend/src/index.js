@@ -111,6 +111,7 @@ import ResellerSettingsScreen from './screens/reseller/ResellerSettingsScreen'
 import ResellerSupportsScreen from './screens/reseller/ResellerSupportsScreen'
 import ResellerProfileScreen from './screens/reseller/ResellerProfileScreen'
 import ResellerDocumentionScreen from './screens/reseller/ResellerDocumentionScreen'
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -127,6 +128,7 @@ const router = createBrowserRouter(
         <Route path="/contacts" element={<ContactScreen />} />
         <Route path="/krysto-shop" element={<ProductsScreen />} />
         <Route path="/pannier" element={<CartScreen />} />
+        <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
         <Route path="/produit/:id" element={<ProductDetailsScreen />} />
       </Route>
 

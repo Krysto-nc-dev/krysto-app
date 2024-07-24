@@ -325,6 +325,7 @@ const updateResellerProfile = asyncHandler(async (req, res) => {
     dollibarThirdPartyId,
     dollibarWarehousId,
     preferredStockLevels,
+    margin,
   } = req.body
   const user = await User.findById(req.params.id)
 
@@ -333,6 +334,7 @@ const updateResellerProfile = asyncHandler(async (req, res) => {
   }
 
   if (storeName) user.resellerProfile.storeName = storeName
+  if (margin) user.resellerProfile.margin = margin
   if (dollibarThirdPartyId)
     user.resellerProfile.dollibarThirdPartyId = dollibarThirdPartyId
   if (dollibarWarehousId)

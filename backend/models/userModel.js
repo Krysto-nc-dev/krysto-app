@@ -26,6 +26,7 @@ const resellerProfileSchema = new mongoose.Schema({
   dollibarThirdPartyId: { type: String },
   dollibarWarehousId: { type: String },
   preferredStockLevels: [preferredStockLevelSchema],
+  margin: { type: Number, required: true, default: 0 },
 })
 
 // Schéma principal de l'utilisateur

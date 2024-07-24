@@ -1,7 +1,10 @@
+import AnimatedPageTitle from "../components/shared/AnimatedPageTitle"
 
 const ContactScreen = () => {
   return (
-    <>ContactScreen</>
+    <>
+     <AnimatedPageTitle title={"Restons en contact"}/>
+    </>
   )
 }
 

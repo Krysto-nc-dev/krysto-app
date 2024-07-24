@@ -26,8 +26,8 @@ export const campagneCollecteApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['CampagneCollecte'],
     }),
     updateCampagneCollecte: builder.mutation({
-      query: ({ id, updatedCampagneCollecte }) => ({
-        url: `${CAMPAGNE_COLLECTE_URL}/${id}`,
+      query: (updatedCampagneCollecte) => ({
+        url: `${CAMPAGNE_COLLECTE_URL}/${updatedCampagneCollecte.id}`,
         method: 'PUT',
         body: updatedCampagneCollecte,
       }),

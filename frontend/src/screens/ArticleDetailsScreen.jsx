@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetArticleDetailsQuery, useCreateArticleReviewMutation } from '../slices/articleApiSlice';
-
+import { motion, useScroll, useSpring } from 'framer-motion'; // Importer framer-motion
 import Button from '../components/shared/Button';
 import { ArrowBigLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
-import Card from '../components/shared/Card'; // Assurez-vous que ce composant existe
+import Card from '../components/shared/Card';
 import Loader from './FeedbackScreens/Loader';
+
+const fadeInVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const ArticleDetailsScreen = () => {
   const { id: articleId } = useParams();
@@ -15,6 +20,14 @@ const ArticleDetailsScreen = () => {
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+
+  // Barre de progression
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   if (articleLoading) {
     return <Loader />;
@@ -43,7 +56,6 @@ const ArticleDetailsScreen = () => {
     }
   };
 
-  // Vérifiez si l'article est défini et que les propriétés nécessaires existent
   if (!article) {
     return <p>Article non trouvé.</p>;
   }
@@ -52,24 +64,63 @@ const ArticleDetailsScreen = () => {
 
   return (
     <div className="p-4">
+      {/* Barre de progression */}
+      <motion.div
+        className="progress-bar fixed top-0 left-0 h-2 bg-blue-500"
+        style={{ scaleX }}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX }}
+        transition={{ duration: 0.1 }}
+      />
+
       <div className="mb-6 flex items-center">
         <Button icon={ArrowBigLeft}>
           <a href="/blog">Retour</a>
         </Button>
       </div>
 
-      <h1 className="text-4xl font-bold mb-4">{article.title || 'Titre indisponible'}</h1>
-      <h2 className="text-2xl font-semibold mb-4">{article.subtitle || 'Sous-titre indisponible'}</h2>
-      <p className="text-gray-600 mb-6">{article.category || 'Catégorie indisponible'}</p>
+      <motion.h1
+        className="text-4xl font-bold mb-4"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInVariants}
+        transition={{ duration: 0.6 }}
+      >
+        {article.title || 'Titre indisponible'}
+      </motion.h1>
+
+      <motion.h2
+        className="text-2xl font-semibold mb-4"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInVariants}
+        transition={{ duration: 0.7 }}
+      >
+        {article.subtitle || 'Sous-titre indisponible'}
+      </motion.h2>
+
+      <motion.p
+        className="text-gray-600 mb-6"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInVariants}
+        transition={{ duration: 0.8 }}
+      >
+        {article.category || 'Catégorie indisponible'}
+      </motion.p>
 
       {article.images && article.images.length > 0 && (
         <div className="mb-6">
           {article.images.map((image, index) => (
-            <img
+            <motion.img
               key={index}
               src={image}
               alt={`Article image ${index + 1}`}
               className="w-full h-80 object-cover mb-4"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariants}
+              transition={{ duration: 0.9 }}
             />
           ))}
         </div>
@@ -78,7 +129,14 @@ const ArticleDetailsScreen = () => {
       <div>
         {article.paragraphs && article.paragraphs.length > 0 ? (
           article.paragraphs.map((paragraph, index) => (
-            <div key={index} className="mb-6">
+            <motion.div
+              key={index}
+              className="mb-6"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariants}
+              transition={{ duration: 1 }}
+            >
               <h3 className="text-xl font-semibold mb-2">{paragraph.title || 'Titre indisponible'}</h3>
               <p className="text-gray-700 mb-4">{paragraph.content || 'Contenu indisponible'}</p>
               {paragraph.listItems && paragraph.listItems.length > 0 && (
@@ -88,7 +146,7 @@ const ArticleDetailsScreen = () => {
                   ))}
                 </ul>
               )}
-            </div>
+            </motion.div>
           ))
         ) : (
           <p>Aucun paragraphe disponible.</p>
@@ -96,7 +154,15 @@ const ArticleDetailsScreen = () => {
       </div>
 
       <div className="mt-10">
-        <h2 className="text-xl font-semibold mb-4">Ajouter un avis</h2>
+        <motion.h2
+          className="text-xl font-semibold mb-4"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInVariants}
+          transition={{ duration: 1.2 }}
+        >
+          Ajouter un avis
+        </motion.h2>
         <form onSubmit={submitReviewHandler}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">Évaluation (1-5)</label>
@@ -128,23 +194,40 @@ const ArticleDetailsScreen = () => {
       </div>
 
       <div className="mt-10">
-        <h2 className="text-xl font-semibold mb-4">Avis des lecteurs</h2>
+        <motion.h2
+          className="text-xl font-semibold mb-4"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInVariants}
+          transition={{ duration: 1.4 }}
+        >
+          Avis des lecteurs
+        </motion.h2>
         {reviews.length === 0 ? (
           <p>Aucun avis pour cet article.</p>
         ) : (
           reviews.map((review) => (
-            <Card key={review._id} className="mb-4">
-              <div className="mb-2">
-                <span className="font-semibold">Note:</span> {review.rating}/5
-              </div>
-              <p className="mb-2">{review.comment}</p>
-              <div className="text-gray-600 text-sm">
-                <span className="font-semibold">Auteur:</span> {review.name || 'Anonyme'}
-              </div>
-              <div className="text-gray-400 text-xs">
-                <span className="font-semibold">Date:</span> {new Date(review.createdAt).toLocaleDateString()}
-              </div>
-            </Card>
+            <motion.div
+              key={review._id}
+              className="mb-4"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariants}
+              transition={{ duration: 1.5 }}
+            >
+              <Card>
+                <div className="mb-2">
+                  <span className="font-semibold">Note:</span> {review.rating}/5
+                </div>
+                <p className="mb-2">{review.comment}</p>
+                <div className="text-gray-600 text-sm">
+                  <span className="font-semibold">Auteur:</span> {review.name || 'Anonyme'}
+                </div>
+                <div className="text-gray-400 text-xs">
+                  <span className="font-semibold">Date:</span> {new Date(review.createdAt).toLocaleDateString()}
+                </div>
+              </Card>
+            </motion.div>
           ))
         )}
       </div>

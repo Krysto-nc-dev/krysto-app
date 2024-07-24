@@ -23,6 +23,7 @@ const AdminCampagneCollectEditScreen = () => {
   const [endDate, setEndDate] = useState('');
   const [address, setAddress] = useState('');
   const [barcode, setBarcode] = useState('');
+  const [dollibarTierId, setDollibarTierId] = useState('');
 
   // Fetch data
   const { data: campagneCollect, error: campagneCollectError, isLoading: campagneCollectLoading } = useGetCampagneCollecteByIdQuery(campagneCollectId);
@@ -43,6 +44,7 @@ const AdminCampagneCollectEditScreen = () => {
       setEndDate(campagneCollect.endDate || '');
       setAddress(campagneCollect.address || '');
       setBarcode(campagneCollect.barcode || '');
+      setDollibarTierId(campagneCollect.dollibarTierId || '');
     }
   }, [campagneCollect]);
 
@@ -51,7 +53,7 @@ const AdminCampagneCollectEditScreen = () => {
     e.preventDefault();
 
     const updatedCampagneCollecte = {
-      _id: campagneCollectId,
+      id: campagneCollectId,
       title,
       description,
       collectionType,
@@ -60,7 +62,8 @@ const AdminCampagneCollectEditScreen = () => {
       startDate,
       endDate,
       address,
-      barcode
+      barcode,
+      dollibarTierId,
     };
 
     try {
@@ -94,6 +97,15 @@ const AdminCampagneCollectEditScreen = () => {
           <input
             type="text"
             value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="block w-full border-gray-300 rounded-md shadow-sm focus:border-primaryColor focus:ring focus:ring-primaryColor focus:ring-opacity-50"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-medium mb-2">Titre</label>
+          <input
+            type="text"
+            value={dollibarTierId}
             onChange={(e) => setTitle(e.target.value)}
             className="block w-full border-gray-300 rounded-md shadow-sm focus:border-primaryColor focus:ring focus:ring-primaryColor focus:ring-opacity-50"
           />
