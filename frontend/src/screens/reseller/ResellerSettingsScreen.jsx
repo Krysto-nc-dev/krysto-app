@@ -114,7 +114,7 @@ const ResellerSettingsScreen = () => {
         </div>
 
         {products.map((product) => (
-          <div key={product._id} className="border p-4 rounded-md shadow-sm bg-white mb-4 flex items-center">
+          <div key={product._id} className="border p-4 rounded-md shadow-sm bg-white mb-4 flex items-center w-56">
             <div className="w-24 h-24 flex-shrink-0">
               {product.images.length > 0 && (
                 <img
