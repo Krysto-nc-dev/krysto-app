@@ -25,7 +25,7 @@ const AdminRecyclableProductEditScreen = () => {
   const [barCode, setBarCode] = useState('')
 
   // List of categories
-  const categories = ['Alimentaires', 'Beauté', 'Entretien', 'Autres']
+  const categories = ['Alimentaires', 'Beaute', 'Entretien', 'Autres']
 
   // List of recycling notes
   const recyclingNotes = [ 1, 1.5, 2, 2.5, 3,3.5,4,4.5] // Replace with actual notes

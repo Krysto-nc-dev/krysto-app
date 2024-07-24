@@ -13,7 +13,7 @@ const recyclableProductSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Vous devez ajouter un catégorie'],
       default: 'Alimentaires',
-      enum: ['Alimentaires', 'Beauté', 'Entretien', 'Autres'],
+      enum: ['Alimentaires', 'Beaute', 'Entretien', 'Autres'],
     },
     brand: {
       type: String,
