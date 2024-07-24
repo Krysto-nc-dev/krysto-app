@@ -209,7 +209,7 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div
           ref={menuRef}
-          className="absolute top-0 left-0 w-full bg-primaryColor lg:hidden z-50 p-4"
+          className="absolute top-0 left-0 w-full bg-gray-800 lg:hidden z-50 p-4"
         >
           <div className="flex justify-between items-center">
             <Link to={'/'}>
@@ -218,48 +218,48 @@ const Header = () => {
 
             {/* Icône de fermeture */}
             <button onClick={toggleMobileMenu}>
-              <X className="w-6 h-6 text-gray-700" />
+              <X className="w-6 h-6 text-primaryColor" />
             </button>
           </div>
 
           <div className="flex flex-col mt-4 space-y-4">
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/'}
               onClick={toggleMobileMenu}
             >
               <HomeIcon className="w-[20px] mr-2" /> Accueil
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/krysto-shop'}
               onClick={toggleMobileMenu}
             >
               <ShoppingBasket className="w-[20px] mr-2" /> Nos produits
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/initiations'}
               onClick={toggleMobileMenu}
             >
               <RecycleIcon className="w-[20px] mr-2" /> Initiations
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/blog'}
               onClick={toggleMobileMenu}
             >
               <Newspaper className="w-[20px] mr-2" /> Blog
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/contacts'}
               onClick={toggleMobileMenu}
             >
               <PhoneForwarded className="w-[20px] mr-2" /> Nous contacter
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/a-propos'}
               onClick={toggleMobileMenu}
             >
@@ -267,7 +267,7 @@ const Header = () => {
             </Link>
 
             <Link
-              className="flex items-center text-gray-700 hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
+              className="flex items-center text-primaryColor hover:text-gray-900 hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={'/pannier'}
             >
               <BsBasket className="w-5 h-5 mr-2" /> Panier
@@ -278,7 +278,7 @@ const Header = () => {
               )}
             </Link>
             <Link
-              className="flex items-center text-gray-700 hover:text-secondaryColor hover:font-bold"
+              className="flex items-center text-primaryColor hover:text-secondaryColor hover:font-bold"
               to={'/mon-profile'}
               onClick={toggleMobileMenu}
             >
