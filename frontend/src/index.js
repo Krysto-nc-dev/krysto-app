@@ -113,6 +113,7 @@ import ResellerProfileScreen from './screens/reseller/ResellerProfileScreen'
 import ResellerDocumentionScreen from './screens/reseller/ResellerDocumentionScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import AdminThirdpartyDetailsScreen from './screens/admin/AdminThirdpartyDetailsScreen'
+import AdminWarehouseDetailsScreen from './screens/admin/AdminWarehouseDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -227,6 +228,10 @@ const router = createBrowserRouter(
             element={<AdminDolibarrProductDetailsScreen />}
           />
           <Route path="/admin-entrepots" element={<AdminWarehousesScreen />} />
+          <Route
+            path="/admin-entrepot-details/:id"
+            element={<AdminWarehouseDetailsScreen />}
+          />
           <Route
             path="/admin-propositions-commercial"
             element={<AdminPropalsScreen />}

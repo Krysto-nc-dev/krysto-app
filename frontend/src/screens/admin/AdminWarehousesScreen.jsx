@@ -1,15 +1,34 @@
 import React from 'react';
 import { useGetWarehousesQuery } from '../../slices/dolibarr/dolliWarehouseApiSlice';
 import Loader from '../../components/shared/Loader';
+import { Card as MuiCard, CardContent, Typography, Grid, Box, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Card from '../../components/shared/Card';
+import AnimatedPageTitle from '../../components/shared/AnimatedPageTitle';
+
+// Composant de carte stylisé
+const StyledCard = ({ to, children }) => (
+  <MuiCard
+    component={Link}
+    to={to}
+    sx={{
+      textDecoration: 'none',
+      color: 'inherit',
+      backgroundColor: '#f0f4f8',
+      border: '1px solid #e0e0e0',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      '&:hover': {
+        backgroundColor: '#e3f2fd',
+        boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
+      },
+    }}
+  >
+    {children}
+  </MuiCard>
+);
 
 const AdminWarehousesScreen = () => {
-  const {
-    data: warehouses,
-    isLoading,
-    error
-  } = useGetWarehousesQuery();
+  const { data: warehouses, isLoading, error } = useGetWarehousesQuery();
 
   if (isLoading) {
     return <Loader />;
@@ -17,37 +36,50 @@ const AdminWarehousesScreen = () => {
 
   if (error) {
     return (
-      <p className="text-red-500">
+      <Typography variant="h6" color="error" align="center">
         {typeof error.data.message === 'string'
           ? error.data.message
           : 'Une erreur est survenue'}
-      </p>
+      </Typography>
     );
   }
 
   return (
-    <div className="h-screen p-6  text-gray-70à">
-      <h1 className="text-3xl font-bold mb-6 text-primaryColor text-center">Entrepôts ({warehouses.length})</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {warehouses.map((warehouse) => (
-          <Card url={`/user-warehouse-details/${warehouse.id}`} key={warehouse.id} className= "card p-4">
-            <div className="flex items-center justify-between">
-
-            <h2 className="text-xl font-bold mb-2 text-secondaryColor">{warehouse.label}</h2>
-            <p className="text-gray-700"> {warehouse.lieu}</p>
-            </div>
-            <p className="text-gray-700"><strong>Description:</strong> {warehouse.description}</p>
-            <p className="text-gray-700"><strong>Adresse:</strong> {warehouse.address}</p>
-            <div className="flex justify-between items-center">
-
-            <p className="text-gray-700"><strong>Code Postal:</strong> {warehouse.zip}</p>
-            <p className="text-gray-700"><strong>Ville:</strong> {warehouse.town}</p>
-            </div>
-            <p className="text-gray-700"><strong>Téléphone:</strong> {warehouse.phone}</p>
-          </Card>
-        ))}
-      </div>
-    </div>
+    <>
+      <Container sx={{ pt: 4 }}>
+        <AnimatedPageTitle title={`Entrepôts (${warehouses.length})`} />
+        <Grid container spacing={4}>
+          {warehouses.map((warehouse) => (
+            <Grid item xs={12} sm={6} md={4} key={warehouse.id}>
+              <StyledCard to={`/admin-entrepot-details/${warehouse.id}`}>
+                <CardContent>
+                  <Typography variant="h5" component="h2" gutterBottom color="secondary">
+                    {warehouse.label}
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    <strong>Description:</strong> {warehouse.description}
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    <strong>Adresse:</strong> {warehouse.address}
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body1">
+                      <strong>Code Postal:</strong> {warehouse.zip}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>Ville:</strong> {warehouse.town}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">
+                    <strong>Téléphone:</strong> {warehouse.phone}
+                  </Typography>
+                </CardContent>
+              </StyledCard>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 };
 
