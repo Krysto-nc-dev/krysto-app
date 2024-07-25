@@ -6,12 +6,36 @@ import {
   useGetCashiersQuery,
 } from '../../slices/cashierApiSlice';
 import Loader from '../../components/shared/Loader';
-import { EyeIcon } from 'lucide-react';
+import { Eye as EyeIcon } from 'lucide-react';
 import {
   useGetThirdPartiesQuery,
   useGetThirdPartyDetailsQuery,
 } from '../../slices/dolibarr/dolliThirdPartyApiSlice';
 import { toast } from 'react-toastify';
+import {
+  Box,
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  MenuItem,
+  Select,
+  CircularProgress,
+  IconButton
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import AnimatedPageTitle from '../../components/shared/AnimatedPageTitle';
+
+// Styles pour les boutons et autres éléments
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+}));
 
 const AdminCashierScreen = () => {
   const navigate = useNavigate();
@@ -32,26 +56,14 @@ const AdminCashierScreen = () => {
   const [formData, setFormData] = useState({
     date: '',
     tierId: '',
-    placePrice: '', // Assurez-vous que cela est correct pour votre application
+    placePrice: '',
   });
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    console.log('Name:', name, 'Value:', value);
-
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -61,10 +73,8 @@ const AdminCashierScreen = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Convertir placePrice en nombre flottant
     const parsedPlacePrice = parseFloat(formData.placePrice);
 
-    // Vérifier les champs requis
     if (!formData.date || !formData.tierId || isNaN(parsedPlacePrice)) {
       toast.error('Veuillez remplir tous les champs correctement.');
       return;
@@ -73,23 +83,20 @@ const AdminCashierScreen = () => {
     try {
       const response = await addCashier({
         ...formData,
-        placePrice: parsedPlacePrice, // Assurez-vous d'envoyer le nombre flottant à l'API
+        placePrice: parsedPlacePrice,
       });
 
       if (response && response.data && response.data._id) {
-        toggleModal();
+        closeModal();
         refetchCashiers();
         setFormData({
           date: '',
           tierId: '',
-          title: '',
-          placePrice: '', // Réinitialiser à une chaîne vide pour le prochain ajout
+          placePrice: '',
         });
         toast.success('La caisse est créée avec succès.');
       } else {
-        toast.error(
-          'Une erreur est survenue lors de la création de la caisse. Veuillez réessayer.',
-        );
+        toast.error('Une erreur est survenue lors de la création de la caisse. Veuillez réessayer.');
       }
     } catch (error) {
       toast.error('Une erreur est survenue lors de la création de la caisse.');
@@ -99,8 +106,8 @@ const AdminCashierScreen = () => {
 
   const getStatusColor = (status) => {
     return status === 'Ouvert'
-      ? 'bg-green-500 text-white'
-      : 'bg-red-500 text-white';
+      ? 'success'
+      : 'error';
   };
 
   if (loadingCashier || loadingThirdParties) {
@@ -109,163 +116,141 @@ const AdminCashierScreen = () => {
 
   if (cashiersError || errorThirdParties) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-red-500 text-xl font-semibold">
-          Error: {cashiersError?.message || errorThirdParties?.message}
-        </div>
-      </div>
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Typography color="error">Error: {cashiersError?.message || errorThirdParties?.message}</Typography>
+      </Box>
     );
   }
 
   return (
-    <div className="mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Historique des caisses</h1>
-        <div>
-          <button
-            onClick={openModal}
-            className="inline-block bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-          >
-            Nouvelle Caisse
-          </button>
-        </div>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-gray-300 border-gray-200 shadow-md rounded-lg overflow-hidden text-sm">
-          <thead className="bg-primaryColor text-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-center">Date</th>
-              <th className="py-3 px-4 text-center">Total des ventes</th>
-              <th className="py-3 px-4 text-center">Tiers</th>
-              <th className="py-3 px-4 text-center">Statut</th>
-              <th className="py-3 px-2 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
+    <Box p={4}>
+      <Box display="flex" justifyContent="space-between" mb={4}>
+        <AnimatedPageTitle title={`Historique des caisses (${cashiers.length})`} />
+     
+        <StyledButton variant="contained" color="success" onClick={openModal}>
+          Nouvelle Caisse
+        </StyledButton>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Date</TableCell>
+              <TableCell align="center">Total des ventes</TableCell>
+              <TableCell align="center">Tiers</TableCell>
+              <TableCell align="center">Statut</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {cashiers && cashiers.length > 0 ? (
               cashiers.map((cashier) => (
-                <tr key={cashier._id}>
-                  <td className="py-3 px-4">
-                    {new Date(cashier.date).toLocaleDateString()}
-                  </td>
-                  <td className="py-3 px-4">{cashier.totalDaySales} XPF</td>
-                  <td className="py-3 px-4">
+                <TableRow key={cashier._id}>
+                  <TableCell>{new Date(cashier.date).toLocaleDateString()}</TableCell>
+                  <TableCell>{cashier.totalDaySales} XPF</TableCell>
+                  <TableCell>
                     {cashier.tierId ? (
                       <TierName tierId={cashier.tierId} />
                     ) : (
                       'N/A'
                     )}
-                  </td>
-                  <td className="py-3 px-2 text-center">
-                    <span
-                      className={`flex items-center justify-center px-10 py-1 rounded-full font-bold ${getStatusColor(
-                        cashier.status,
-                      )}`}
-                    >
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography variant="body2" color={getStatusColor(cashier.status)}>
                       {cashier.status === 'Ouvert' ? 'Ouvert' : 'Fermé'}
-                    </span>
-                  </td>
-                  <td className="py-3 px-2 text-right">
-                    <Link
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      component={Link}
                       to={`/admin-caisse-details/${cashier._id}`}
-                      className="inline-flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600"
+                      color="primary"
                     >
-                      <EyeIcon className="w-5 h-5" />
-                      <span>Voir les détails</span>
-                    </Link>
-                  </td>
-                </tr>
+                      <EyeIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
               ))
             ) : (
-              <tr>
-                <td className="py-3 px-4" colSpan="5">
+              <TableRow>
+                <TableCell colSpan={5} align="center">
                   Aucune caisse trouvée
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             )}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       {showModal && (
         <Modal closeModal={closeModal}>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold mb-4">Nouvelle Caisse</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-              <div className="flex flex-col space-y-4">
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Titre:
-                  </label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Date:
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Prix de la place
-                  </label>
-                  <input
-                    type="number"
-                    name="placePrice"
-                    value={formData.placePrice}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Tiers:
-                  </label>
-                  <select
-                    name="tierId"
-                    value={formData.tierId}
-                    onChange={handleChange}
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required
-                  >
-                    <option value="">Sélectionnez un tiers</option>
-                    {thirdParties &&
-                      thirdParties.map((tier) => (
-                        <option key={tier.id} value={tier.id}>
-                          {tier.name}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <button
+          <Box p={4}>
+            <Typography variant="h6" gutterBottom>
+              Nouvelle Caisse
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <TextField
+                  label="Titre"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  variant="outlined"
+                  required
+                />
+                <TextField
+                  label="Date"
+                  name="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  required
+                />
+                <TextField
+                  label="Prix de la place"
+                  name="placePrice"
+                  type="number"
+                  value={formData.placePrice}
+                  onChange={handleChange}
+                  variant="outlined"
+                  required
+                />
+                <Select
+                  label="Tiers"
+                  name="tierId"
+                  value={formData.tierId}
+                  onChange={handleChange}
+                  variant="outlined"
+                  displayEmpty
+                  required
+                >
+                  <MenuItem value="">
+                    <em>Sélectionnez un tiers</em>
+                  </MenuItem>
+                  {thirdParties &&
+                    thirdParties.map((tier) => (
+                      <MenuItem key={tier.id} value={tier.id}>
+                        {tier.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Box>
+              <Box display="flex" justifyContent="flex-end" mt={2}>
+                <Button
                   type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primaryColor hover:bg-primaryColor-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  variant="contained"
+                  color="primary"
                 >
                   Valider
-                </button>
-              </div>
+                </Button>
+              </Box>
             </form>
-          </div>
+          </Box>
         </Modal>
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -277,14 +262,14 @@ const TierName = ({ tierId }) => {
   } = useGetThirdPartyDetailsQuery(tierId);
 
   if (loadingTier) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   if (tierError) {
-    return <span>Error: {tierError.message}</span>;
+    return <Typography color="error">Error: {tierError.message}</Typography>;
   }
 
-  return <span>{tier.name}</span>;
+  return <Typography>{tier.name}</Typography>;
 };
 
 export default AdminCashierScreen;

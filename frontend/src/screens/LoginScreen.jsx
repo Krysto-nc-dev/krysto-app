@@ -5,8 +5,9 @@ import { toast } from 'react-toastify'
 import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
 
-import { Loader, MoveLeftIcon, MoveRightIcon } from 'lucide-react'
+import { ArrowBigLeft, Loader, LogIn, MoveLeftIcon, MoveRightIcon } from 'lucide-react'
 import { BsFacebook, BsGoogle } from 'react-icons/bs'
+import { Button, TextField } from '@mui/material'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -53,39 +54,41 @@ const LoginScreen = () => {
   return (
     <>
       <div className="flex items-center justify-center ">
-        <div className="relative flex flex-col m-1 space-y-10 bg-gray-700 shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0">
+        <div className="relative flex flex-col m-1 space-y-10 bg-gray-300 shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0">
           {/* left side  */}
           <div className="p-3 md:p-14 ">
             {/* top content */}
-            <h2 className="mb-4 text-4xl font-bold text-gray-200 ">
+            <h2 className="mb-4 text-4xl font-bold text-gray-700 ">
               Connection
             </h2>
-            <p className="max-w-md mb-8 font-light text-gray-200">
+            <p className="max-w-md mb-8 font-light text-gray-700">
               Connectez-vous à votre compte pour profiter de notre plateforme.
             </p>
-            <form onSubmit={submitHandler}>
-              <input
-                type="email"
+            <form onSubmit={submitHandler} className=' flex flex-col gap-4'>
+       
+              <TextField
                 id="email"
+                label="votre email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-3 border border-textColor rounded-md placeholder:font-light mb-3 "
-                placeholder="Entrez votre addresse"
+                
               />
-              <input
-                type="password"
-                id="password"
+               <TextField
+                id='password'
+                label="votre mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-textColor rounded-md placeholder:font-light "
-                placeholder="Entrez votre mot de passe"
-              />
-              <button
-                type="submit"
-                className="w-full mt-6  flex justify-center items-center p-3 space-x-4 font-bold  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg transition hover:-translate-y-0.5 duration-150"
-              >
-                {isLoading ? <Loader /> : 'Connexion'}
-              </button>
+                type='password'
+               />
+         
+      
+              <Button
+                variant="contained"
+               type='submit'
+                color="primary"
+                size="large"
+                startIcon={<LogIn />}
+              > {isLoading ? <Loader /> : 'Connexion'}</Button>
             </form>
             <div className="flex items-center justify-between mt-6">
               <Link
@@ -107,13 +110,15 @@ const LoginScreen = () => {
             <div className="mt-4 border-b border-b-gray-200"></div>
 
             <div className="flex flex-col items-center justify-between mt-6 space-y-6 md:flex-row md:space-y-0">
-              <Link
-                to={'/'}
-                className="w-full  flex justify-center items-center p-3 space-x-4 font-bold text-white  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg  transition hover:-translate-y-0.5 duration-150"
+              <Button
+                variant="contained"
+                href={'/'}
+                color="primary"
+                size="large"
+                startIcon={<ArrowBigLeft />}
               >
-                <MoveRightIcon className="mr-5" />
                 Retour au site
-              </Link>
+              </Button>
             </div>
           </div>
 

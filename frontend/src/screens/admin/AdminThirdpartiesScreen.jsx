@@ -1,10 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import { useGetThirdPartiesQuery } from '../../slices/dolibarr/dolliThirdPartyApiSlice';
 import { Link } from 'react-router-dom';
 import Loader from '../FeedbackScreens/Loader';
 import Button from '../../components/shared/Button';
 import { PlusCircleIcon } from 'lucide-react';
-
+import { DataGrid } from '@mui/x-data-grid';
+import AnimatedPageTitle from './../../components/shared/AnimatedPageTitle';
+import Ship from '../../components/shared/Ship';
 
 const AdminThirdpartiesScreen = () => {
   const [filter, setFilter] = useState('all'); // all, client, prospect, fournisseur
@@ -34,64 +37,89 @@ const AdminThirdpartiesScreen = () => {
     return "Autre";
   };
 
-  const getTierTypeClass = (tier) => {
-    if (tier.client === "1") return "bg-blue-200 text-blue-800 px-2 py-1 rounded-full font-semibold";
-    if (tier.client === "2") return "bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full font-semibold";
-    if (tier.fournisseur === "1") return "bg-green-200 text-green-800 px-2 py-1 rounded-full font-semibold";
-    return "bg-red-200 text-gray-800 px-2 py-1 rounded-full font-semibold";
+  const getTierTypeSx = (tier) => {
+    if (tier.client === "1") return { backgroundColor: '#90caf9', color: '#1e88e5' };
+    if (tier.client === "2") return { backgroundColor: '#fff59d', color: '#fbc02d' };
+    if (tier.fournisseur === "1") return { backgroundColor: '#a5d6a7', color: '#43a047' };
+    return { backgroundColor: '#ef9a9a', color: '#e53935' };
   };
+
+  // Transform the data for DataGrid
+  const rows = filteredTiers.map((tier) => ({
+    id: tier.id,
+    name: tier.name,
+    type: getTierType(tier),
+    email: tier.email,
+    address: tier.address,
+    phone: tier.phone,
+  }));
+
+  // Define columns for DataGrid
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Nom',
+      width: 200,
+      renderCell: (params) => (
+        <Link to={`/admin-tier-details/${params.row.id}`}>
+          {params.row.name}
+        </Link>
+      ),
+      sortable: true,
+    },
+    {
+      field: 'type',
+      headerName: 'Type',
+      width: 150,
+      renderCell: (params) => (
+        <Ship text={params.row.type} sx={getTierTypeSx(params.row)} />
+      ),
+      sortable: true,
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 200,
+      sortable: true,
+    },
+    {
+      field: 'address',
+      headerName: 'Adresse',
+      width: 300,
+      sortable: true,
+    },
+    {
+      field: 'phone',
+      headerName: 'Telephone',
+      width: 250,
+      sortable: true,
+    },
+  ];
 
   return (
     <div className="p-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
+      <AnimatedPageTitle title={`Tiers (${filteredTiers.length})`} />
 
-      <h1 className="text-2xl font-bold mb-4">Tiers ({filteredTiers.length})</h1>
-      <Button url={"/admin-dolibarr-nouveaux-tier"} icon={PlusCircleIcon}>Nouveaux tier</Button>
+        <h1 className="text-2xl font-bold"></h1>
+        <Button url={"/admin-dolibarr-nouveaux-tier"} icon={PlusCircleIcon}>Nouveaux tier</Button>
       </div>
-      <div className="mb-4">
-        <label htmlFor="filter" className="mr-4 ml-1">Filter par:</label>
-        <select id="filter" value={filter} onChange={handleFilterChange} className="p-1 text-sm  bg-gray-300 rounded">
-          <option value="all">Tous</option>
-          <option value="client">Client</option>
-          <option value="prospect">Prospect</option>
-          <option value="fournisseur">Fournisseur</option>
-        </select>
-      </div>
+      
       {isLoading ? (
         <Loader/>
       ) : error ? (
         <p>Erreur : {error.message}</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 text-sm">
-            <thead>
-              <tr className="bg-primaryColor text-textColor">
-                <th className="px-4 py-2 border-b">Nom</th>
-                <th className="px-4 py-2 border-b">Type</th>
-                <th className="px-4 py-2 border-b">Email</th>
-                <th className="px-4 py-2 border-b">Adresse</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTiers.map((tier) => (
-                <tr key={tier.id} className="hover:bg-primaryColor bg-gray-200">
-                  <td className="px-4 py-2 border-b">
-                    <Link to={`/admin-thirdparty-details/${tier.id}`}>
-                      {tier.name}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-2 border-b">
-                    <span className={getTierTypeClass(tier)}>
-                      {getTierType(tier)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 border-b">{tier.email}</td>
-                  <td className="px-4 py-2 border-b">{tier.address}</td>
-               
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ height: 520, width: '100%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5, 10]}
+            checkboxSelection
+            sortingOrder={['asc', 'desc']}
+            disableSelectionOnClick
+          />
         </div>
       )}
     </div>

@@ -5,7 +5,42 @@ import { Link } from 'react-router-dom';
 import Loader from './FeedbackScreens/Loader';
 import Rating from '../components/shared/Rating';
 import AnimatedPageTitle from '../components/shared/AnimatedPageTitle';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import { Heart, Share } from 'lucide-react';
 
+// Styled component for the progress bar
+const ProgressBar = styled(motion.div)({
+  height: '4px',
+  backgroundColor: '#3f51b5', // Customize the color as needed
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  transformOrigin: '0%',
+});
+
+// Styled component for the card media
+const StyledCardMedia = styled(CardMedia)({
+  height: 194, // Fixed height for the images
+  objectFit: 'cover', // Ensures the image covers the area without distortion
+});
+
+// Styled component for fixed height typography
+const FixedHeightTypography = styled(Typography)(({ theme, height }) => ({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  WebkitLineClamp: 1, // Number of lines to display before truncating
+  height: height,
+}));
 
 const ArticlesScreen = () => {
   const { data: articles, error: articleError, isLoading: loadingArticles } = useGetArticlesQuery();
@@ -27,28 +62,55 @@ const ArticlesScreen = () => {
   return (
     <div className="p-4">
       {/* Barre de progression */}
-      <motion.div className="progress-bar" style={{ scaleX }} />
+      <ProgressBar style={{ scaleX }} />
 
       {/* Titre de la page */}
       <AnimatedPageTitle title={"Le Blog Krysto"} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {articles && articles.map((article) => (
-          <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img
-              src={article.images[0] || 'https://via.placeholder.com/300'}
+          <Card key={article._id} sx={{ maxWidth: 345, marginBottom: 2 }}>
+            <StyledCardMedia
+              component="img"
+              image={article.images[0] || 'https://via.placeholder.com/300'}
               alt={article.title}
-              className="w-full h-48 object-cover"
             />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
-              <p className="text-gray-700 mb-4">{article.subtitle}</p>
-              <Link to={`/article-details/${article._id}`} className="mb-2 text-blue-500 hover:underline">
-                Lire plus
-              </Link>
+            <CardContent>
+              <FixedHeightTypography 
+                variant="h6" 
+                component="div" 
+                fontSize="1rem"
+                height="3em" // Fixed height for title
+                gutterBottom
+              >
+                {article.title}
+              </FixedHeightTypography>
+              <FixedHeightTypography 
+                variant="body2" 
+                color="text.secondary" 
+                height="5em" // Fixed height for subtitle
+              >
+                {article.subtitle}
+              </FixedHeightTypography>
               <Rating value={article.rating} text={article.numReviews + " Avis"} />
-            </div>
-          </div>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <Heart />
+              </IconButton>
+              <IconButton aria-label="share">
+                <Share />
+              </IconButton>
+              <Button
+                component={Link}
+                to={`/article-details/${article._id}`}
+                size="small"
+                sx={{ marginLeft: 'auto' }}
+              >
+                Lire plus
+              </Button>
+            </CardActions>
+          </Card>
         ))}
       </div>
     </div>

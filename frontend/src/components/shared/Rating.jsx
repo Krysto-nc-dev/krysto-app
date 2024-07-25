@@ -2,7 +2,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'
 
 const Rating = ({ value, text }) => {
   return (
-    <div className="flex gap-1 items-center">
+    <div className="flex gap-1 items-center mt-3">
       {[1, 2, 3, 4, 5].map((star, index) => {
         // Vérifiez si la valeur actuelle doit afficher une étoile pleine, moitié ou vide
         const isFullStar = value >= star;

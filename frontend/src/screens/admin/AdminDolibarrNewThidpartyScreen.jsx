@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowBigLeft, Send } from 'lucide-react';
-import Button from '../../components/shared/Button';
+import { ArrowBack, Send } from '@mui/icons-material';
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Typography, Container } from '@mui/material';
 import { useCreateThirdPartyMutation, useGetThirdPartiesQuery } from '../../slices/dolibarr/dolliThirdPartyApiSlice';
 import { toast } from 'react-toastify';
+import AnimatedPageTitle from './../../components/shared/AnimatedPageTitle';
+
 
 // Options pour les sélecteurs
 const countryOptions = [
@@ -155,346 +157,291 @@ const AdminDolibarrNewThidpartyScreen = () => {
   };
 
   return (
-    <div className="p-6 max-w-9xl mx-auto bg-white rounded-lg shadow-md">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Ajouter un Nouveau Tiers</h1>
-        <Button version={'primary'} icon={ArrowBigLeft} url={'/admin-tiers'}>
-          Retour
-        </Button>
-      </div>
+    <Container>
+          <AnimatedPageTitle title={`Nouveau Tiers`} />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-       
-          {/* Name */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          {/* Name Alias */}
-          <div>
-            <label htmlFor="name_alias" className="block text-sm font-medium text-gray-700">Nom Alias</label>
-            <input
-              type="text"
-              id="name_alias"
-              name="name_alias"
-              value={formData.name_alias}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
-            <select
-              id="status"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            >
-              <option value="">Sélectionner</option>
-              {statusOptions.map(status => (
-                <option key={status.code} value={status.code}>
-                  {status.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          
    
-        <h3>Type de tier</h3>
-        <div className="flex items-center justify-between">
-          {/* Prospect */}
-          <div>
-            <label htmlFor="prospect" className="block text-sm font-medium text-gray-700">Prospect</label>
-            <select
-              id="prospect"
-              name="prospect"
-              value={formData.prospect}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            >
-              <option value="">Sélectionner</option>
-              {prospectOptions.map(prospect => (
-                <option key={prospect.code} value={prospect.code}>
-                  {prospect.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Client */}
-          <div>
-            <label htmlFor="client" className="block text-sm font-medium text-gray-700">Client</label>
-            <select
-              id="client"
-              name="client"
-              value={formData.client}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            >
-              <option value="">Sélectionner</option>
-              {clientOptions.map(client => (
-                <option key={client.code} value={client.code}>
-                  {client.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Fournisseur */}
-          <div>
-            <label htmlFor="fournisseur" className="block text-sm font-medium text-gray-700">Fournisseur</label>
-            <select
-              id="fournisseur"
-              name="fournisseur"
-              value={formData.fournisseur}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            >
-              <option value="">Sélectionner</option>
-              {fournisseurOptions.map(fournisseur => (
-                <option key={fournisseur.code} value={fournisseur.code}>
-                  {fournisseur.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        {formData.client === '1' && (
-          <div className="flex items-center justify-between">
-            {/* Client Code */}
-            <div>
-              <label htmlFor="code_client" className="block text-sm font-medium text-gray-700">Code Client</label>
-              <input
-                type="text"
-                id="code_client"
-                name="code_client"
-                value={formData.code_client}
-                readOnly
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-            </div>
-          </div>
-        )}
-        {formData.fournisseur === '1' && (
-          <div className="flex items-center justify-between">
-            {/* Fournisseur Code */}
-            <div>
-              <label htmlFor="code_fournisseur" className="block text-sm font-medium text-gray-700">Code Fournisseur</label>
-              <input
-                type="text"
-                id="code_fournisseur"
-                name="code_fournisseur"
-                value={formData.code_fournisseur}
-                readOnly
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-            </div>
-          </div>
-        )}
-        <div className="flex items-center justify-between">
-          {/* Country */}
-          <div>
-            <label htmlFor="country_code" className="block text-sm font-medium text-gray-700">Pays</label>
-            <select
-              id="country_code"
-              name="country_code"
-              value={formData.country_code}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            >
-              <option value="">Sélectionner</option>
-              {countryOptions.map(country => (
-                <option key={country.code} value={country.code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium text-gray-700">Adresse</label>
-            <input
-              type="text"
-              
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-700">Ville</label>
-            <input
-              type="text"
-              
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="zip" className="block text-sm font-medium text-gray-700">Code postal</label>
-            <input
-              type="text"
-              
-              id="zip"
-              name="zip"
-              value={formData.zip}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="url" className="block text-sm font-medium text-gray-700">Site internet</label>
-            <input
-              type="text"
-              id="url"
-              name="url"
-              value={formData.url}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-            />
-          </div>
-          
-         
-         
-        </div>
-        <div className="flex items-center justify-between">
+      
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<ArrowBack />}
+        href="/admin-tiers"
+      >
+        Retour
+      </Button>
 
-        <div>
-            <label htmlFor="idprof1" className="block text-sm font-medium text-gray-700">N° Ridet</label>
-            <input
-              type="text"
-              
-              id="idprof1"
-              name="idprof1"
-              value={formData.idprof1}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="tva_intra" className="block text-sm font-medium text-gray-700">N° TGC</label>
-            <input
-              type="text"
-              
-              id="tva_intra"
-              name="tva_intra"
-              value={formData.tva_intra}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="idprof2" className="block text-sm font-medium text-gray-700"> N° RCS</label>
-            <input
-              type="text"
-              
-              id="idprof2"
-              name="idprof2"
-              value={formData.idprof2}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="idprof3" className="block text-sm font-medium text-gray-700"> Identifiant Prof 3</label>
-            <input
-              type="text"
-              
-              id="idprof3"
-              name="idprof3"
-              value={formData.idprof3}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="idprof4" className="block text-sm font-medium text-gray-700"> Identifiant Prof 4</label>
-            <input
-              type="text"
-              
-              id="idprof4"
-              name="idprof4"
-              value={formData.idprof4}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-              </div>
-        <div className="flex items-center justify-between">
+      <form onSubmit={handleSubmit} noValidate autoComplete="off">
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="name">Nom</InputLabel>
+          <TextField
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
 
-        <div>
-            <label htmlFor="idprof4" className="block text-sm font-medium text-gray-700">Identifiant prof. 5</label>
-            <input
-              type="text"
-              
-              id="idprof5"
-              name="idprof5"
-              value={formData.idprof5}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="idprof6" className="block text-sm font-medium text-gray-700"> Identifiant prof. 6</label>
-            <input
-              type="text"
-              
-              id="idprof6"
-              name="idprof6"
-              value={formData.idprof6}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="siret" className="block text-sm font-medium text-gray-700"> n° Siret</label>
-            <input
-              type="text"
-              
-              id="siret"
-              name="siret"
-              value={formData.siret}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-        <div>
-            <label htmlFor="ape" className="block text-sm font-medium text-gray-700">N° APE</label>
-            <input
-              type="text"
-              
-              id="ape"
-              name="ape"
-              value={formData.ape}
-              onChange={handleChange}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-primaryColor focus:border-primaryColor sm:text-sm rounded-md"
-              />
-          </div>
-              </div>
-          
-        <div className="flex items-center justify-between">
-          
-          <Button
-            version="primary"
-            type="submit"
-            loading={loadingCreate}
-            icon={Send}
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="name_alias">Nom Alias</InputLabel>
+          <TextField
+            id="name_alias"
+            name="name_alias"
+            value={formData.name_alias}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="status">Status</InputLabel>
+          <Select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            variant="outlined"
           >
-            Ajouter
-          </Button>
-        </div>
+            <MenuItem value="">Sélectionner</MenuItem>
+            {statusOptions.map(status => (
+              <MenuItem key={status.code} value={status.code}>
+                {status.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Typography variant="h6" gutterBottom>
+          Type de tier
+        </Typography>
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="prospect">Prospect</InputLabel>
+          <Select
+            id="prospect"
+            name="prospect"
+            value={formData.prospect}
+            onChange={handleChange}
+            variant="outlined"
+          >
+            <MenuItem value="">Sélectionner</MenuItem>
+            {prospectOptions.map(prospect => (
+              <MenuItem key={prospect.code} value={prospect.code}>
+                {prospect.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="client">Client</InputLabel>
+          <Select
+            id="client"
+            name="client"
+            value={formData.client}
+            onChange={handleChange}
+            variant="outlined"
+          >
+            <MenuItem value="">Sélectionner</MenuItem>
+            {clientOptions.map(client => (
+              <MenuItem key={client.code} value={client.code}>
+                {client.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="fournisseur">Fournisseur</InputLabel>
+          <Select
+            id="fournisseur"
+            name="fournisseur"
+            value={formData.fournisseur}
+            onChange={handleChange}
+            variant="outlined"
+          >
+            <MenuItem value="">Sélectionner</MenuItem>
+            {fournisseurOptions.map(fournisseur => (
+              <MenuItem key={fournisseur.code} value={fournisseur.code}>
+                {fournisseur.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="country_code">Pays</InputLabel>
+          <Select
+            id="country_code"
+            name="country_code"
+            value={formData.country_code}
+            onChange={handleChange}
+            variant="outlined"
+          >
+            <MenuItem value="">Sélectionner</MenuItem>
+            {countryOptions.map(country => (
+              <MenuItem key={country.code} value={country.code}>
+                {country.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="address"
+            name="address"
+            label="Adresse"
+            value={formData.address}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="zip"
+            name="zip"
+            label="Code Postal"
+            value={formData.zip}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="town"
+            name="town"
+            label="Ville"
+            value={formData.town}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="url"
+            name="url"
+            label="URL"
+            value={formData.url}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="tva_intra"
+            name="tva_intra"
+            label="TVA Intracommunautaire"
+            value={formData.tva_intra}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="siret"
+            name="siret"
+            label="SIRET"
+            value={formData.siret}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="ape"
+            name="ape"
+            label="APE"
+            value={formData.ape}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof1"
+            name="idprof1"
+            label="N° RIDET"
+            value={formData.idprof1}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof2"
+            name="idprof2"
+            label="ID Prof 2"
+            value={formData.idprof2}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof3"
+            name="idprof3"
+            label="ID Prof 3"
+            value={formData.idprof3}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof4"
+            name="idprof4"
+            label="ID Prof 4"
+            value={formData.idprof4}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof5"
+            name="idprof5"
+            label="ID Prof 5"
+            value={formData.idprof5}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="idprof6"
+            name="idprof6"
+            label="ID Prof 6"
+            value={formData.idprof6}
+            onChange={handleChange}
+            variant="outlined"
+          />
+        </FormControl>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          startIcon={<Send />}
+          disabled={loadingCreate}
+          sx={{ mt: 3 }}
+        >
+          Ajouter
+        </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 

@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useGetSupplierInvoicesQuery } from '../../slices/dolibarr/dolliSupplierInvoiceApiSlice'
 import { CircleDollarSign } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+  TableSortLabel,
+  TablePagination,
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import AnimatedPageTitle from './../../components/shared/AnimatedPageTitle'
+
+// Styles pour les cartes
+const StyledCard = styled(Card)(({ theme, color }) => ({
+  backgroundColor: color || theme.palette.background.paper,
+  color: theme.palette.text.primary,
+  boxShadow: theme.shadows[3],
+  height: '100%', // S'assure que les cartes ont toutes la même hauteur
+}))
 
 const AdminSupplierInvoicesScreen = () => {
   const {
@@ -9,8 +35,18 @@ const AdminSupplierInvoicesScreen = () => {
     isLoading: loadingSupplierInvoices,
   } = useGetSupplierInvoicesQuery()
 
-  if (loadingSupplierInvoices) return <div>Loading...</div>
-  if (errorSupplierInvoices) return <div>Error loading supplier invoices</div>
+  const [orderDirection, setOrderDirection] = useState('asc')
+  const [orderBy, setOrderBy] = useState('date')
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  if (loadingSupplierInvoices) return <CircularProgress />
+  if (errorSupplierInvoices)
+    return (
+      <Typography color="error">
+        Erreur lors du chargement des factures fournisseurs
+      </Typography>
+    )
 
   // Formatage de la date
   const formatDate = (timestamp) => {
@@ -28,33 +64,28 @@ const AdminSupplierInvoicesScreen = () => {
     })
   }
 
-  // Calcul du total TTC de toutes les factures
+  // Calcul des totaux et filtrage des factures
   const totalTTC = supplierInvoices.reduce(
     (acc, invoice) => acc + parseFloat(invoice.total_ttc),
     0,
   )
 
-  // Définition des dates de début et de fin des exercices sociaux
   const currentYear = new Date().getFullYear()
-  const startCurrentFiscalYear = new Date(currentYear, 6, 1) // 1er juillet de l'année en cours
-  const endCurrentFiscalYear = new Date(currentYear + 1, 5, 30, 23, 59, 59) // 30 juin de l'année prochaine
+  const startCurrentFiscalYear = new Date(currentYear, 6, 1)
+  const endCurrentFiscalYear = new Date(currentYear + 1, 5, 30, 23, 59, 59)
+  const startPreviousFiscalYear = new Date(currentYear - 1, 6, 1)
+  const endPreviousFiscalYear = new Date(currentYear, 5, 30, 23, 59, 59)
 
-  const startPreviousFiscalYear = new Date(currentYear - 1, 6, 1) // 1er juillet de l'année précédente
-  const endPreviousFiscalYear = new Date(currentYear, 5, 30, 23, 59, 59) // 30 juin de l'année en cours
-
-  // Filtrage des factures pour l'année civile en cours
   const invoicesCurrentYear = supplierInvoices.filter((invoice) => {
     const invoiceDate = new Date(invoice.date * 1000)
     return invoiceDate.getFullYear() === currentYear
   })
 
-  // Filtrage des factures pour l'année civile précédente
   const invoicesPreviousYear = supplierInvoices.filter((invoice) => {
     const invoiceDate = new Date(invoice.date * 1000)
     return invoiceDate.getFullYear() === currentYear - 1
   })
 
-  // Filtrage des factures pour l'exercice social actuel
   const invoicesCurrentFiscalYear = supplierInvoices.filter((invoice) => {
     const invoiceDate = new Date(invoice.date * 1000)
     return (
@@ -63,7 +94,6 @@ const AdminSupplierInvoicesScreen = () => {
     )
   })
 
-  // Filtrage des factures pour l'exercice social précédent
   const invoicesPreviousFiscalYear = supplierInvoices.filter((invoice) => {
     const invoiceDate = new Date(invoice.date * 1000)
     return (
@@ -72,125 +102,208 @@ const AdminSupplierInvoicesScreen = () => {
     )
   })
 
-  // Calcul du total TTC des factures pour l'année civile en cours
   const totalTTCCurrentYear = invoicesCurrentYear.reduce(
     (acc, invoice) => acc + parseFloat(invoice.total_ttc),
     0,
   )
 
-  // Calcul du total TTC des factures pour l'année civile précédente
   const totalTTCPreviousYear = invoicesPreviousYear.reduce(
     (acc, invoice) => acc + parseFloat(invoice.total_ttc),
     0,
   )
 
-  // Calcul du total TTC des factures pour l'exercice social actuel
   const totalTTCCurrentFiscalYear = invoicesCurrentFiscalYear.reduce(
     (acc, invoice) => acc + parseFloat(invoice.total_ttc),
     0,
   )
 
-  // Calcul du total TTC des factures pour l'exercice social précédent
   const totalTTCPreviousFiscalYear = invoicesPreviousFiscalYear.reduce(
     (acc, invoice) => acc + parseFloat(invoice.total_ttc),
     0,
   )
 
+  // Fonction pour trier les données
+  const handleSort = (property) => {
+    const isAscending = orderBy === property && orderDirection === 'asc'
+    setOrderDirection(isAscending ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
+
+  // Fonction pour trier les factures
+  const sortedInvoices = [...supplierInvoices].sort((a, b) => {
+    if (a[orderBy] < b[orderBy]) return orderDirection === 'asc' ? -1 : 1
+    if (a[orderBy] > b[orderBy]) return orderDirection === 'asc' ? 1 : -1
+    return 0
+  })
+
+  // Fonction pour gérer le changement de page
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  // Fonction pour gérer le changement de nombre de lignes par page
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  // Calculer les factures à afficher pour la page actuelle
+  const paginatedInvoices = sortedInvoices.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage,
+  )
+
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold mb-4">Factures de fournisseur</h1>
-      <div className="bg-gray-700 rounded-lg p-4 shadow-md flex items-center justify-between my-4">
-        <div>
-          <p className="text-textColor text-lg font-semibold">
-            Total TTC de toutes les factures
-          </p>
-          <p className="text-gray-200">{formatTotalTTC(totalTTC)}</p>
-        </div>
-        <CircleDollarSign className="text-blue-500" size={32} />
-      </div>
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
-        {/* Card 1 : Total TTC de toutes les factures */}
+    <div style={{ padding: '10px' }}>
+      <AnimatedPageTitle title={'Factures de fournisseur'} />
 
-        {/* Card 2 : Total TTC des factures pour l'année en cours */}
-        <div className="bg-green-300 rounded-lg p-4 shadow-md flex items-center justify-between">
-          <div>
-            <p className="text-gray-700 text-sm font-semibold">
-              Total des factures pour l'année en cours
-            </p>
-            <p className="text-gray-500">
-              {formatTotalTTC(totalTTCCurrentYear)}
-            </p>
-          </div>
-         
-        </div>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <StyledCard color="#f0f4c3" style={{ width: '100%' }}>
+            {' '}
+            {/* Première carte prenant toute la largeur */}
+            <CardContent
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <div>
+                <Typography variant="h6" style={{ fontSize: '1.2rem' }}>
+                  Total TTC de toutes les factures
+                </Typography>
+                <Typography variant="h5" style={{ fontSize: '1.3rem' }}>
+                  {formatTotalTTC(totalTTC)}
+                </Typography>
+              </div>
+              <CircleDollarSign color="primary" size={32} />
+            </CardContent>
+          </StyledCard>
+        </Grid>
 
-        {/* Card 3 : Total TTC des factures pour l'année précédente */}
-        <div className="bg-red-300 rounded-lg p-4 shadow-md flex items-center justify-between">
-          <div>
-            <p className="text-gray-700 text-sm font-semibold">
-              Total des factures pour l'année précédente
-            </p>
-            <p className="text-gray-500">
-              {formatTotalTTC(totalTTCPreviousYear)}
-            </p>
-          </div>
-         
-        </div>
+        <Grid item xs={12} md={6} lg={3}>
+          <StyledCard color="#c5e1a5">
+            <CardContent>
+              <Typography variant="body2" style={{ fontSize: '0.80rem' }}>
+                Total des factures pour l'année en cours
+              </Typography>
+              <Typography variant="h6">
+                {formatTotalTTC(totalTTCCurrentYear)}
+              </Typography>
+            </CardContent>
+          </StyledCard>
+        </Grid>
 
-        {/* Card 4 : Total TTC des factures pour l'exercice social actuel */}
-        <div className="bg-green-300 rounded-lg p-4 shadow-md flex items-center justify-between w-full">
-          <div>
-            <p className="text-gray-700 text-sm font-semibold">
-              Total des factures pour l'exercice social actuel
-            </p>
-            <p className="text-gray-500">
-              {formatTotalTTC(totalTTCCurrentFiscalYear)}
-            </p>
-          </div>
-     
-        </div>
-        {/* Card 5 : Total TTC des factures pour l'exercice social précédent */}
-        <div className="bg-red-300 rounded-lg p-4 shadow-md flex items-center justify-between">
-          <div>
-            <p className="text-gray-700 text-sm font-semibold mb-2">
-              Total factures pour l'exercice social précédent
-            </p>
-            <p className="text-gray-500">
-              {formatTotalTTC(totalTTCPreviousFiscalYear)}
-            </p>
-          </div>
-          
-        </div>
-      </div>
+        <Grid item xs={12} md={6} lg={3}>
+          <StyledCard color="#ef9a9a">
+            <CardContent>
+              <Typography variant="body2" style={{ fontSize: '0.80rem' }}>
+                Total des factures pour l'année précédente
+              </Typography>
+              <Typography variant="h6">
+                {formatTotalTTC(totalTTCPreviousYear)}
+              </Typography>
+            </CardContent>
+          </StyledCard>
+        </Grid>
 
-      {/* Tableau des factures de fournisseur */}
-      <div className="mt-8 overflow-x-auto">
-        <table className="min-w-full rounded-lg overflow-hidden text-xs">
-          <thead className=" text-white">
-            <tr className=' bg-primaryColor'>
-              <th className="py-2 px-4">Ref. Fournisseur</th>
-              <th className="py-2 px-4">Libellé</th>
-              <th className="py-2 px-4">Total TTC (XPF)</th>
-              <th className="py-2 px-4">Date</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-700">
-            {supplierInvoices.map((invoice) => (
-              <tr
-                key={invoice.id}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td className="py-2 px-4">{invoice.ref_supplier}</td>
-                <td className="py-2 px-4">{invoice.label}</td>
-                <td className="py-2 px-4">
-                  {formatTotalTTC(invoice.total_ttc)}
-                </td>
-                <td className="py-2 px-4">{formatDate(invoice.date)}</td>
-              </tr>
+        <Grid item xs={12} md={6} lg={3}>
+          <StyledCard color="#a5d6a7">
+            <CardContent>
+              <Typography variant="body2" style={{ fontSize: '0.80rem' }}>
+                Total des factures pour l'exercice social actuel
+              </Typography>
+              <Typography variant="h6">
+                {formatTotalTTC(totalTTCCurrentFiscalYear)}
+              </Typography>
+            </CardContent>
+          </StyledCard>
+        </Grid>
+
+        <Grid item xs={12} md={6} lg={3}>
+          <StyledCard color="#b39ddb">
+            <CardContent>
+              <Typography variant="body2" style={{ fontSize: '0.80rem' }}>
+                Total factures pour l'exercice social précédent
+              </Typography>
+              <Typography variant="h6">
+                {formatTotalTTC(totalTTCPreviousFiscalYear)}
+              </Typography>
+            </CardContent>
+          </StyledCard>
+        </Grid>
+      </Grid>
+
+      <TableContainer
+        component={Paper}
+        style={{ width: '100%', marginTop: '24px' }}
+      >
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'ref_supplier'}
+                  direction={
+                    orderBy === 'ref_supplier' ? orderDirection : 'asc'
+                  }
+                  onClick={() => handleSort('ref_supplier')}
+                >
+                  Ref. Fournisseur
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'label'}
+                  direction={orderBy === 'label' ? orderDirection : 'asc'}
+                  onClick={() => handleSort('label')}
+                >
+                  Libellé
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'total_ttc'}
+                  direction={orderBy === 'total_ttc' ? orderDirection : 'asc'}
+                  onClick={() => handleSort('total_ttc')}
+                >
+                  Total TTC (XPF)
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'date'}
+                  direction={orderBy === 'date' ? orderDirection : 'asc'}
+                  onClick={() => handleSort('date')}
+                >
+                  Date
+                </TableSortLabel>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedInvoices.map((invoice) => (
+              <TableRow key={invoice.id}>
+                <TableCell>{invoice.ref_supplier}</TableCell>
+                <TableCell>{invoice.label}</TableCell>
+                <TableCell>{formatTotalTTC(invoice.total_ttc)}</TableCell>
+                <TableCell>{formatDate(invoice.date)}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={supplierInvoices.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
     </div>
   )
 }

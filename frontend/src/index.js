@@ -112,6 +112,7 @@ import ResellerSupportsScreen from './screens/reseller/ResellerSupportsScreen'
 import ResellerProfileScreen from './screens/reseller/ResellerProfileScreen'
 import ResellerDocumentionScreen from './screens/reseller/ResellerDocumentionScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
+import AdminThirdpartyDetailsScreen from './screens/admin/AdminThirdpartyDetailsScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -192,6 +193,10 @@ const router = createBrowserRouter(
           <Route path="/admin-dashboard" element={<AdminDashboardScreen />} />
           <Route path="/admin-settings" element={<AdminSettingsScreen />} />
           <Route path="/admin-tiers" element={<AdminThirdpartiesScreen />} />
+          <Route
+            path="/admin-tier-details/:id"
+            element={<AdminThirdpartyDetailsScreen />}
+          />
           <Route
             path="/admin-dolibarr-nouveaux-tier"
             element={<AdminDolibarrNewThidpartyScreen />}

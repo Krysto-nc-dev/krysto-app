@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useGetEmailsQuery, useAddEmailMutation, useDeleteEmailMutation } from '../../slices/emailApiSlice';
 import Loader from '../../components/shared/Loader';
 import Modal from '../../components/shared/Modal';
-import { CheckCircle, CirclePlus, Edit, PlusCircleIcon, Trash, XCircle } from 'lucide-react'; // Import des icônes
+import { CheckCircle, XCircle, Edit, Trash, PlusCircle as PlusCircleIcon } from 'lucide-react'; // Import des icônes
 import { toast } from 'react-toastify';
 import Button from '../../components/shared/Button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Paper,
+  TextField,
+  IconButton,
+  InputAdornment
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const AdminBanksScreen= () => {
+const AdminBanksScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -18,10 +32,35 @@ const AdminBanksScreen= () => {
     acceptMailing: true, // Default value based on schema
   });
 
-const [addEmail] = useAddEmailMutation()
-const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmailMutation
+  const [addEmail] = useAddEmailMutation();
+  const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmailMutation
 
   const { data: emails, error: errorMail, isLoading: emailLoading, refetch: refetchEmails } = useGetEmailsQuery();
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredEmails = useMemo(() => {
+    return emails?.filter(email =>
+      Object.values(email).some(val =>
+        String(val).toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    ) || [];
+  }, [emails, searchTerm]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChangeSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -63,21 +102,18 @@ const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmail
   };
 
   const handleDelete = async (emailId) => {
-
-    if(window.confirm('Voulez-vous vraiment supprimer cet email ?')) {
-
+    if (window.confirm('Voulez-vous vraiment supprimer cet email ?')) {
       try {
         await deleteEmail(emailId); // Utilisation de la mutation pour supprimer l'email
         toast.success("Email supprimé avec succès.");
         refetchEmails(); // Rafraîchir la liste des emails après la suppression
       } catch (error) {
         console.error('Error deleting email:', error);
-        toast.error("Une erreur est survenue lors de l'ajout de l'email.");
+        toast.error("Une erreur est survenue lors de la suppression de l'email.");
         // Handle error state if needed
       }
-    };
-  }
-
+    }
+  };
 
   if (emailLoading) {
     return <Loader />;
@@ -96,162 +132,174 @@ const [deleteEmail] = useDeleteEmailMutation(); // Utilisation de useDeleteEmail
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex space-x-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Email:</label>
-                  <input
-                    type="email"
+                  <TextField
+                    label="Email"
                     name="email"
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                     required
                   />
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Civilité:</label>
-                  <input
-                    type="text"
+                  <TextField
+                    label="Civilité"
                     name="civility"
+                    type="text"
                     value={formData.civility}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                   />
                 </div>
               </div>
               <div className="flex space-x-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Prénom:</label>
-                  <input
-                    type="text"
+                  <TextField
+                    label="Prénom"
                     name="firstname"
+                    type="text"
                     value={formData.firstname}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                   />
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Nom:</label>
-                  <input
-                    type="text"
+                  <TextField
+                    label="Nom"
                     name="lastname"
+                    type="text"
                     value={formData.lastname}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                   />
                 </div>
               </div>
               <div className="flex space-x-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Ville:</label>
-                  <input
-                    type="text"
+                  <TextField
+                    label="Ville"
                     name="city"
+                    type="text"
                     value={formData.city}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                     required
                   />
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">Date de naissance:</label>
-                  <input
-                    type="date"
+                  <TextField
+                    label="Date de naissance"
                     name="birthdate"
+                    type="date"
                     value={formData.birthdate}
                     onChange={handleChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    fullWidth
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Accepte les mails:</label>
-                <div className="mt-1 flex items-center">
-                  <input
-                    id="acceptMailing"
-                    name="acceptMailing"
-                    type="checkbox"
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    checked={formData.acceptMailing}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, acceptMailing: e.target.checked }))}
-                  />
-                  <label htmlFor="acceptMailing" className="ml-2 block text-sm text-gray-900">
-                    Accepte de recevoir des mails
-                  </label>
-                </div>
+                <TextField
+                  id="acceptMailing"
+                  name="acceptMailing"
+                  type="checkbox"
+                  label="Accepte les mails"
+                  checked={formData.acceptMailing}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, acceptMailing: e.target.checked }))}
+                />
+                <label htmlFor="acceptMailing" className="ml-2 block text-sm text-gray-900">
+                  Accepte de recevoir des mails
+                </label>
               </div>
               <div className="flex justify-end">
-                <button
+                <Button
                   type="submit"
-                  className = "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primaryColor hover:bg-primaryColor-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          
+                  className="py-2 px-4 bg-primaryColor text-white rounded"
                 >
-             Ajouter
-                </button>
+                  Ajouter
+                </Button>
               </div>
             </form>
           </div>
         </Modal>
       )}
 
- 
-<div className="p-2">
-  <div className="flex items-center justify-between mb-6">
-
-        <h2 className="text-xl font-semibold ">Liste des emails</h2>
-       
+      <div className="p-2">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold">Liste des emails</h2>
           <Button icon={PlusCircleIcon} onClick={toggleModal} />
-  </div>
- 
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-300 border">
-            <thead className="bg-primaryColor">
-              <tr>
-                <th className="px-4 py-2 border-b text-left text-white">Email</th>
-                <th className="px-4 py-2 border-b text-left text-white">Civilité</th>
-                <th className="px-4 py-2 border-b text-left text-white">Prénom</th>
-                <th className="px-4 py-2 border-b text-left text-white">Nom</th>
-                <th className="px-4 py-2 border-b text-left text-white">Ville</th>
-                <th className="px-4 py-2 border-b text-left text-white">Date de naissance</th>
-                <th className="px-4 py-2 border-b text-left text-white">Accepte les mails</th>
-                <th className="px-4 py-2 border-b text-left text-white">Actions</th> {/* Nouvelle colonne */}
-              </tr>
-            </thead>
-            <tbody>
-              {emails.map((email) => (
-                <tr key={email._id} className="hover:bg-primaryColor">
-                  <td className="px-4 py-2 border-b text-left">{email.email}</td>
-                  <td className="px-4 py-2 border-b text-left">{email.civility}</td>
-                  <td className="px-4 py-2 border-b text-left">{email.firstname}</td>
-                  <td className="px-4 py-2 border-b text-left">{email.lastname}</td>
-                  <td className="px-4 py-2 border-b text-left">{email.city}</td>
-                  <td className="px-4 py-2 border-b text-left">
+        </div>
+{/* 
+        <TextField
+          placeholder="Rechercher..."
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={handleChangeSearch}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        /> */}
+
+        <TableContainer component={Paper} className="mt-4">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Email</TableCell>
+                <TableCell>Civilité</TableCell>
+                <TableCell>Prénom</TableCell>
+                <TableCell>Nom</TableCell>
+                <TableCell>Ville</TableCell>
+                <TableCell>Date de naissance</TableCell>
+                <TableCell>Accepte les mails</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredEmails.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((email) => (
+                <TableRow key={email._id}>
+                  <TableCell>{email.email}</TableCell>
+                  <TableCell>{email.civility}</TableCell>
+                  <TableCell>{email.firstname}</TableCell>
+                  <TableCell>{email.lastname}</TableCell>
+                  <TableCell>{email.city}</TableCell>
+                  <TableCell>
                     {email.birthdate ? new Date(email.birthdate).toLocaleDateString() : '-'}
-                  </td>
-                  <td className="px-4 py-2 border-b text-left">
+                  </TableCell>
+                  <TableCell>
                     {email.acceptMailing ? (
                       <CheckCircle className="text-green-500" size={24} />
                     ) : (
                       <XCircle className="text-red-500" size={24} />
                     )}
-                  </td>
-                  <td className="px-4 py-2 border-b text-left">
-                    <button
-                      onClick={() => handleEdit(email._id)}
-                      className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    >
-                      <Edit size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(email._id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                    >
-                      <Trash size={18} />
-                    </button>
-                  </td>
-                </tr>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => handleEdit(email._id)} color="primary">
+                      <Edit />
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(email._id)} color="error">
+                      <Trash />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredEmails.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>
       </div>
     </>
   );
