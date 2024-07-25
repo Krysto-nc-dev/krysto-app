@@ -1,17 +1,120 @@
 import { createTheme } from '@mui/material/styles'
 
-// Définir les couleurs pour le mode clair
+// Déclinaisons de couleurs
+const primary = {
+  light: '#B0B4E6',
+  main: '#9196CA',
+  dark: '#7479AD',
+  contrastText: '#fff',
+}
+
+const secondary = {
+  light: '#A5E5D1',
+  main: '#7EC7B8',
+  dark: '#61A99B',
+  contrastText: '#fff',
+}
+
+const neutral = {
+  light: '#f5f5f5',
+  main: '#e0e0e0',
+  dark: '#bdbdbd',
+}
+
+// Typographies
+const typography = {
+  fontFamily: 'Lato, Arial, sans-serif',
+  h1: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '2.5rem',
+    fontWeight: 700,
+    color: '#333',
+  },
+  h2: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '2rem',
+    fontWeight: 600,
+    color: '#333',
+  },
+  h3: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '1.75rem',
+    fontWeight: 500,
+    color: '#333',
+  },
+  body1: {
+    fontFamily: 'Lato, Arial, sans-serif',
+    fontSize: '1rem',
+    fontWeight: 400,
+    color: '#333',
+  },
+  body2: {
+    fontFamily: 'Lato, Arial, sans-serif',
+    fontSize: '0.875rem',
+    fontWeight: 400,
+    color: '#666',
+  },
+}
+
+// Composants MUI personnalisés
+const components = {
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: 4,
+        textTransform: 'none',
+      },
+      containedPrimary: {
+        backgroundColor: primary.main,
+        color: primary.contrastText,
+        '&:hover': {
+          backgroundColor: primary.dark,
+        },
+      },
+      containedSecondary: {
+        backgroundColor: secondary.main,
+        color: secondary.contrastText,
+        '&:hover': {
+          backgroundColor: secondary.dark,
+        },
+      },
+    },
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      head: {
+        backgroundColor: primary.main,
+        color: primary.contrastText,
+        fontWeight: 'bold',
+      },
+      body: {
+        backgroundColor: '#fff',
+        color: '#333',
+      },
+    },
+  },
+  MuiAppBar: {
+    styleOverrides: {
+      colorPrimary: {
+        backgroundColor: primary.main,
+      },
+    },
+  },
+  MuiDrawer: {
+    styleOverrides: {
+      paper: {
+        backgroundColor: primary.light,
+      },
+    },
+  },
+}
+
+// Thème clair
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary: {
-      main: '#9196CA',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#7EC7B8',
-      contrastText: '#fff',
-    },
+    primary: primary,
+    secondary: secondary,
     background: {
       default: '#f5f5f5',
       paper: '#fff',
@@ -20,69 +123,18 @@ const lightTheme = createTheme({
       primary: '#333',
       secondary: '#666',
     },
-    divider: '#e0e0e0',
+    divider: neutral.main,
   },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-    h1: {
-      fontSize: '2.5rem',
-      fontWeight: 700,
-      color: '#333',
-    },
-    // Autres styles typographiques
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 4,
-          textTransform: 'none',
-        },
-        containedPrimary: {
-          backgroundColor: '#9196CA',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#7a7fb8',
-          },
-        },
-        containedSecondary: {
-          backgroundColor: '#7EC7B8',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#5cb2a0',
-          },
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          backgroundColor: '#9196CA',
-          color: '#fff',
-          fontWeight: 'bold',
-        },
-        body: {
-          backgroundColor: '#fff',
-          color: '#333',
-        },
-      },
-    },
-    // Autres composants
-  },
+  typography: typography,
+  components: components,
 })
 
-// Définir les couleurs pour le mode sombre
+// Thème sombre
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: {
-      main: '#9196CA',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#7EC7B8',
-      contrastText: '#fff',
-    },
+    primary: primary,
+    secondary: secondary,
     background: {
       default: '#333',
       paper: '#424242',
@@ -91,45 +143,38 @@ const darkTheme = createTheme({
       primary: '#fff',
       secondary: '#ccc',
     },
-    divider: '#555',
+    divider: neutral.dark,
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    ...typography,
     h1: {
-      fontSize: '2.5rem',
-      fontWeight: 700,
+      ...typography.h1,
       color: '#fff',
     },
-    // Autres styles typographiques
+    h2: {
+      ...typography.h2,
+      color: '#fff',
+    },
+    h3: {
+      ...typography.h3,
+      color: '#fff',
+    },
+    body1: {
+      ...typography.body1,
+      color: '#fff',
+    },
+    body2: {
+      ...typography.body2,
+      color: '#ccc',
+    },
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 4,
-          textTransform: 'none',
-        },
-        containedPrimary: {
-          backgroundColor: '#9196CA',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#7a7fb8',
-          },
-        },
-        containedSecondary: {
-          backgroundColor: '#7EC7B8',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#5cb2a0',
-          },
-        },
-      },
-    },
+    ...components,
     MuiTableCell: {
       styleOverrides: {
         head: {
-          backgroundColor: '#9196CA',
-          color: '#fff',
+          backgroundColor: primary.main,
+          color: primary.contrastText,
           fontWeight: 'bold',
         },
         body: {
@@ -138,7 +183,6 @@ const darkTheme = createTheme({
         },
       },
     },
-    // Autres composants
   },
 })
 
