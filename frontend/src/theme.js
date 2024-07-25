@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles'
+import merge from 'deepmerge'
 
-// Déclinaisons de couleurs
+// Couleurs personnalisées
 const primary = {
   light: '#B0B4E6',
   main: '#9196CA',
@@ -20,6 +21,18 @@ const neutral = {
   main: '#e0e0e0',
   dark: '#bdbdbd',
 }
+
+const gray = {
+  light: '#f5f5f5',
+  main: '#949494',
+  dark: '#333333',
+}
+
+const highlight = '#F5F5DC'
+const muted = '#ecf3ff80'
+const danger = '#E57373'
+const warning = '#FFB74D'
+const success = '#1c9222'
 
 // Typographies
 const typography = {
@@ -42,22 +55,46 @@ const typography = {
     fontWeight: 500,
     color: '#333',
   },
+  h4: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '1.125rem',
+    fontWeight: 500,
+    color: '#333',
+  },
+  h5: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '1.0625rem',
+    fontWeight: 500,
+    color: '#333',
+  },
+  h6: {
+    fontFamily: 'Animated, Arial, sans-serif',
+    fontSize: '1rem',
+    fontWeight: 500,
+    color: '#333',
+  },
   body1: {
-    fontFamily: 'Lato, Arial, sans-serif',
     fontSize: '1rem',
     fontWeight: 400,
     color: '#333',
   },
   body2: {
-    fontFamily: 'Lato, Arial, sans-serif',
     fontSize: '0.875rem',
     fontWeight: 400,
     color: '#666',
   },
+  button: {
+    textTransform: 'none',
+  },
 }
 
-// Composants MUI personnalisés
+// Composants personnalisés
 const components = {
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
   MuiButton: {
     styleOverrides: {
       root: {
@@ -107,6 +144,35 @@ const components = {
       },
     },
   },
+  MuiLink: {
+    defaultProps: {
+      underline: 'hover',
+    },
+  },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        backgroundImage: 'none',
+      },
+    },
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: {
+        borderRadius: '6px',
+      },
+      filled: {
+        textShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+      },
+    },
+  },
+  MuiMenu: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+      }),
+    },
+  },
 }
 
 // Thème clair
@@ -116,7 +182,7 @@ const lightTheme = createTheme({
     primary: primary,
     secondary: secondary,
     background: {
-      default: '#f5f5f5',
+      default: '#9196CA',
       paper: '#fff',
     },
     text: {
@@ -130,60 +196,46 @@ const lightTheme = createTheme({
 })
 
 // Thème sombre
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: primary,
-    secondary: secondary,
-    background: {
-      default: '#333',
-      paper: '#424242',
+const darkTheme = createTheme(
+  merge(lightTheme, {
+    palette: {
+      mode: 'dark',
+      background: {
+        default: gray.dark,
+        paper: '#424242',
+      },
+      text: {
+        primary: '#fff',
+        secondary: '#ccc',
+      },
+      divider: gray.main,
     },
-    text: {
-      primary: '#fff',
-      secondary: '#ccc',
+    typography: {
+      h1: { color: '#fff' },
+      h2: { color: '#fff' },
+      h3: { color: '#fff' },
+      h4: { color: '#fff' },
+      h5: { color: '#fff' },
+      h6: { color: '#fff' },
+      body1: { color: '#fff' },
+      body2: { color: '#ccc' },
     },
-    divider: neutral.dark,
-  },
-  typography: {
-    ...typography,
-    h1: {
-      ...typography.h1,
-      color: '#fff',
-    },
-    h2: {
-      ...typography.h2,
-      color: '#fff',
-    },
-    h3: {
-      ...typography.h3,
-      color: '#fff',
-    },
-    body1: {
-      ...typography.body1,
-      color: '#fff',
-    },
-    body2: {
-      ...typography.body2,
-      color: '#ccc',
-    },
-  },
-  components: {
-    ...components,
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          backgroundColor: primary.main,
-          color: primary.contrastText,
-          fontWeight: 'bold',
-        },
-        body: {
-          backgroundColor: '#424242',
-          color: '#fff',
+    components: {
+      MuiTableCell: {
+        styleOverrides: {
+          head: {
+            backgroundColor: primary.main,
+            color: primary.contrastText,
+            fontWeight: 'bold',
+          },
+          body: {
+            backgroundColor: '#424242',
+            color: '#fff',
+          },
         },
       },
     },
-  },
-})
+  }),
+)
 
 export { lightTheme, darkTheme }
