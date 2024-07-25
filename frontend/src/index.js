@@ -114,6 +114,7 @@ import ResellerDocumentionScreen from './screens/reseller/ResellerDocumentionScr
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import AdminThirdpartyDetailsScreen from './screens/admin/AdminThirdpartyDetailsScreen'
 import AdminWarehouseDetailsScreen from './screens/admin/AdminWarehouseDetailsScreen'
+import AdminBankAccounts from './screens/admin/AdminBankAccounts'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -243,7 +244,7 @@ const router = createBrowserRouter(
           />
           <Route
             path="/admin-comptes-bancaire"
-            element={<AdminBanksScreen />}
+            element={<AdminBankAccounts />}
           />
           <Route path="/admin-caisses" element={<AdminCashiersScreen />} />
           <Route
