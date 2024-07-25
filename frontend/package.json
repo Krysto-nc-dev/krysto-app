@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
+    "@mui/x-charts": "^7.11.0",
     "@mui/x-data-grid": "^7.11.0",
     "@mui/x-date-pickers": "^7.11.0",
     "@nivo/bar": "^0.87.0",
@@ -39,6 +40,7 @@
     "react-router-dom": "^6.25.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
+    "recharts": "^2.12.7",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
